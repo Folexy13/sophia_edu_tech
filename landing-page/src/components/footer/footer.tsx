@@ -1,0 +1,132 @@
+import React from "react";
+import { APPCONSTANTS } from "../../constants";
+import { Col, Row } from "antd";
+import { Button } from "..";
+import "./footer.styles.scss";
+import { logo2 } from "../../assets";
+
+const Footer: React.FC = () => {
+	return (
+		<div
+			className="footer"
+			style={{
+				background: APPCONSTANTS.APP_DARK_PURPLE,
+				color: "#fff",
+				minHeight: "50vh",
+				width: "100%",
+			}}
+		>
+			<Row
+				justify="center"
+				align="top"
+				style={{ borderBottom: "1px solid #fff", marginBottom: 20 }}
+			>
+				<Col>
+					<div style={{ textAlign: "center" }}>
+						<h2
+							className="playfair-display-bold"
+							style={{
+								fontSize: 48,
+								marginBottom: 18,
+								marginTop: 136,
+								width: 520,
+							}}
+						>
+							Get started and find your best courses
+						</h2>
+						<Button
+							color={APPCONSTANTS.APP_DARK_PURPLE}
+							background="#fff"
+							className="reg_btn"
+						>
+							Sign Up
+						</Button>
+					</div>
+				</Col>
+			</Row>
+			<Row gutter={[16, 16]} style={{ marginBottom: "16px" }}>
+				<Col xs={24} md={8} className="col">
+					<div
+						style={{
+							// textAlign: "center",
+							// display: "flex",
+							// flexDirection: "column",
+							// justifyContent: "flex-end",
+							// alignItems: "center",
+							padding: "20px",
+							// background: "#fff",
+						}}
+					>
+						<img
+							src={logo2}
+							alt="logo"
+							height={50}
+							style={{ marginBottom: 150 }}
+						/>
+						<p className="playfair-display-normal" style={{ color: "#ccc" }}>
+							Copyright, {new Date().getFullYear()}
+						</p>
+					</div>
+				</Col>
+				<Col xs={24} md={8} style={{ minHeight: "140px" }} className="col">
+					<div
+						style={{
+							// textAlign: "center",
+							display: "flex",
+							alignItems: "center",
+							flexDirection: "column",
+							// justifyContent: "flex-end",
+							padding: "20px",
+						}}
+					>
+						<h2
+							className="playfair-display-bold"
+							style={{ color: "#fff", marginLeft: "-29px" }}
+						>
+							More
+						</h2>
+						<ul>
+							<li>
+								<a href="">About Us</a>
+							</li>
+							<li>
+								<a href="">Terms of use</a>
+							</li>
+							<li>
+								<a href="">Privacy Policy</a>
+							</li>
+							<li>
+								<a href="">Blog</a>
+							</li>
+							<li>
+								<a href="">Contact</a>
+							</li>
+						</ul>
+					</div>
+				</Col>
+				<Col xs={24} md={8} style={{ minHeight: "140px" }} className="col">
+					<div
+						style={{
+							textAlign: "center",
+							padding: "20px",
+						}}
+					>
+						<h2 className="playfair-display-bold" style={{ color: "#fff" }}>
+							Contacts
+						</h2>
+						<ul>
+							<li>
+								<a href="">info@sophia.com</a>
+							</li>
+							<li>
+								<a href="">+44 234 234 234567</a>
+							</li>
+						</ul>
+					</div>
+				</Col>
+			</Row>
+		</div>
+	);
+};
+
+export default Footer;

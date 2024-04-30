@@ -1,0 +1,10 @@
+.navbar {
+	width: 85%;
+	margin: 30px auto !important;
+	@media (max-width: 1020px) {
+		width: 90%;
+		@media (max-width: 900px) {
+			width: 100%;
+		}
+	}
+}
