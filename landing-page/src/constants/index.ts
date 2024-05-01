@@ -7,7 +7,8 @@ export const URL = {
 	CONTACT: "/contact-us",
 	ABOUT: "/about-us",
 	FORGOT_PASSWORD: "/forgot-password",
-	PRIVACY: "/privacy/terms-of-service",
+	PRIVACY: "/privacy/",
+	TERMS: "/terms-of-use/",
 	BLOG: "/blog",
 };
 
@@ -37,7 +38,16 @@ export const APPCONSTANTS = {
 			name: "About",
 			icon: UserOutlined,
 		},
-		// Add more routes as needed
+		{
+			path: URL.PRIVACY,
+			name: "Privacy",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.TERMS,
+			name: "Terms of Use",
+			icon: UserOutlined,
+		},
 	],
 };
 export const applied_science_data = [

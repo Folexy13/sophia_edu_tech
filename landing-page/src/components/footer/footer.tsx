@@ -1,9 +1,10 @@
 import React from "react";
-import { APPCONSTANTS } from "../../constants";
+import { APPCONSTANTS, URL } from "../../constants";
 import { Col, Row } from "antd";
 import { Button } from "..";
 import "./footer.styles.scss";
 import { logo2 } from "../../assets";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
 	return (
@@ -34,13 +35,15 @@ const Footer: React.FC = () => {
 						>
 							Get started and find your best courses
 						</h2>
-						<Button
-							color={APPCONSTANTS.APP_DARK_PURPLE}
-							background="#fff"
-							className="reg_btn"
-						>
-							Sign Up
-						</Button>
+						<Link to={URL.LOGIN}>
+							<Button
+								color={APPCONSTANTS.APP_DARK_PURPLE}
+								background="#fff"
+								className="reg_btn"
+							>
+								Sign Up
+							</Button>
+						</Link>
 					</div>
 				</Col>
 			</Row>
@@ -87,19 +90,19 @@ const Footer: React.FC = () => {
 						</h2>
 						<ul>
 							<li>
-								<a href="">About Us</a>
+								<Link to={URL.ABOUT}>About Us</Link>
 							</li>
 							<li>
-								<a href="">Terms of use</a>
+								<Link to={URL.TERMS}>Terms of use</Link>
 							</li>
 							<li>
-								<a href="">Privacy Policy</a>
+								<Link to={URL.PRIVACY}>Privacy Policy</Link>
 							</li>
 							<li>
-								<a href="">Blog</a>
+								<Link to={URL.BLOG}>Blog</Link>
 							</li>
 							<li>
-								<a href="">Contact</a>
+								<Link to={URL.CONTACT}>Contact</Link>
 							</li>
 						</ul>
 					</div>

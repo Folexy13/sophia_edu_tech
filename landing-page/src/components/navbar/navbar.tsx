@@ -14,7 +14,9 @@ const Navbar: React.FC = () => {
 					<img src={logo} alt="Logo" />
 				</Col>
 			</Link>
-			<Button>Login</Button>
+			<Link to={URL.LOGIN}>
+				<Button>Login</Button>
+			</Link>
 		</Row>
 	);
 };
