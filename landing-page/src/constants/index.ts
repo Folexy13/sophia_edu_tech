@@ -7,6 +7,7 @@ export const URL = {
 	CONTACT: "/contact-us",
 	ABOUT: "/about-us",
 	FORGOT_PASSWORD: "/forgot-password",
+	SET_PASSWORD: "/set-password",
 	PRIVACY: "/privacy/",
 	TERMS: "/terms-of-use/",
 	BLOG: "/blog",
@@ -46,6 +47,21 @@ export const APPCONSTANTS = {
 		{
 			path: URL.TERMS,
 			name: "Terms of Use",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.FORGOT_PASSWORD,
+			name: "Forgot Password",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.SET_PASSWORD,
+			name: "Set Password",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.CONTACT,
+			name: "Contact us",
 			icon: UserOutlined,
 		},
 	],
