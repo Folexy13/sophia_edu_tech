@@ -11,7 +11,7 @@ interface IAccordionProps {
 	background?: string;
 }
 
-const Accordion: React.FC<IAccordionProps> = ({ data, title, background }) => {
+const Accordion: React.FC<IAccordionProps> = ({ data, title }) => {
 	return (
 		<Collapse
 			className="accordion"
