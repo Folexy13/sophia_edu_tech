@@ -39,14 +39,7 @@ const AboutPage: React.FC = () => {
 					align-items="center"
 					style={{ marginTop: 60 }}
 				>
-					<Col
-						// xs={12}
-						// sm={10}
-						// md={8}
-						// lg={6}
-						xl={8}
-						style={{ width: "50%" }}
-					>
+					<Col xs={{ span: 24 }} lg={{ span: 12 }}>
 						<p
 							className="playfair-display-normal"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
@@ -79,18 +72,16 @@ const AboutPage: React.FC = () => {
 						</p>
 					</Col>
 					<Col
-						xs={12}
-						sm={10}
-						md={8}
-						lg={6}
-						xl={10}
+						xs={{ span: 24 }}
+						lg={{ span: 12 }}
 						style={{
-							width: "50%",
 							textAlign: "center",
 						}}
+						className="xlx"
 					>
 						<img
 							src={office_woman}
+							className="img1"
 							alt="Office-Woman-on-call-pic"
 							style={{ maxWidth: "100%", maxHeight: "100%", height: "auto" }}
 						/>
@@ -106,28 +97,22 @@ const AboutPage: React.FC = () => {
 					style={{ marginTop: 60, gap: 80 }}
 				>
 					<Col
-						xs={12}
-						sm={10}
-						md={8}
-						lg={6}
-						xl={10}
+						xs={{ span: 24 }}
+						lg={{ span: 10 }}
 						style={{
-							width: "50%",
 							textAlign: "center",
 						}}
 					>
 						<img
 							src={twoWoman}
+							className="img1"
 							alt="Office-Woman-on-call-pic"
 							style={{ maxWidth: "100%", maxHeight: "100%", height: "auto" }}
 						/>
 					</Col>
 					<Col
-						xs={12}
-						sm={10}
-						md={8}
+						xs={{ span: 24 }}
 						lg={10}
-						xl={12}
 						style={{ width: "100%", marginTop: 30 }}
 					>
 						<img src={badge} width={30} alt="" style={{ marginBottom: 10 }} />
@@ -155,28 +140,22 @@ const AboutPage: React.FC = () => {
 					style={{ marginTop: 60, gap: 80 }}
 				>
 					<Col
-						xs={12}
-						sm={10}
-						md={8}
-						lg={6}
-						xl={10}
+						xs={{ span: 24 }}
+						lg={{ span: 10 }}
 						style={{
-							width: "50%",
 							textAlign: "center",
 						}}
 					>
 						<img
 							src={manWoman}
+							className="img1"
 							alt="Office-Woman-on-call-pic"
 							style={{ maxWidth: "100%", maxHeight: "100%", height: "auto" }}
 						/>
 					</Col>
 					<Col
-						xs={12}
-						sm={10}
-						md={8}
-						lg={10}
-						xl={12}
+						xs={{ span: 24 }}
+						lg={{ span: 12 }}
 						style={{ width: "100%", marginTop: 30 }}
 					>
 						<img

@@ -16,6 +16,9 @@
 			margin: 30px auto;
 			width: 60%;
 			text-align: center;
+			@media (max-width: 800px) {
+				width: 100%;
+			}
 		}
 		.div {
 			width: 100%;
@@ -38,6 +41,15 @@
 			// background-color: red;
 			margin: auto !important;
 			padding: 60px 0;
+			@media (max-width: 800px) {
+				flex-direction: column-reverse;
+				.xlx {
+					margin: auto;
+					.img1 {
+						width: 80%;
+					}
+				}
+			}
 		}
 	}
 }
