@@ -3,6 +3,8 @@ import "./Forgotpage.styles.scss";
 import { Col, Form, Input, Row } from "antd";
 import { Button } from "../../components";
 import { logo, student, woman } from "../../assets";
+import { URL } from "../../constants";
+import { Link } from "react-router-dom";
 
 const Forgotpage: React.FC<any> = () => {
 	return (
@@ -28,6 +30,13 @@ const Forgotpage: React.FC<any> = () => {
 				</Col>
 				<Col xs={{ span: 24 }} lg={{ span: 12 }}>
 					<div className="forgot-container" style={{}}>
+						<Link to={URL.HOME} className="midlogo">
+							<img
+								src={logo}
+								alt="Login"
+								style={{ maxWidth: "100%", maxHeight: "100%" }}
+							/>
+						</Link>
 						<h2>Forgot password</h2>
 						<p className="inter-normal">
 							Enter email address to recieve mail from us

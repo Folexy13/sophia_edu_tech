@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer } from "../../components";
+import { Footer, Navbar } from "../../components";
 import "./Privacypage.styles.scss";
 import { Card } from "antd";
 
@@ -7,6 +7,8 @@ const TermsPage: React.FC = () => {
 	return (
 		<div className="privacy">
 			<div className="container">
+				<Navbar />
+
 				<h2>Privacy Policy</h2>
 				<Card bordered={false} style={{ width: "100%" }} hoverable>
 					<h3 className="inter-bold" style={{ color: "#581A57" }}>

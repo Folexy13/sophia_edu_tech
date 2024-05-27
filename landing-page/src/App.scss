@@ -16,6 +16,12 @@ a {
 li {
 	list-style: none;
 }
+.midlogo {
+	display: none;
+	@media (max-width: 890px) {
+		display: block;
+	}
+}
 
 .playfair-display-normal {
 	font-family: "Playfair Display", serif;

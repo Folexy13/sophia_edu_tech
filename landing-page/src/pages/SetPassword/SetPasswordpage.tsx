@@ -3,6 +3,8 @@ import "./SetPasswordpage.styles.scss";
 import { Col, Form, Input, Row } from "antd";
 import { Button } from "../../components";
 import { logo, student, woman } from "../../assets";
+import { Link } from "react-router-dom";
+import { URL } from "../../constants";
 
 const SetPasswordpage: React.FC<any> = () => {
 	return (
@@ -28,6 +30,13 @@ const SetPasswordpage: React.FC<any> = () => {
 				</Col>
 				<Col xs={{ span: 24 }} lg={{ span: 12 }}>
 					<div className="setpassword-container" style={{}}>
+						<Link to={URL.HOME} className="midlogo">
+							<img
+								src={logo}
+								alt="Login"
+								style={{ maxWidth: "100%", maxHeight: "100%" }}
+							/>
+						</Link>
 						<h2>Set password</h2>
 						<p className="inter-normal">
 							Enter new password and sign in to your account
