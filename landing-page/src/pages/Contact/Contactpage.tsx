@@ -24,7 +24,7 @@ const Contactpage: React.FC<any> = () => {
 			</div>
 
 			<Row style={{ background: "#fff" }} className="bottom">
-				<Col xs={{ span: 0 }} lg={{ span: 12 }}>
+				<Col xs={{ span: 24 }} lg={{ span: 12 }}>
 					<h2 className="inter-bold">Find Us</h2>
 					<div className="flex">
 						<img src={locationIcon} alt="icon" />
