@@ -24,15 +24,7 @@ const Footer: React.FC = () => {
 			>
 				<Col>
 					<div style={{ textAlign: "center" }}>
-						<h2
-							className="playfair-display-bold"
-							style={{
-								fontSize: 48,
-								marginBottom: 18,
-								marginTop: 136,
-								width: 520,
-							}}
-						>
+						<h2 className="playfair-display-bold title">
 							Get started and find your best courses
 						</h2>
 						<Link to={URL.LOGIN}>
@@ -60,12 +52,7 @@ const Footer: React.FC = () => {
 							// background: "#fff",
 						}}
 					>
-						<img
-							src={logo2}
-							alt="logo"
-							height={50}
-							style={{ marginBottom: 150 }}
-						/>
+						<img src={logo2} alt="logo" className="footerImg" height={50} />
 						<p className="playfair-display-normal" style={{ color: "#ccc" }}>
 							Copyright, {new Date().getFullYear()}
 						</p>
