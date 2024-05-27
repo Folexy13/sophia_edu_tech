@@ -29,6 +29,9 @@
 	.bottom {
 		min-height: 500px;
 		padding: 60px 100px;
+		@media (max-width: 768px) {
+			padding: 50px;
+		}
 		h2 {
 			font-size: 16px;
 		}
