@@ -21,6 +21,12 @@
 				text-align: unset;
 			}
 		}
+		@media (max-width: 768px) {
+			div {
+				align-items: unset !important;
+				text-align: unset !important;
+			}
+		}
 	}
 	h2 {
 		margin: unset !important;
