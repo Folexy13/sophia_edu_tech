@@ -66,7 +66,16 @@ const AboutPage: React.FC = () => {
 							platform's logo suggests, Sophia is aimed at providing the
 							scaffolding with which learners could see what is lying out there
 							in terms of knowledge, wisdom and understanding in their chosen
-							fields of study. Read more
+							fields of study.
+						</p>
+						<p
+							className="playfair-display-normal"
+							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
+						>
+							Sophia leverages on the potentials offered by latest technologies,
+							insights and feedback from stakeholders in the higher education
+							sector to optimize learning and research skills for higher
+							education students and professionals.
 						</p>
 					</Col>
 					<Col

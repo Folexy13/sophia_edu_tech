@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import React from "react";
-import { woman } from "../../assets";
+import { badge, computer_lady, woman } from "../../assets";
 import { Accordion, Button, Footer, Navbar } from "../../components";
 import "./Homepage.styles.scss";
 import {
@@ -22,14 +22,7 @@ const HomePage: React.FC = () => {
 					justify="space-between"
 					style={{ marginTop: 60 }}
 				>
-					<Col
-						// xs={12}
-						// sm={10}
-						// md={8}
-						// lg={6}
-						xl={8}
-						style={{ width: "50%" }}
-					>
+					<Col xs={{ span: 24 }} lg={{ span: 12 }}>
 						<h2
 							className="playfair-display-bold"
 							style={{ fontSize: 48, marginBottom: 18 }}
@@ -49,19 +42,18 @@ const HomePage: React.FC = () => {
 						<Button>Sign Up</Button>
 					</Col>
 					<Col
-						xs={12}
-						sm={10}
-						md={8}
-						lg={6}
-						xl={10}
+						xs={{ span: 24 }}
+						lg={{ span: 12 }}
+						className="xlx"
 						style={{
-							width: "50%",
+							// width: "50%",
 							textAlign: "center",
 						}}
 					>
 						<img
 							src={woman}
 							alt="Graduate-Woman-pic"
+							className="img1"
 							style={{ maxWidth: "100%", maxHeight: "100%", height: "auto" }}
 						/>
 					</Col>
@@ -143,6 +135,54 @@ const HomePage: React.FC = () => {
 							<Accordion title="Humanities" data={humanities_data} />
 							<Accordion title="Natural Science" data={natural_science_data} />
 							<Accordion title="Social Science" data={social_science_data} />
+						</Col>
+					</Row>
+				</div>
+			</section>
+			<section className="">
+				<div className="compartment">
+					<h2 className="playfair-display-bold">
+						Things you can do with <span>SOPHIA</span>
+					</h2>
+					<Row align="top" justify="space-between" className="hero-text">
+						<Col xs={{ span: 24 }} lg={{ span: 12 }}>
+							<div className="flex">
+								<img src={badge} alt="..." width={20} />
+								<p className="playfair-display-normal">Become a member</p>
+							</div>
+							<div className="flex">
+								<img src={badge} alt="..." width={20} />
+								<p className="playfair-display-normal">
+									Enroll and take your learning development courses
+								</p>
+							</div>
+							<div className="flex">
+								<img src={badge} alt="..." width={20} />
+								<p className="playfair-display-normal">
+									Enroll and take your social entrepreneurship and innovation
+									courses
+								</p>
+							</div>
+							<div className="flex">
+								<img src={badge} alt="..." width={20} />
+								<p className="playfair-display-normal">
+									Publish your work and generate certificate of achievement
+								</p>
+							</div>
+							<div className="flex">
+								<img src={badge} alt="..." width={20} />
+								<p className="playfair-display-normal">
+									Upload your enterprise project
+								</p>
+							</div>
+						</Col>
+						<Col
+							xs={{ span: 24 }}
+							lg={{ span: 12 }}
+							className="xlx"
+							style={{ textAlign: "center", paddingBottom: 30 }}
+						>
+							<img className="img1" src={computer_lady} alt="..." />
 						</Col>
 					</Row>
 				</div>

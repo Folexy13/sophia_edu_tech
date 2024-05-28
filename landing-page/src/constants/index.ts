@@ -102,6 +102,7 @@ export const natural_science_data = [
 	"Chemistry",
 	"Earth science",
 	"Astronomy",
+	"Physics",
 ];
 export const social_science_data = [
 	"Antropology",

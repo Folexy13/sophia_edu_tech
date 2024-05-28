@@ -14,3 +14,5 @@ export { default as facebookIcon } from "./facebook_icon.svg";
 export { default as xIcon } from "./x_icon.svg";
 export { default as instaIcon } from "./insta_Icon.svg";
 export { default as youtubeIcon } from "./youtube_icon.svg";
+export { default as computer_lady } from "./computer_lady.svg";
+export { default as googleIcon } from "./google_icon.svg";
