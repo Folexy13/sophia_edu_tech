@@ -75,7 +75,7 @@ export const applied_science_data = [
 	"Environmental studies and  forestry",
 	"Family and consumer science",
 	"Human physical performance and recreation",
-	"Journalism,media studies and communication",
+	"Journalism, media studies and communication",
 	"Law",
 	"Library and museum studies",
 	"Medicine and health",
@@ -90,7 +90,7 @@ export const humanities_data = [
 	"Performing arts",
 	"Visual Arts",
 	"History",
-	"Langugaes and literature",
+	"Languagesw and literature",
 	"Law",
 	"Philosophy",
 	"Religious Studies",
@@ -105,7 +105,7 @@ export const natural_science_data = [
 	"Physics",
 ];
 export const social_science_data = [
-	"Antropology",
+	"Antropoly",
 	"Archaeology",
 	"Economics",
 	"Geography",
