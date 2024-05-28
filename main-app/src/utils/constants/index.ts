@@ -2,12 +2,13 @@ import { HomeOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 
 export const URL = {
 	HOME: "/",
-	LOGIN: "/login",
+	LOGIN: "/register",
 	REGISTER: "/register",
 	CONTACT: "/contact-us",
 	ABOUT: "/about-us",
 	FORGOT_PASSWORD: "/forgot-password",
 	PRIVACY: "/privacy/terms-of-service",
+	COURSELISTING: "/course/1",
 	BLOG: "/blog",
 };
 
@@ -29,6 +30,11 @@ export const APPCONSTANTS = {
 		{
 			path: URL.REGISTER,
 			name: "Register",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.COURSELISTING,
+			name: "Course_Listing",
 			icon: UserOutlined,
 		},
 		// Add more routes as needed

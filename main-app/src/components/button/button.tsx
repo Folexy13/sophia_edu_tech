@@ -1,26 +1,14 @@
-import { Button as AntdButton } from "antd"; // Rename imported Button to avoid naming conflict
-import { ReactNode } from "react";
-
+import React from "react";
+import { Button as AntdButton } from "antd";
 interface IButtonProps {
-	width: string | number;
-	height: string | number;
-	borderRadius: string;
-	children?: ReactNode;
+	width?: string | number;
+	height?: string | number;
+	borderRadius?: string;
+	children?: React.ReactNode;
+	block?: boolean;
 }
-
-const CustomButton: React.FC<IButtonProps> = ({
-	width,
-	height,
-	borderRadius,
-	children,
-}) => {
-	return (
-		<AntdButton
-			style={{ width, height, borderRadius }} // Apply styles to the AntdButton
-		>
-			{children}
-		</AntdButton>
-	);
+const Button: React.FC<IButtonProps> = ({ block }) => {
+	return <AntdButton block={block}>Button</AntdButton>;
 };
 
-export default CustomButton; // Export the component
+export default Button;

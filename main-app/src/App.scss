@@ -1,5 +1,24 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+body {
+	background: #b6b6b640;
+}
+li,
+p,
+button {
+	font-family: inter !important;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-menu-horizontal {
+	border-bottom: none !important;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-layout-footer {
+	padding: unset;
 }
