@@ -1,14 +1,2 @@
 [build]
-  # Command to build your site
   command = "npm install --force && npm run build"
-
-  # Directory to change to before starting build
-  base = "landing-page"
-
-  # Directory that contains the deploy-ready HTML files and assets
-  publish = "landing-page/dist"
-
-  [[redirects]]
-    from = "/*"
-    to = "/index.html"
-    status = 200
