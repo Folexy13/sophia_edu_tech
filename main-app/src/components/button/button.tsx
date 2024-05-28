@@ -6,9 +6,15 @@ interface IButtonProps {
 	borderRadius?: string;
 	children?: React.ReactNode;
 	block?: boolean;
+	className?: string;
+	color?: string;
 }
-const Button: React.FC<IButtonProps> = ({ block }) => {
-	return <AntdButton block={block}>Button</AntdButton>;
+const Button: React.FC<IButtonProps> = ({ block, className }) => {
+	return (
+		<AntdButton className={className} block={block}>
+			Button
+		</AntdButton>
+	);
 };
 
 export default Button;

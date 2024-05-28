@@ -22,3 +22,21 @@ button {
 :where(.css-dev-only-do-not-override-mzwlov).ant-layout-footer {
 	padding: unset;
 }
+:where(.css-dev-only-do-not-override-mzwlov).ant-select-outlined:not(
+		.ant-select-customize-input
+	)
+	.ant-select-selector {
+	background: transparent !important;
+	border-radius: 20px !important;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-card .ant-card-meta {
+	margin: 10px 0 !important;
+}
+
+:where(.css-dev-only-do-not-override-mzwlov).ant-card .ant-card-body {
+	padding: 23px 23px 0 23px;
+	border-radius: 0 0 8px 8px;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-btn {
+	height: unset !important;
+}

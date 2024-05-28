@@ -1,21 +1,51 @@
 import React from "react";
-import { Card } from "antd";
+import { Avatar, Card } from "antd";
+import { Button } from "..";
 
 const { Meta } = Card;
 
-const App: React.FC = () => (
+const Container: React.FC = () => (
 	<Card
 		hoverable
-		style={{ width: 240 }}
+		className="w-[100%] p-3 bg-white"
 		cover={
-			<img
-				alt="example"
-				src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-			/>
+			<div className="relative">
+				{/* Background Image */}
+				<img
+					alt="example"
+					src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+					className="h-[150px] w-full object-cover rounded-[50%] "
+				/>
+				{/* Avatar */}
+				<Avatar
+					size={64}
+					src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+					className="mb-3 absolute border-4 border-solid border-white left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+				/>
+			</div>
 		}
 	>
-		<Meta title="Europe Street beat" description="www.instagram.com" />
+		{/* Content */}
+		<Meta
+			title="ALUKO FOLAJIMI"
+			description="Instructor"
+			className="text-center mt-[10px]"
+		/>
+		{/* Description */}
+		<p className="text-center">
+			Lorem ipsum dolor sit amet consectetur. Purus id etiam turpis nisl viverra
+			ut.
+		</p>
+		{/* Footer */}
+		<div className="mt-[22px] flex justify-between">
+			<p className="text-[#121212] text-[18px]">
+				Price <span className="text-black"> $15</span>
+			</p>
+			<Button className="bg-[#581A57] text-white p-3 w-[100px]">
+				Subscribe
+			</Button>
+		</div>
 	</Card>
 );
 
-export default App;
+export default Container;
