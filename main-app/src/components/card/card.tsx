@@ -41,9 +41,10 @@ const Container: React.FC = () => (
 			<p className="text-[#121212] text-[18px]">
 				Price <span className="text-black"> $15</span>
 			</p>
-			<Button className="bg-[#581A57] text-white p-3 w-[100px]">
-				Subscribe
-			</Button>
+			<Button
+				label="Subscribe"
+				className="bg-[#581A57] text-white p-3 w-[100px]"
+			/>
 		</div>
 	</Card>
 );
