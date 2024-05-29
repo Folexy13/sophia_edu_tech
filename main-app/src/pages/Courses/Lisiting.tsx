@@ -14,7 +14,7 @@ const ListingPage: React.FC<any> = () => {
 	return (
 		<Layout>
 			<div className="courses w-full bg-green-700 p-[100px] h-[300px]">H</div>
-			<div className="px-[30px] py-10">
+			<div className="px-[30px] py-10 w-[100%] sm:w-[95%] mx-auto">
 				<div className="flex justify-between">
 					<h3 className="text-[20px] font-semibold">Enrolled Course</h3>
 
@@ -38,16 +38,14 @@ const ListingPage: React.FC<any> = () => {
 						/>
 					</div>
 				</div>
-				<Row gutter={16} className="my-4">
-					<Col className="gutter-row" span={8}>
-						<Card />
-					</Col>
-					<Col className="gutter-row" span={8}>
-						<Card />
-					</Col>
-					<Col className="gutter-row" span={8}>
-						<Card />
-					</Col>
+				<Row gutter={[16, 16]} className="my-4">
+					{Array(18)
+						.fill("*")
+						.map((_, index) => (
+							<Col key={index} className="gutter-row" span={8}>
+								<Card name="Aluko Folajimi" />
+							</Col>
+						))}
 				</Row>
 			</div>
 		</Layout>

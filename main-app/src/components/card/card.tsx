@@ -1,10 +1,33 @@
 import React from "react";
-import { Avatar, Card } from "antd";
+import { Avatar, Card, Progress } from "antd";
 import { Button } from "..";
 
 const { Meta } = Card;
 
-const Container: React.FC = () => (
+interface ICardProps {
+	name: string;
+	description: string;
+	image: string;
+	subject: string;
+	isSubscribed?: boolean;
+	avatar: string;
+	price: string;
+	buttonText: string;
+	buttonLink: string;
+	buttonColor: string;
+}
+
+const Container: React.FC<any> = ({
+	name,
+	image,
+	price,
+	avatar,
+	description,
+	buttonText,
+	buttonColor,
+	isSubscribed,
+	buttonLink,
+}) => (
 	<Card
 		hoverable
 		className="w-[100%] p-3 bg-white"
@@ -27,7 +50,7 @@ const Container: React.FC = () => (
 	>
 		{/* Content */}
 		<Meta
-			title="ALUKO FOLAJIMI"
+			title={name}
 			description="Instructor"
 			className="text-center mt-[10px]"
 		/>
@@ -36,16 +59,33 @@ const Container: React.FC = () => (
 			Lorem ipsum dolor sit amet consectetur. Purus id etiam turpis nisl viverra
 			ut.
 		</p>
-		{/* Footer */}
-		<div className="mt-[22px] flex justify-between">
-			<p className="text-[#121212] text-[18px]">
-				Price <span className="text-black"> $15</span>
-			</p>
-			<Button
-				label="Subscribe"
-				className="bg-[#581A57] text-white p-3 w-[100px]"
-			/>
-		</div>
+
+		{!isSubscribed ? (
+			<>
+				<Progress
+					showInfo={false}
+					strokeColor="#581A57"
+					className="py-[12px]"
+					percent={60}
+				/>
+				{/* Footer */}
+				<Button
+					block
+					label="Continue learning"
+					className="bg-[#581A57] text-white p-3 w-[100px]"
+				/>
+			</>
+		) : (
+			<div className="mt-[22px] flex justify-between">
+				<p className="text-[#121212] text-[18px]">
+					Price <span className="text-black"> $15</span>
+				</p>
+				<Button
+					label="Subscribe"
+					className="bg-[#581A57] text-white p-3 w-[100px]"
+				/>
+			</div>
+		)}
 	</Card>
 );
 
