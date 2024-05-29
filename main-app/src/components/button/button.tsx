@@ -8,11 +8,24 @@ interface IButtonProps {
 	block?: boolean;
 	className?: string;
 	color?: string;
+	onclick?: any;
 	label: string;
+	loading?: boolean;
 }
-const Button: React.FC<IButtonProps> = ({ block, className, label }) => {
+const Button: React.FC<IButtonProps> = ({
+	block,
+	className,
+	onclick,
+	loading,
+	label,
+}) => {
 	return (
-		<AntdButton className={className} block={block}>
+		<AntdButton
+			loading={loading}
+			className={className}
+			block={block}
+			onClick={onclick}
+		>
 			{label}
 		</AntdButton>
 	);

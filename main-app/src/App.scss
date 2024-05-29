@@ -40,3 +40,6 @@ button {
 :where(.css-dev-only-do-not-override-mzwlov).ant-btn {
 	height: unset !important;
 }
+:where(.css-dev-only-do-not-override-mzwlov).ant-modal .ant-modal-title {
+	text-align: center;
+}
