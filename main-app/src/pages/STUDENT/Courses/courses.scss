@@ -1,0 +1,29 @@
+.courses {
+}
+
+.about_course {
+	.custom-collapse {
+		margin-bottom: 5px;
+		background: #fff !important;
+
+		span {
+			font-size: 20px;
+		}
+	}
+	.custom-collapse .ant-collapse-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-direction: row-reverse;
+	}
+
+	.custom-collapse .ant-collapse-header .ant-collapse-arrow {
+		order: 2; /* Move arrow to the right side */
+		margin-left: 8px;
+	}
+
+	.custom-collapse .ant-collapse-header .ant-collapse-header-text {
+		// order: 1; /* Ensure text is on the left side */
+		// flex-grow: 1; /* Take up remaining space */
+	}
+}

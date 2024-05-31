@@ -1,9 +1,9 @@
 import React from "react";
-import Layout from "../Layout";
+import Layout from "../../Layout";
 import { Col, Input, Row } from "antd";
 import { Select } from "antd";
 import "./courses.scss";
-import { Card } from "../../components";
+import { Card } from "../../../components";
 
 const { Option } = Select;
 

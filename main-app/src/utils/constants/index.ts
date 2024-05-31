@@ -8,7 +8,8 @@ export const URL = {
 	ABOUT: "/about-us",
 	FORGOT_PASSWORD: "/forgot-password",
 	PRIVACY: "/privacy/terms-of-service",
-	COURSELISTING: "/course/1",
+	COURSELISTING: "/course/all",
+	ABOUTCOURSE: "/course/1",
 	BLOG: "/blog",
 };
 
@@ -35,6 +36,11 @@ export const APPCONSTANTS = {
 		{
 			path: URL.COURSELISTING,
 			name: "Course_Listing",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ABOUTCOURSE,
+			name: "Course_Details",
 			icon: UserOutlined,
 		},
 		// Add more routes as needed

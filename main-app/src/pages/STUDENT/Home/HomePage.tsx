@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "../Layout";
-import { Modal } from "../../components";
+import Layout from "../../Layout";
+import { Modal } from "../../../components";
 const HomePage: React.FC = () => {
 	return (
 		<Layout>
