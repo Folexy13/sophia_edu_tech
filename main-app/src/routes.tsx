@@ -1,6 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { APPCONSTANTS } from "./utils/constants";
-import { AboutCoursePage, CourseListingPage, Homepage } from "./pages/STUDENT"; // Import your page components
+import {
+	AboutCoursePage,
+	CourseLearningPage,
+	CourseListingPage,
+	Homepage,
+} from "./pages/STUDENT"; // Import your page components
 
 const Router: React.FC = () => {
 	return (
@@ -14,6 +19,10 @@ const Router: React.FC = () => {
 				<Route
 					path={APPCONSTANTS.ROUTES[4].path}
 					element={<AboutCoursePage />}
+				/>
+				<Route
+					path={APPCONSTANTS.ROUTES[5].path}
+					element={<CourseLearningPage />}
 				/>
 			</Routes>
 		</BrowserRouter>

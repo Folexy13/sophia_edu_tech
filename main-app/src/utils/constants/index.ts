@@ -10,6 +10,7 @@ export const URL = {
 	PRIVACY: "/privacy/terms-of-service",
 	COURSELISTING: "/course/all",
 	ABOUTCOURSE: "/course/1",
+	LEARNING: "/course/1/learning",
 	BLOG: "/blog",
 };
 
@@ -41,6 +42,11 @@ export const APPCONSTANTS = {
 		{
 			path: URL.ABOUTCOURSE,
 			name: "Course_Details",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.LEARNING,
+			name: "Course_Learning",
 			icon: UserOutlined,
 		},
 		// Add more routes as needed
