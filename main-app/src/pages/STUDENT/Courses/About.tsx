@@ -12,6 +12,7 @@ import {
 	OpenBookIcon,
 	SmileyIcon,
 } from "../../../assets";
+import { Button } from "../../../components";
 
 const AboutPage: React.FC<any> = () => {
 	const text = `
@@ -36,7 +37,9 @@ const AboutPage: React.FC<any> = () => {
 		<Layout>
 			<div className="about_course px-[30px] py-10 w-[100%] sm:w-[95%] mx-auto flex justify-between gap-2">
 				<div className="w-1/2">
-					<h1 className="font-semibold text-[24px] mb-[20px]">About Course</h1>
+					<h1 className="font-semibold text-[24px] mb-[20px]">
+						About the Course
+					</h1>
 					<div className="flex mb-[20px]">
 						<p className="font-semibold text-[20px] text-[#581A57] ">
 							Applied Science {">"}
@@ -123,6 +126,13 @@ const AboutPage: React.FC<any> = () => {
 							<p className="text-[#4D4D4D] font-medium">
 								Certificate Available
 							</p>
+						</div>
+						<div className="w-[300px]">
+							<Button
+								className="bg-[#581A57] text-white"
+								block
+								label="Subscribe for $15 monthly"
+							/>
 						</div>
 					</div>
 				</div>
