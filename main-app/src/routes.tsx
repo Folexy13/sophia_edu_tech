@@ -6,6 +6,7 @@ import {
 	CourseListingPage,
 	GenerateCertPage,
 	Homepage,
+	MessagingPage,
 	MyProfilePage,
 	NotificationsPage,
 	OthersProfilePage,
@@ -45,6 +46,10 @@ const Router: React.FC = () => {
 					element={<NotificationsPage />}
 				/>
 				<Route path={APPCONSTANTS.ROUTES[11].path} element={<UploadPage />} />
+				<Route
+					path={APPCONSTANTS.ROUTES[12].path}
+					element={<MessagingPage />}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);

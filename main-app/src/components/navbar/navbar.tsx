@@ -7,11 +7,10 @@ import {
 	MenuProps,
 	Dropdown,
 	Button,
-	message,
 	Space,
 } from "antd";
 import "./navbar.scss";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
 import { BellOutlined, MessageOutlined, PlusOutlined } from "@ant-design/icons";
 import { avatar, Logo } from "../../assets";
 import { useNavigate } from "react-router-dom";
@@ -50,15 +49,7 @@ const Navbar: React.FC<any> = () => {
 		},
 		{
 			key: "3",
-			label: (
-				<a
-					target="_blank"
-					rel="noopener noreferrer"
-					href="https://www.aliyun.com"
-				>
-					Messages
-				</a>
-			),
+			label: <div onClick={() => navigate(URL.MESSAGING)}>Messages</div>,
 		},
 		{
 			key: "4",

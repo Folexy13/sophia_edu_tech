@@ -18,6 +18,7 @@ export const URL = {
 	GENERATE_CERTIFICATE: "/generate-certificate",
 	NOTIFICATION: "/notifications",
 	UPLOAD: "/upload",
+	MESSAGING: "/messaging",
 };
 
 export const APPCONSTANTS = {
@@ -82,6 +83,11 @@ export const APPCONSTANTS = {
 		},
 		{
 			path: URL.UPLOAD,
+			name: "Upload",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.MESSAGING,
 			name: "Upload",
 			icon: UserOutlined,
 		},

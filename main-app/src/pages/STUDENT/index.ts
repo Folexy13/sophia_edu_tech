@@ -8,3 +8,4 @@ export { default as WalletPage } from "./Wallet/wallet";
 export { default as GenerateCertPage } from "./Certificate/generate";
 export { default as NotificationsPage } from "./Notifications/notifications";
 export { default as UploadPage } from "./Upload/upload";
+export { default as MessagingPage } from "./Messaging/messaging";
