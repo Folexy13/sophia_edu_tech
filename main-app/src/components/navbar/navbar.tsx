@@ -39,22 +39,38 @@ const Navbar: React.FC<any> = () => {
 
 	const dropdown: MenuProps["items"] = [
 		{
-			label: "1st menu item",
 			key: "1",
+			label: <div onClick={() => navigate(URL.BIO)}>Profile</div>,
 		},
 		{
-			label: "2nd menu item",
 			key: "2",
+			label: (
+				<div onClick={() => navigate(URL.NOTIFICATION)}>Notifications</div>
+			),
 		},
 		{
-			label: "3rd menu item",
 			key: "3",
-			danger: true,
+			label: (
+				<a
+					target="_blank"
+					rel="noopener noreferrer"
+					href="https://www.aliyun.com"
+				>
+					Messages
+				</a>
+			),
 		},
 		{
-			label: "4rd menu item",
 			key: "4",
-			danger: true,
+			label: <div onClick={() => navigate(URL.WALLET)}>Wallet</div>,
+		},
+		{
+			key: "5",
+			label: (
+				<div onClick={() => navigate(URL.GENERATE_CERTIFICATE)}>
+					Generate Certificates
+				</div>
+			),
 			disabled: true,
 		},
 	];
@@ -70,14 +86,6 @@ const Navbar: React.FC<any> = () => {
 		}
 	};
 
-	const handleMenuClick: MenuProps["onClick"] = (e) => {
-		message.info("Click on menu item.");
-		console.log("click", e);
-	};
-	const menuProps = {
-		dropdown,
-		onClick: handleMenuClick,
-	};
 	return (
 		<div className="navbar w-[95%] mx-auto">
 			<Title level={3} className="logo">
@@ -127,25 +135,14 @@ const Navbar: React.FC<any> = () => {
 					<p className="text-[#581A57] text-sm font-[inter]">Upload</p>
 				</div>
 			</div>
-			<Dropdown menu={menuProps} disabled placement="bottomRight">
-				<>
-					<a className="ant-dropdown-link" style={{ marginLeft: "20px" }}>
-						<Button prefix={Logo}>
-							<Space>
-								<img src={avatar} alt=".." width={30} />
-								<span>Aluko Opeyemi</span>
-								<DownOutlined />
-							</Space>
-						</Button>
-					</a>
-					<a className="ant-dropdown-link2" style={{ marginLeft: "20px" }}>
-						<Space>
-							<UserOutlined />
-
-							<DownOutlined />
-						</Space>
-					</a>
-				</>
+			<Dropdown menu={{ items: dropdown }}>
+				<Button>
+					<Space>
+						<img src={avatar} alt=".." width={30} />
+						<span>Aluko Opeyemi</span>
+						<DownOutlined />
+					</Space>
+				</Button>
 			</Dropdown>
 		</div>
 	);
