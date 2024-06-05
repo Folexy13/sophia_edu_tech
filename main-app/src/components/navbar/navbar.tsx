@@ -13,11 +13,14 @@ import {
 import "./navbar.scss";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { BellOutlined, MessageOutlined, PlusOutlined } from "@ant-design/icons";
-import { Logo } from "../../assets";
+import { avatar, Logo } from "../../assets";
+import { useNavigate } from "react-router-dom";
+import { URL } from "../../utils/constants";
 
 const { Title } = Typography;
 
 const Navbar: React.FC<any> = () => {
+	const navigate = useNavigate();
 	type MenuItem = Required<MenuProps>["items"][number];
 	const items: MenuItem[] = [
 		{
@@ -28,8 +31,8 @@ const Navbar: React.FC<any> = () => {
 			key: "learnings",
 			label: "Learnings",
 			children: [
-				{ key: "1", label: "Courses" },
-				{ key: "2", label: "Tutorials" },
+				{ key: "/learnings/courses", label: "Courses" },
+				{ key: "/learnings/tutorials", label: "Tutorials" },
 			],
 		},
 	];
@@ -57,7 +60,14 @@ const Navbar: React.FC<any> = () => {
 	];
 
 	const onClick: MenuProps["onClick"] = (e) => {
-		console.log("click ", e);
+		console.log(e.key);
+		if (e.key === "home") {
+			navigate("/");
+		} else if (e.key === "/learnings/courses") {
+			navigate(URL.LEARNING);
+		} else if (e.key === "/learnings/tutorials") {
+			navigate(URL.COURSELISTING);
+		}
 	};
 
 	const handleMenuClick: MenuProps["onClick"] = (e) => {
@@ -69,7 +79,7 @@ const Navbar: React.FC<any> = () => {
 		onClick: handleMenuClick,
 	};
 	return (
-		<div className="navbar">
+		<div className="navbar w-[95%] mx-auto">
 			<Title level={3} className="logo">
 				<img src={Logo} alt="..." style={{ width: 108 }} />
 			</Title>
@@ -90,14 +100,29 @@ const Navbar: React.FC<any> = () => {
 			</div>
 			<div className="flex gap-6">
 				<div className="flex">
-					<Badge dot={true} className="cursor">
-						<BellOutlined style={{ fontSize: "20px", marginLeft: "20px" }} />
-					</Badge>
-					<Badge dot className="cursor">
-						<MessageOutlined style={{ fontSize: "20px", marginLeft: "20px" }} />
-					</Badge>
+					<div
+						className="cursor-pointer"
+						onClick={() => navigate(URL.NOTIFICATION)}
+					>
+						<Badge dot={true} className="cursor">
+							<BellOutlined style={{ fontSize: "20px", marginLeft: "20px" }} />
+						</Badge>
+					</div>
+					<div
+						className="cursor-pointer"
+						onClick={() => navigate(URL.NOTIFICATION)}
+					>
+						<Badge dot className="cursor">
+							<MessageOutlined
+								style={{ fontSize: "20px", marginLeft: "20px" }}
+							/>
+						</Badge>
+					</div>
 				</div>
-				<div className="flex upload">
+				<div
+					className="flex upload cursor-pointer"
+					onClick={() => navigate(URL.UPLOAD)}
+				>
 					<PlusOutlined style={{ fontSize: "20px", marginLeft: "20px" }} />
 					<p className="text-[#581A57] text-sm font-[inter]">Upload</p>
 				</div>
@@ -107,7 +132,8 @@ const Navbar: React.FC<any> = () => {
 					<a className="ant-dropdown-link" style={{ marginLeft: "20px" }}>
 						<Button prefix={Logo}>
 							<Space>
-								Aluko Opeyemi
+								<img src={avatar} alt=".." width={30} />
+								<span>Aluko Opeyemi</span>
 								<DownOutlined />
 							</Space>
 						</Button>
