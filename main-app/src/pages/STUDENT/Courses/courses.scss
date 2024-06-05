@@ -22,14 +22,19 @@
 		margin-left: 8px;
 	}
 
-	.custom-collapse .ant-collapse-header .ant-collapse-header-text {
-		// order: 1; /* Ensure text is on the left side */
-		// flex-grow: 1; /* Take up remaining space */
-	}
+	// .custom-collapse .ant-collapse-header .ant-collapse-header-text {
+	// 	// order: 1; /* Ensure text is on the left side */
+	// 	// flex-grow: 1; /* Take up remaining space */
+	// }
 }
 .learn_course {
 	/* courses.scss */
-
+	.main {
+		min-height: calc(100vh - 153px) !important;
+		svg {
+			color: #fff;
+		}
+	}
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
@@ -38,6 +43,11 @@
 		flex-grow: 1;
 		width: 100%;
 		// background-color: red;
+		button:hover {
+			border: inherit !important;
+			border-top: 2px solid #581a57 !important;
+			color: #581a57 !important;
+		}
 	}
 
 	.ant-tabs-content-holder {
@@ -54,5 +64,25 @@
 		align-items: center;
 		text-align: center;
 		padding: 20px;
+	}
+	.custom-collapse {
+		margin-bottom: 3px;
+		background: #009ffd !important;
+
+		span {
+			font-size: 20px;
+		}
+	}
+	.custom-collapse .ant-collapse-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		color: #fff;
+		flex-direction: row-reverse;
+	}
+
+	.custom-collapse .ant-collapse-header .ant-collapse-arrow {
+		order: 2; /* Move arrow to the right side */
+		margin-left: 8px;
 	}
 }

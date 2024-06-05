@@ -12,6 +12,9 @@ export const URL = {
 	ABOUTCOURSE: "/course/1",
 	LEARNING: "/course/1/learning",
 	BLOG: "/blog",
+	PROFILE: "/profile/me/settings",
+	BIO: "/profile/me/bio",
+	WALLET: "/wallet",
 };
 
 export const APPCONSTANTS = {
@@ -47,6 +50,21 @@ export const APPCONSTANTS = {
 		{
 			path: URL.LEARNING,
 			name: "Course_Learning",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.PROFILE,
+			name: "Profile",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.BIO,
+			name: "Friend Profile",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.WALLET,
+			name: "Wallet",
 			icon: UserOutlined,
 		},
 		// Add more routes as needed

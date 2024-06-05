@@ -5,6 +5,9 @@ import {
 	CourseLearningPage,
 	CourseListingPage,
 	Homepage,
+	MyProfilePage,
+	OthersProfilePage,
+	WalletPage,
 } from "./pages/STUDENT"; // Import your page components
 
 const Router: React.FC = () => {
@@ -24,6 +27,12 @@ const Router: React.FC = () => {
 					path={APPCONSTANTS.ROUTES[5].path}
 					element={<CourseLearningPage />}
 				/>
+				<Route path={APPCONSTANTS.ROUTES[6].path} element={<MyProfilePage />} />
+				<Route
+					path={APPCONSTANTS.ROUTES[7].path}
+					element={<OthersProfilePage />}
+				/>
+				<Route path={APPCONSTANTS.ROUTES[8].path} element={<WalletPage />} />
 			</Routes>
 		</BrowserRouter>
 	);

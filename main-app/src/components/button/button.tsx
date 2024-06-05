@@ -10,10 +10,12 @@ interface IButtonProps {
 	block?: boolean;
 	className?: string;
 	color?: string;
-	onClick?: () => void;
+	onclick?: () => void;
+	onhover?: () => void;
 	label: string;
 	loading?: boolean;
 	type?: string; // Added type prop
+	iconColor?: string; // Added type prop
 	active?: boolean;
 	icon?: any; // Added type prop
 }
@@ -23,9 +25,11 @@ const Button: React.FC<IButtonProps> = ({
 	className,
 	onclick,
 	loading,
+	onhover,
 	label,
 	active,
 	icon,
+	iconColor,
 	type, // Default type is empty string
 }) => {
 	if (type === "tab") {
@@ -41,8 +45,9 @@ const Button: React.FC<IButtonProps> = ({
 				].join(" ")}
 				block={block}
 				onClick={onclick}
+				onMouseEnter={onhover}
 			>
-				{icon ? icon : <DiscIcon />}
+				{icon ? icon : <DiscIcon color={iconColor} />}
 				<span>{label}</span>
 			</AntdButton>
 		);

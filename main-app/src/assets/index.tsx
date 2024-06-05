@@ -6,6 +6,8 @@ export { default as certificateIcon } from "./icons/certificateIcon.svg";
 export { default as discIcon } from "./icons/discIcon.svg";
 export { default as laptopIcon } from "./icons/laptopIcon.svg";
 export { default as circleHeartIcon } from "./icons/circleHeartIcon.svg";
+export { default as profileBG } from "./images/profile_bg.png";
+export { default as avatar } from "./images/avatar.png";
 
 export const SmileyIcon: React.FC<any> = () => {
 	return (
@@ -66,7 +68,26 @@ export const LaptopIcon: React.FC<any> = () => {
 	);
 };
 
-export const DiscIcon: React.FC<any> = () => {
+export const WalletIcon: React.FC<any> = () => {
+	return (
+		<svg
+			width="25"
+			height="24"
+			viewBox="0 0 25 24"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M10.5 16V14.0003M10.5 14.0003V12M10.5 14.0003L12.5 14.0005M10.5 14.0003L8.5 14M21.5 12V11.2C21.5 10.0799 21.5 9.51984 21.282 9.09202C21.0903 8.71569 20.7843 8.40973 20.408 8.21799C19.9802 8 19.4201 8 18.3 8H3.5M21.5 12V16M21.5 12H19.5C18.3954 12 17.5 12.8954 17.5 14C17.5 15.1046 18.3954 16 19.5 16H21.5M21.5 16V16.8C21.5 17.9201 21.5 18.4802 21.282 18.908C21.0903 19.2843 20.7843 19.5903 20.408 19.782C19.9802 20 19.4201 20 18.3 20H6.7C5.5799 20 5.01984 20 4.59202 19.782C4.21569 19.5903 3.90973 19.2843 3.71799 18.908C3.5 18.4802 3.5 17.9201 3.5 16.8V8M18.5 8V7.2C18.5 6.0799 18.5 5.51984 18.282 5.09202C18.0903 4.71569 17.7843 4.40973 17.408 4.21799C16.9802 4 16.4201 4 15.3 4H6.7C5.57989 4 5.01984 4 4.59202 4.21799C4.21569 4.40973 3.90973 4.71569 3.71799 5.09202C3.5 5.51984 3.5 6.0799 3.5 7.2V8"
+				stroke="white"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</svg>
+	);
+};
+export const DiscIcon: React.FC<any> = ({ color }) => {
 	return (
 		<svg
 			width="24"
@@ -77,14 +98,14 @@ export const DiscIcon: React.FC<any> = () => {
 		>
 			<path
 				d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
-				stroke="#4D4D4D"
+				stroke={color ?? "#4D4D4D"}
 				stroke-width="2"
 				stroke-linecap="round"
 				stroke-linejoin="round"
 			/>
 			<path
 				d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
-				stroke="#4D4D4D"
+				stroke={color ?? "#4D4D4D"}
 				stroke-width="2"
 				stroke-linecap="round"
 				stroke-linejoin="round"
