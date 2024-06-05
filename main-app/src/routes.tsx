@@ -7,6 +7,7 @@ import {
 	GenerateCertPage,
 	Homepage,
 	MyProfilePage,
+	NotificationsPage,
 	OthersProfilePage,
 	WalletPage,
 } from "./pages/STUDENT"; // Import your page components
@@ -37,6 +38,10 @@ const Router: React.FC = () => {
 				<Route
 					path={APPCONSTANTS.ROUTES[9].path}
 					element={<GenerateCertPage />}
+				/>
+				<Route
+					path={APPCONSTANTS.ROUTES[10].path}
+					element={<NotificationsPage />}
 				/>
 			</Routes>
 		</BrowserRouter>
