@@ -1,1 +1,2 @@
 Generate Reciept libray for PDF
+Focus on Select button rounded corners

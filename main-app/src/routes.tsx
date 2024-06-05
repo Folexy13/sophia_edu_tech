@@ -9,6 +9,7 @@ import {
 	MyProfilePage,
 	NotificationsPage,
 	OthersProfilePage,
+	UploadPage,
 	WalletPage,
 } from "./pages/STUDENT"; // Import your page components
 
@@ -43,6 +44,7 @@ const Router: React.FC = () => {
 					path={APPCONSTANTS.ROUTES[10].path}
 					element={<NotificationsPage />}
 				/>
+				<Route path={APPCONSTANTS.ROUTES[11].path} element={<UploadPage />} />
 			</Routes>
 		</BrowserRouter>
 	);

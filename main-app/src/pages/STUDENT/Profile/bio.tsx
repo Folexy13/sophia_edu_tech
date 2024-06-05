@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Layout from "../../Layout";
 import { avatar, profileBG } from "../../../assets";
 import { Avatar, Button, DatePicker, Form, Input } from "antd";

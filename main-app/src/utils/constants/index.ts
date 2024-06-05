@@ -17,6 +17,7 @@ export const URL = {
 	WALLET: "/wallet",
 	GENERATE_CERTIFICATE: "/generate-certificate",
 	NOTIFICATION: "/notifications",
+	UPLOAD: "/upload",
 };
 
 export const APPCONSTANTS = {
@@ -77,6 +78,11 @@ export const APPCONSTANTS = {
 		{
 			path: URL.NOTIFICATION,
 			name: "Notifications",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.UPLOAD,
+			name: "Upload",
 			icon: UserOutlined,
 		},
 		// Add more routes as needed
