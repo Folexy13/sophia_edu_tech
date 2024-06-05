@@ -15,6 +15,7 @@ export const URL = {
 	PROFILE: "/profile/me/settings",
 	BIO: "/profile/me/bio",
 	WALLET: "/wallet",
+	GENERATE_CERTIFICATE: "/generate-certificate",
 };
 
 export const APPCONSTANTS = {
@@ -64,6 +65,11 @@ export const APPCONSTANTS = {
 		},
 		{
 			path: URL.WALLET,
+			name: "Wallet",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.GENERATE_CERTIFICATE,
 			name: "Wallet",
 			icon: UserOutlined,
 		},

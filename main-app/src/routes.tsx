@@ -4,6 +4,7 @@ import {
 	AboutCoursePage,
 	CourseLearningPage,
 	CourseListingPage,
+	GenerateCertPage,
 	Homepage,
 	MyProfilePage,
 	OthersProfilePage,
@@ -33,6 +34,10 @@ const Router: React.FC = () => {
 					element={<OthersProfilePage />}
 				/>
 				<Route path={APPCONSTANTS.ROUTES[8].path} element={<WalletPage />} />
+				<Route
+					path={APPCONSTANTS.ROUTES[9].path}
+					element={<GenerateCertPage />}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);
