@@ -102,7 +102,7 @@ const Upload: React.FC<any> = () => {
 							label={"Submit"}
 							loading={loading}
 							onclick={handleSubmit}
-							className="mr-[10px] p-[8px] w-[200px] bg-[#581A57] text-white"
+							className="p-[8px] w-[200px] bg-[#581A57] text-white"
 						/>
 					</div>
 				</Form>
