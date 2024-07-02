@@ -4,12 +4,7 @@ import "./courses.scss";
 import { Collapse, Progress, Tabs } from "antd";
 import type { CollapseProps, TabsProps } from "antd";
 import { Button } from "../../../components";
-import {
-	ArrowDownOutlined,
-	ArrowLeftOutlined,
-	ArrowRightOutlined,
-	ArrowUpOutlined,
-} from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { DiscIcon } from "../../../assets";
 
 const Learn: React.FC<any> = () => {

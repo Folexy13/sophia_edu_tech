@@ -4,6 +4,7 @@ import { Col, Input, Row } from "antd";
 import { Select } from "antd";
 import "./courses.scss";
 import { Card } from "../../../components";
+import { smilingWoman } from "../../../assets";
 
 const { Option } = Select;
 
@@ -14,7 +15,16 @@ const ListingPage: React.FC<any> = () => {
 	return (
 		<Layout>
 			<div className="courses">
-				<div className=" w-full bg-green-700 p-[100px] h-[300px]">H</div>
+				<div className=" w-full relative bg-green-700 p-[100px] flex justify-between h-[350px]  ">
+					<p className="text-white text-[40px] leading-[64px] w-[500px]">
+						Learning Development Courses
+					</p>
+					<img
+						src={smilingWoman}
+						className="absolute bottom-0 right-[40px] z-50"
+						alt="smiling woman"
+					/>
+				</div>
 				<div className="px-[30px] py-10 w-[100%] sm:w-[95%] mx-auto">
 					<div className="flex justify-between">
 						<h3 className="text-[20px] font-semibold">Enrolled Course</h3>

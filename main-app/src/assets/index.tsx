@@ -8,6 +8,7 @@ export { default as laptopIcon } from "./icons/laptopIcon.svg";
 export { default as circleHeartIcon } from "./icons/circleHeartIcon.svg";
 export { default as profileBG } from "./images/profile_bg.png";
 export { default as avatar } from "./images/avatar.png";
+export { default as smilingWoman } from "./images/smiling_woman.png";
 
 export const SmileyIcon: React.FC<any> = () => {
 	return (
