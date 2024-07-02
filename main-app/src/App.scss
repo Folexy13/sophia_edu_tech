@@ -13,6 +13,7 @@ html {
 
 body {
 	background: #b6b6b640;
+	font-family: inter !important;
 }
 li,
 p,
@@ -45,4 +46,37 @@ button {
 }
 :where(.css-dev-only-do-not-override-mzwlov).ant-modal .ant-modal-title {
 	text-align: center;
+}
+.homepage_btn {
+	&:hover {
+		background: #581a57b4 !important;
+		color: #fff !important;
+	}
+}
+.playfair-display-normal {
+	font-family: "Playfair Display" !important;
+	font-optical-sizing: auto !important;
+	font-weight: 400 !important;
+	font-style: normal !important;
+}
+
+.playfair-display-bold {
+	font-family: "Playfair Display";
+	font-optical-sizing: auto !important;
+	font-weight: 700 !important;
+	font-style: normal !important;
+}
+.inter-bold {
+	font-family: "Inter", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 700;
+	font-style: normal;
+	font-variation-settings: "slnt" 0;
+}
+.inter-normal {
+	font-family: "Inter", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	font-variation-settings: "slnt" 0;
 }

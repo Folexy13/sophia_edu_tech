@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Menu,
 	Input,
@@ -77,9 +77,31 @@ const Navbar: React.FC<any> = () => {
 		}
 	};
 
+	const [isScrolled, setIsScrolled] = useState(false);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.scrollY > 50) {
+				setIsScrolled(true);
+			} else {
+				setIsScrolled(false);
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
+
 	return (
-		<div className="navbar w-[95%] mx-auto">
-			<Title level={3} className="logo">
+		<div className={`navbar w-[95%] mx-auto ${isScrolled ? "fixed" : ""}`}>
+			<Title
+				level={3}
+				className="logo cursor-pointer"
+				onClick={() => navigate("/")}
+			>
 				<img src={Logo} alt="..." style={{ width: 108 }} />
 			</Title>
 			<Input

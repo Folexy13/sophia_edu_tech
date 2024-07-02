@@ -2,7 +2,7 @@ import { HomeOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 
 export const URL = {
 	HOME: "/",
-	LOGIN: "/register",
+	LOGIN: "/login",
 	REGISTER: "/register",
 	CONTACT: "/contact-us",
 	ABOUT: "/about-us",
