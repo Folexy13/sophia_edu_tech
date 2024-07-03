@@ -24,17 +24,17 @@ li {
 }
 
 .playfair-display-normal {
-	font-family: "Playfair Display", serif;
-	font-optical-sizing: auto;
-	font-weight: 400;
-	font-style: normal;
+	font-family: "Playfair Display" !important;
+	font-optical-sizing: auto !important;
+	font-weight: 400 !important;
+	font-style: normal !important;
 }
 
 .playfair-display-bold {
-	font-family: "Playfair Display", serif;
-	font-optical-sizing: auto;
-	font-weight: 700;
-	font-style: normal;
+	font-family: "Playfair Display";
+	font-optical-sizing: auto !important;
+	font-weight: 700 !important;
+	font-style: normal !important;
 }
 .inter-bold {
 	font-family: "Inter", sans-serif;
