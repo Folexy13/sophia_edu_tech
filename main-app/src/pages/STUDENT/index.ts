@@ -9,3 +9,6 @@ export { default as GenerateCertPage } from "./Certificate/generate";
 export { default as NotificationsPage } from "./Notifications/notifications";
 export { default as UploadPage } from "./Upload/upload";
 export { default as MessagingPage } from "./Messaging/messaging";
+export { default as LoginPage } from "./Login/Loginpage";
+export { default as RegisterPage } from "./Register/Registerpage";
+export { default as ForgotPasswordPage } from "./Forgot/Forgotpage";

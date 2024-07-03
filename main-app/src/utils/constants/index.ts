@@ -91,6 +91,10 @@ export const APPCONSTANTS = {
 			name: "Upload",
 			icon: UserOutlined,
 		},
-		// Add more routes as needed
+		{
+			path: URL.FORGOT_PASSWORD,
+			name: "Forgotn] Password",
+			icon: UserOutlined,
+		},
 	],
 };

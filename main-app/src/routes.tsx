@@ -4,12 +4,15 @@ import {
 	AboutCoursePage,
 	CourseLearningPage,
 	CourseListingPage,
+	ForgotPasswordPage,
 	GenerateCertPage,
 	Homepage,
+	LoginPage,
 	MessagingPage,
 	MyProfilePage,
 	NotificationsPage,
 	OthersProfilePage,
+	RegisterPage,
 	UploadPage,
 	WalletPage,
 } from "./pages/STUDENT"; // Import your page components
@@ -49,6 +52,13 @@ const Router: React.FC = () => {
 				<Route
 					path={APPCONSTANTS.ROUTES[12].path}
 					element={<MessagingPage />}
+				/>
+
+				<Route path={APPCONSTANTS.ROUTES[1].path} element={<LoginPage />} />
+				<Route path={APPCONSTANTS.ROUTES[2].path} element={<RegisterPage />} />
+				<Route
+					path={APPCONSTANTS.ROUTES[13].path}
+					element={<ForgotPasswordPage />}
 				/>
 			</Routes>
 		</BrowserRouter>
