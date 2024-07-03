@@ -28,7 +28,11 @@ const Navbar: React.FC<any> = () => {
 		},
 		{
 			key: "learnings",
-			label: "Learnings",
+			label: (
+				<span>
+					Learnings <DownOutlined />
+				</span>
+			),
 			children: [
 				{ key: "/learnings/courses", label: "Courses" },
 				{ key: "/learnings/tutorials", label: "Tutorials" },
