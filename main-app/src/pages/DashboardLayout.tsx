@@ -1,7 +1,8 @@
 import React, { ReactNode, useState } from "react";
-import { Layout, Menu } from "antd";
-import { SettingOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Layout, Menu, MenuProps, Space } from "antd";
+import { DownOutlined, SettingOutlined } from "@ant-design/icons";
 import {
+	avatar,
 	CourseIcon,
 	Logo,
 	NotificationBell,
@@ -9,6 +10,8 @@ import {
 	StudentsIcon,
 	Wallet2Icon,
 } from "../assets";
+import { useNavigate } from "react-router-dom";
+import { URL } from "../utils/constants";
 
 const { Header, Sider, Content } = Layout;
 
@@ -17,11 +20,25 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 	title,
 }) => {
 	const [activeKey, setActiveKey] = useState<string>("1");
+	const navigate = useNavigate();
 
 	const handleMenuClick = (e: any) => {
 		setActiveKey(e.key);
 	};
-
+	const dropdown: MenuProps["items"] = [
+		{
+			key: "1",
+			label: (
+				<div className="text-[16px]" onClick={() => navigate(URL.BIO)}>
+					View Profile
+				</div>
+			),
+		},
+		{
+			key: "2",
+			label: <div className="text-red-600 text-[16px]">Logout</div>,
+		},
+	];
 	const getMenuItemClass = (key: string) =>
 		activeKey === key
 			? "!text-[#581A57] !bg-[#F5F5F5] !border-r-3 !border-[#F5F5F5] !font-bold !text-[16px] !my-[20px]"
@@ -99,8 +116,19 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 					style={{ padding: 0 }}
 				>
 					<h2 className=" font-semibold inter-bold text-[24px]">{title}</h2>
-					<div>
+					<div className="flex gap-3 items-center">
 						<NotificationBell className="cursor-pointer" />
+						<Dropdown
+							className="border-0 bg-transparent mt-[7px] !shadow-none "
+							menu={{ items: dropdown }}
+						>
+							<Button>
+								<Space>
+									<img src={avatar} alt=".." width={30} />
+									<DownOutlined />
+								</Space>
+							</Button>
+						</Dropdown>
 					</div>
 				</Header>
 				<Content style={{ margin: "0 16px" }}>
