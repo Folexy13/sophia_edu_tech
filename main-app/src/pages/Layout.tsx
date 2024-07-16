@@ -2,10 +2,7 @@ import React from "react";
 import { Menu, Layout as AntdLayout } from "antd";
 import {
 	HomeOutlined,
-	BookOutlined,
-	UploadOutlined,
 	MessageOutlined,
-	CaretDownFilled,
 	PlusOutlined,
 	DownOutlined,
 } from "@ant-design/icons";

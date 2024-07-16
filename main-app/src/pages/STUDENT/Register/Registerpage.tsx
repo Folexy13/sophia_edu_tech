@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Registerpage.styles.scss";
-import { Col, Form, Input, Row, Button as AntDButton } from "antd";
-import { Button } from "../../../../../landing-page/src/components";
-import { Link } from "react-router-dom";
+import { Col, Form, Input, Row, Button as AntDButton, FormProps } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import {
 	googleIcon,
 	logo,
@@ -15,7 +14,14 @@ import {
 	GoogleLoginResponse,
 	GoogleLoginResponseOffline,
 } from "react-google-login";
-
+import { AuthRequest } from "../../../requests";
+import { useAlert } from "../../../store";
+type FieldType = {
+	full_name?: string;
+	email?: string;
+	password?: string;
+	confirm_password?: string;
+};
 const Registerpage: React.FC<any> = () => {
 	const responseGoogle = (
 		response: GoogleLoginResponse | GoogleLoginResponseOffline
@@ -23,10 +29,32 @@ const Registerpage: React.FC<any> = () => {
 		// Handle the response from Google login here
 		console.log(response);
 	};
+	const nav = useNavigate();
+	const [loading, setLoading] = useState(false);
+	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
 
 	const onFailure = (error: any) => {
 		// Handle errors here
 		console.error("Google login failed:", error);
+	};
+	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
+		setLoading(true);
+		try {
+			const res = await AuthRequest.register(values); // Assuming AuthRequest returns a promise
+			console.log(res); // Log response if needed
+			onSuccess("Registration successful!"); // Trigger success alert
+			nav(URL.LOGIN);
+		} catch (error: any) {
+			console.error("Registration error:", error);
+			AlertFailure(error.message); // Trigger failure alert
+		} finally {
+			setLoading(false);
+		}
+	};
+	const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
+		errorInfo: any
+	) => {
+		console.log("Failed:", errorInfo);
 	};
 	return (
 		<div className="register">
@@ -64,24 +92,49 @@ const Registerpage: React.FC<any> = () => {
 						<p className="inter-normal">
 							Enter email address and password to register
 						</p>
-						<Form layout="vertical">
-							<Form.Item label="Full name" className="inter-normal">
+						<Form
+							layout="vertical"
+							onFinish={onFinish}
+							onFinishFailed={onFinishFailed}
+							// autoComplete="off"
+						>
+							<Form.Item
+								label="Full name"
+								name="full_name"
+								className="inter-normal"
+							>
 								<Input />
 							</Form.Item>
-							<Form.Item label="Email address" className="inter-normal">
+							<Form.Item
+								label="Email address"
+								name="email"
+								className="inter-normal"
+							>
 								<Input />
 							</Form.Item>
-							<Form.Item label="Password" className="inter-normal">
+							<Form.Item
+								label="Password"
+								name="password"
+								className="inter-normal"
+							>
 								<Input.Password />
 							</Form.Item>
-							<Form.Item label="Confirm password" className="inter-normal">
+							<Form.Item
+								label="Confirm password"
+								name="confirm_password"
+								className="inter-normal"
+							>
 								<Input.Password />
 							</Form.Item>
 
 							<Form.Item className="inter-normal">
-								<Button height={50} width={"100%"}>
+								<AntDButton
+									className="h-[50px] w-full bg-[#581A57] text-white p-5 hover:"
+									loading={loading}
+									htmlType="submit"
+								>
 									Create Account
-								</Button>
+								</AntDButton>
 							</Form.Item>
 							<Form.Item
 								className="inter-normal"

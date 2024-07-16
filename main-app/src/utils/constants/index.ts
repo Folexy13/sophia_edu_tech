@@ -1,6 +1,7 @@
 import { HomeOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 
 export const URL = {
+	//Student URL
 	HOME: "/",
 	LOGIN: "/login",
 	REGISTER: "/register",
@@ -19,11 +20,15 @@ export const URL = {
 	NOTIFICATION: "/notifications",
 	UPLOAD: "/upload",
 	MESSAGING: "/messaging",
+
+	//Tutor URL
+	OVERVIEW: "/instructor/overview",
 };
 
 export const APPCONSTANTS = {
 	APP_NAME: "Sophia",
 	APP_PURPLE: "#800080",
+	APP_DARK_PURPLE: "#581A57",
 	APP_BLACK: "#121212",
 	ROUTES: [
 		{
@@ -94,6 +99,12 @@ export const APPCONSTANTS = {
 		{
 			path: URL.FORGOT_PASSWORD,
 			name: "Forgotn] Password",
+			icon: UserOutlined,
+		},
+
+		{
+			path: URL.OVERVIEW,
+			name: "Dahboard Overview",
 			icon: UserOutlined,
 		},
 	],

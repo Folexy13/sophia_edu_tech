@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../Layout";
 import { avatar, profileBG } from "../../../assets";
 import { Avatar, Checkbox, Form, Input, Select } from "antd";
 import { HeatMapOutlined } from "@ant-design/icons";
 import "./profile.styles.scss";
+import clientRequests from "../../../requests/client.request";
+import { useAlert } from "../../../store";
 
 const Profile: React.FC<any> = () => {
 	const { Option } = Select;
+	const [isLoading, setIsLoading] = useState(true);
+	const { onFailure } = useAlert();
 	const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const res: any = await clientRequests.getMe(); // Assuming AuthRequest returns a promise
+				console.log(res); // Log response if needed
+			} catch (error: any) {
+				console.error("Login error:", error);
+				onFailure(error.message); // Trigger failure alert
+			} finally {
+				setIsLoading(false);
+			}
+		};
+		fetchData();
+	}, []);
 
 	const handleChange = (value: string[]) => {
 		setSelectedItems(value);

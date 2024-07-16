@@ -80,3 +80,12 @@ button {
 	font-style: normal;
 	font-variation-settings: "slnt" 0;
 }
+
+button:disabled {
+	background: #ccc !important;
+	cursor: pointer !important;
+	color: #fff !important;
+	&:hover {
+		background: #ccc !important;
+	}
+}

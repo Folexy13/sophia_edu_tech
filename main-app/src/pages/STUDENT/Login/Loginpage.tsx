@@ -1,22 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Loginpage.styles.scss";
-import { Col, Form, Input, Row, Button as AntDButton } from "antd";
-import { APPCONSTANTS, URL } from "../../../../../landing-page/src/constants";
-import { Button } from "../../../../../landing-page/src/components";
-import { Link } from "react-router-dom";
 import {
-	googleIcon,
-	logo,
-	student,
-	woman,
-} from "../../../../../landing-page/src/assets";
+	Col,
+	Form,
+	Input,
+	Row,
+	Button as AntDButton,
+	FormProps,
+	Checkbox,
+} from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { googleIcon, Logo, student, woman } from "../../../assets";
 import {
 	GoogleLogin,
 	GoogleLoginResponse,
 	GoogleLoginResponseOffline,
 } from "react-google-login";
+import { AuthRequest } from "../../../requests";
+import { useAlert, useAuth } from "../../../store";
+import { setStoredAuthToken } from "../../../utils/storage";
+import { APPCONSTANTS, URL } from "../../../utils/constants";
+type FieldType = {
+	email?: string;
+	password?: string;
+	remember?: string;
+};
 
 const Loginpage: React.FC<any> = () => {
+	const [loading, setLoading] = useState(false);
+	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
+	const { onLogin } = useAuth();
+	const nav = useNavigate();
 	const responseGoogle = (
 		response: GoogleLoginResponse | GoogleLoginResponseOffline
 	) => {
@@ -24,6 +38,28 @@ const Loginpage: React.FC<any> = () => {
 		console.log(response);
 	};
 
+	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
+		setLoading(true);
+		try {
+			const res: any = await AuthRequest.login(values); // Assuming AuthRequest returns a promise
+			console.log(res); // Log response if needed
+			onSuccess("Login successful!"); // Trigger success alert
+			onLogin(res?.access_token);
+			setStoredAuthToken(res?.access_token);
+			nav(URL.HOME);
+		} catch (error: any) {
+			console.error("Login error:", error);
+			AlertFailure(error.message); // Trigger failure alert
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
+		errorInfo: any
+	) => {
+		console.log("Failed:", errorInfo);
+	};
 	const onFailure = (error: any) => {
 		// Handle errors here
 		console.error("Google login failed:", error);
@@ -36,8 +72,8 @@ const Loginpage: React.FC<any> = () => {
 					<div className="first-container">
 						<Link to={URL.HOME}>
 							<img
-								src={logo}
-								alt="Login"
+								src={Logo}
+								alt="logo"
 								style={{ maxWidth: "100%", maxHeight: "100%" }}
 							/>
 						</Link>
@@ -54,7 +90,7 @@ const Loginpage: React.FC<any> = () => {
 					<div className="login-container" style={{}}>
 						<Link to={URL.HOME} className="midlogo">
 							<img
-								src={logo}
+								src={Logo}
 								alt="Login"
 								style={{ maxWidth: "100%", maxHeight: "100%" }}
 							/>
@@ -63,28 +99,57 @@ const Loginpage: React.FC<any> = () => {
 						<p className="inter-normal">
 							Enter email address and password to login
 						</p>
-						<Form layout="vertical">
-							<Form.Item label="Email address" className="inter-normal">
+						<Form
+							layout="vertical"
+							initialValues={{ remember: true }}
+							onFinish={onFinish}
+							onFinishFailed={onFinishFailed}
+							// autoComplete="off"
+						>
+							<Form.Item
+								label="Email address"
+								className="inter-normal"
+								name={"email"}
+							>
 								<Input />
 							</Form.Item>
-							<Form.Item label="Password" className="inter-normal">
+							<Form.Item
+								label="Password"
+								className="inter-normal"
+								name={"password"}
+							>
 								<Input.Password />
 							</Form.Item>
-							<Form.Item className="inter-bold">
-								<Link
-									to={URL.FORGOT_PASSWORD}
-									style={{
-										color: APPCONSTANTS.APP_DARK_PURPLE,
-										float: "right",
-									}}
+							<div className="flex justify-between">
+								<Form.Item<FieldType>
+									name="remember"
+									valuePropName="checked"
+									// wrapperCol={{ offset: 8, span: 16 }}
 								>
-									Forgot password?
-								</Link>
-							</Form.Item>
+									<Checkbox>Remember me</Checkbox>
+								</Form.Item>
+								<Form.Item className="inter-bold">
+									<Link
+										to={URL.FORGOT_PASSWORD}
+										style={{
+											color: APPCONSTANTS.APP_DARK_PURPLE,
+											float: "right",
+										}}
+									>
+										Forgot password?
+									</Link>
+								</Form.Item>
+							</div>
+
 							<Form.Item className="inter-normal">
-								<Button height={50} width={"100%"}>
+								<AntDButton
+									loading={loading}
+									htmlType="submit"
+									disabled={loading}
+									className="h-[50px] w-full !bg-[#581A57]  !text-white p-5 hover:"
+								>
 									Log in
-								</Button>
+								</AntDButton>
 							</Form.Item>
 							<Form.Item
 								className="inter-normal"

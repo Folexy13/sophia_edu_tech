@@ -17,9 +17,9 @@ import { Dropdown, MenuProps, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../../utils/constants";
 // import { Modal } from "../../../components";
-
 const HomePage: React.FC = () => {
 	const nav = useNavigate();
+
 	const items: MenuProps["items"] = [
 		{
 			label: <div>Repost</div>,
