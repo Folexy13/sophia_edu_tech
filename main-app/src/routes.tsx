@@ -19,7 +19,12 @@ import {
 	WalletPage,
 } from "./pages/STUDENT";
 import { getStoredAuthToken } from "./utils/storage";
-import { CoursePage, CreateCoursePage, OverviewPage } from "./pages/TUTOR";
+import {
+	CoursePage,
+	CreateCoursePage,
+	OverviewPage,
+	StudentsPage,
+} from "./pages/TUTOR";
 
 const Router: React.FC = () => {
 	const authenticated = getStoredAuthToken();
@@ -117,6 +122,10 @@ const Router: React.FC = () => {
 						<Route
 							path={APPCONSTANTS.ROUTES[16].path}
 							element={<CreateCoursePage />}
+						/>
+						<Route
+							path={APPCONSTANTS.ROUTES[17].path}
+							element={<StudentsPage />}
 						/>
 					</>
 				)}

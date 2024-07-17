@@ -32,7 +32,7 @@ const columns: TableColumnsType<any> = [
 	},
 ];
 const data: any[] = [];
-for (let i = 0; i < 106; i++) {
+for (let i = 0; i < 50; i++) {
 	data.push({
 		key: i,
 		course_category: `Learning Development`,
@@ -50,7 +50,7 @@ const Courses: React.FC = () => {
 			<Card className="my-4 p-3">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
-						<h2 className="text-[16px] inter-bold">10 Courses</h2>
+						<h2 className="text-[16px] inter-bold">{data?.length} Courses</h2>
 
 						<Form>
 							<Form.Item>
