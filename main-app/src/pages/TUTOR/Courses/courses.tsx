@@ -1,0 +1,89 @@
+import React from "react";
+import Layout from "../../DashboardLayout";
+import { Card, Form, Input, TableColumnsType } from "antd";
+import { FilterIcon } from "../../../assets";
+import { Button, Table } from "../../../components";
+const columns: TableColumnsType<any> = [
+	{
+		title: "Course Category",
+		dataIndex: "course_category",
+	},
+	{
+		title: "Course Type",
+		dataIndex: "course_type",
+	},
+	{
+		title: "Course Title",
+		dataIndex: "course_title",
+	},
+	{
+		title: "Amount",
+		dataIndex: "amount",
+	},
+	{
+		title: "Number of Students",
+		dataIndex: "number_of_students",
+	},
+	{
+		title: "Date",
+		dataIndex: "date",
+	},
+];
+const data: any[] = [];
+for (let i = 0; i < 106; i++) {
+	data.push({
+		key: i,
+		course_category: `Learning Development`,
+		course_type: "Agriculture",
+		course_title: "Introduction to Bee Farming",
+		amount: `${i * 50}$`,
+		number_of_students: `${i * 10}`,
+		date: "2022-01-01 5:00pm",
+	});
+}
+const Courses: React.FC = () => {
+	return (
+		<Layout title="Courses">
+			<Card className="my-4 p-3">
+				<header className="flex justify-between items-center">
+					<div className="flex items-baseline gap-4">
+						<h2 className="text-[16px] inter-bold">10 Courses</h2>
+
+						<Form>
+							<Form.Item>
+								<Input
+									placeholder="Search "
+									className="px-2 py-3 !outline-none border-[#DBDBDB] border w-[300px] rounded-[50px]"
+								/>
+							</Form.Item>
+						</Form>
+						<div className="flex items-center gap-2 cursor-pointer">
+							<FilterIcon />
+							<p className="text-[#808080] text-[14px] inter-normal">Filter</p>
+						</div>
+					</div>
+
+					<div className="flex gap-3">
+						<Button
+							label="Export"
+							className="text-[#808080] p-3 bg-transparent border-[#808080] border rounded-[5px]"
+						/>
+						<Button
+							label="Upload Course"
+							className="text-[#fff] p-3 bg-[#581A57]  border rounded-[5px]"
+						/>
+					</div>
+				</header>
+
+				<Table
+					className="mt-[20px]"
+					columns={columns}
+					data={data}
+					type={"selection"}
+				/>
+			</Card>
+		</Layout>
+	);
+};
+
+export default Courses;

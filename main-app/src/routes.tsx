@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useAuth } from "./store";
+
 import { APPCONSTANTS } from "./utils/constants";
 import {
 	AboutCoursePage,
@@ -19,7 +19,7 @@ import {
 	WalletPage,
 } from "./pages/STUDENT";
 import { getStoredAuthToken } from "./utils/storage";
-import { OverviewPage } from "./pages/TUTOR";
+import { CoursePage, OverviewPage } from "./pages/TUTOR";
 
 const Router: React.FC = () => {
 	const authenticated = getStoredAuthToken();
@@ -109,6 +109,10 @@ const Router: React.FC = () => {
 						<Route
 							path={APPCONSTANTS.ROUTES[14].path}
 							element={<OverviewPage />}
+						/>
+						<Route
+							path={APPCONSTANTS.ROUTES[15].path}
+							element={<CoursePage />}
 						/>
 					</>
 				)}

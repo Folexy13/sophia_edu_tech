@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Button, Dropdown, Layout, Menu, MenuProps, Space } from "antd";
 import { DownOutlined, SettingOutlined } from "@ant-design/icons";
 import {
@@ -10,7 +10,7 @@ import {
 	StudentsIcon,
 	Wallet2Icon,
 } from "../assets";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { URL } from "../utils/constants";
 
 const { Header, Sider, Content } = Layout;
@@ -21,9 +21,23 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 }) => {
 	const [activeKey, setActiveKey] = useState<string>("1");
 	const navigate = useNavigate();
+	const { pathname } = useLocation();
+	useEffect(() => {
+		if (pathname === URL.OVERVIEW) {
+			setActiveKey("1");
+		} else if (pathname === URL.COURSES || pathname === URL.CREATE_COURSE) {
+			setActiveKey("2");
+		}
+		return () => {};
+	}, [pathname]);
 
 	const handleMenuClick = (e: any) => {
 		setActiveKey(e.key);
+		if (e.key === "1") {
+			navigate(URL.OVERVIEW);
+		} else if (e.key === "2") {
+			navigate(URL.COURSES);
+		}
 	};
 	const dropdown: MenuProps["items"] = [
 		{
