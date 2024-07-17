@@ -47,7 +47,7 @@ const Courses: React.FC = () => {
 	const nav = useNavigate();
 	return (
 		<Layout title="Courses">
-			<Card className="my-4 p-3">
+			<Card className="my-4 p-3 course_card">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
 						<h2 className="text-[16px] inter-bold">{data?.length} Courses</h2>

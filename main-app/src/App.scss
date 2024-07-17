@@ -117,7 +117,7 @@ button:disabled {
 	border-radius: unset !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 990px) {
 	.customtable {
 		overflow-x: auto;
 		th {
@@ -126,5 +126,15 @@ button:disabled {
 	}
 	:where(.css-dev-only-do-not-override-mzwlov).ant-card-bordered {
 		background: transparent !important;
+	}
+}
+
+.course_card {
+	width: 100%;
+	overflow: auto;
+	background: #fff !important;
+	.ant-card-body {
+		min-width: 1042px;
+		overflow-x: auto;
 	}
 }

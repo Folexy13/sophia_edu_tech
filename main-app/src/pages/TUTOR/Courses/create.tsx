@@ -18,8 +18,8 @@ const CreateCoursePage: React.FC = () => {
 
 	return (
 		<Layout title="Courses">
-			<div className="flex gap-2 my-[28px] items-start">
-				<div className="w-1/2">
+			<div className="flex flex-col sm:flex-row gap-2 my-[28px] items-start">
+				<div className="w-full sm:w-1/2">
 					<div>
 						<h3 className="mb-[10px] text-[24px] font-semibold">
 							Upload Course
@@ -29,7 +29,7 @@ const CreateCoursePage: React.FC = () => {
 						</p>
 					</div>
 				</div>
-				<div className="w-1/2">
+				<div className="w-full sm:w-1/2">
 					<Form
 						layout="vertical"
 						form={form}
