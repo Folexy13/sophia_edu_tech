@@ -31,6 +31,8 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 			setActiveKey("3");
 		} else if (pathname === URL.TUTOR_WALLET) {
 			setActiveKey("4");
+		} else if (pathname === URL.SETTINGS) {
+			setActiveKey("5");
 		}
 		return () => {};
 	}, [pathname]);
@@ -45,6 +47,8 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 			navigate(URL.STUDENTS_LIST);
 		} else if (e.key === "4") {
 			navigate(URL.TUTOR_WALLET);
+		} else if (e.key === "5") {
+			navigate(URL.SETTINGS);
 		}
 	};
 	const dropdown: MenuProps["items"] = [

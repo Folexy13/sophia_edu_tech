@@ -23,6 +23,7 @@ import {
 	CoursePage,
 	CreateCoursePage,
 	OverviewPage,
+	SettingsPage,
 	StudentsPage,
 	TutorWalletPage,
 } from "./pages/TUTOR";
@@ -131,6 +132,10 @@ const Router: React.FC = () => {
 						<Route
 							path={APPCONSTANTS.ROUTES[18].path}
 							element={<TutorWalletPage />}
+						/>
+						<Route
+							path={APPCONSTANTS.ROUTES[19].path}
+							element={<SettingsPage />}
 						/>
 					</>
 				)}

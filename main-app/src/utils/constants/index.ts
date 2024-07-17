@@ -27,6 +27,7 @@ export const URL = {
 	CREATE_COURSE: "/instructor/courses/create",
 	STUDENTS_LIST: "/instructor/students",
 	TUTOR_WALLET: "/instructor/wallet",
+	SETTINGS: "/instructor/settings",
 };
 
 export const APPCONSTANTS = {
@@ -129,6 +130,11 @@ export const APPCONSTANTS = {
 		{
 			path: URL.TUTOR_WALLET,
 			name: "Instructor wallet",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.SETTINGS,
+			name: "Instructor settings",
 			icon: UserOutlined,
 		},
 	],
