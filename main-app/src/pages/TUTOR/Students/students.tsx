@@ -3,8 +3,8 @@ import Layout from "../../DashboardLayout";
 import { Card, Form, Input, TableColumnsType } from "antd";
 import { FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
-import { useNavigate } from "react-router-dom";
 import { getRandomDate, getRandomItem } from "../../../utils/helperFunction";
+import { useScreenSize } from "../../../utils/hooks/useScreen";
 const studentNames = [
 	"Aluko Folajimi",
 	"John Doe",
@@ -69,9 +69,10 @@ for (let i = 0; i < 106; i++) {
 }
 
 const StudentsPage: React.FC = () => {
+	const isMobile = useScreenSize();
 	return (
-		<Layout title="Students">
-			<Card className="my-4 p-3">
+		<Layout title="Students" hasMargin={!isMobile}>
+			<Card className="my-4 p-3 course_card">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
 						<h2 className="text-[16px] inter-bold">{data?.length} Students</h2>

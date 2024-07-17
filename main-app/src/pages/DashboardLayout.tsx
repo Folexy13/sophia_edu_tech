@@ -20,10 +20,11 @@ import { URL } from "../utils/constants";
 
 const { Header, Sider, Content } = Layout;
 
-const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
-	children,
-	title,
-}) => {
+const DashboardLayout: React.FC<{
+	children: ReactNode;
+	title: string;
+	hasMargin?: boolean;
+}> = ({ children, title, hasMargin }) => {
 	const [activeKey, setActiveKey] = useState<string>("1");
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
@@ -244,7 +245,7 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 						</Dropdown>
 					</div>
 				</Header>
-				<Content style={{ margin: "0 16px" }}>
+				<Content style={{ margin: hasMargin ? "0 16px" : "0" }}>
 					<div
 						className="site-layout-background p-0 sm:p-[24px]"
 						style={{ minHeight: 360 }}

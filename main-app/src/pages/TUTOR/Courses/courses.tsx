@@ -5,6 +5,7 @@ import { FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../../utils/constants";
+import { useScreenSize } from "../../../utils/hooks/useScreen";
 const columns: TableColumnsType<any> = [
 	{
 		title: "Course Category",
@@ -45,8 +46,9 @@ for (let i = 0; i < 50; i++) {
 }
 const Courses: React.FC = () => {
 	const nav = useNavigate();
+	const isMobile = useScreenSize();
 	return (
-		<Layout title="Courses">
+		<Layout title="Courses" hasMargin={!isMobile}>
 			<Card className="my-4 p-3 course_card">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
