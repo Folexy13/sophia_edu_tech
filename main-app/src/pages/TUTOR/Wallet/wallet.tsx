@@ -5,6 +5,7 @@ import { avatar, FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
 import { getRandomDate, getRandomItem } from "../../../utils/helperFunction";
 import { WalletModal } from "./wallet_modal";
+import { useScreenSize } from "../../../utils/hooks/useScreen";
 
 const studentNames = [
 	"Aluko Folajimi",
@@ -81,9 +82,11 @@ const WalletPage: React.FC = () => {
 	const handleToggleButton = (type: string) => {
 		setType(type);
 	};
+
+	const isMobile = useScreenSize();
 	return (
-		<Layout title="Wallet">
-			<Card className="my-4 p-3">
+		<Layout title="Wallet" hasMargin={!isMobile}>
+			<Card className="my-4 p-3 course_card">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
 						<h2 className="text-[16px] inter-bold">Available Balance: $500</h2>
