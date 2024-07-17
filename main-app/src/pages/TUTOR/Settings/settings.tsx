@@ -115,7 +115,7 @@ const Settings: React.FC = () => {
 						<Button
 							htmlType="submit"
 							block
-							className="my-[15px] text-white bg-[#581A57]"
+							className="my-[15px] p-[10px] text-white bg-[#581A57]"
 						>
 							Click to reset password
 						</Button>
