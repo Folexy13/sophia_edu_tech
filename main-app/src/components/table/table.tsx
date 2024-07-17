@@ -32,8 +32,9 @@ const Table: React.FC<{
 	columns?: any;
 	rowSelection?: any;
 	type?: any;
+	pagination?: any;
 	className?: string;
-}> = ({ data, columns, className, rowSelection, type }) => {
+}> = ({ data, columns, className, rowSelection, type, pagination }) => {
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
 	const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
@@ -84,6 +85,7 @@ const Table: React.FC<{
 				columns={columns}
 				className={`customtable ${className}`}
 				rowSelection={rowSelection ? rowSelection : section}
+				pagination={pagination}
 			/>
 		);
 	return (
@@ -91,6 +93,7 @@ const Table: React.FC<{
 			dataSource={data}
 			columns={columns}
 			className={`customtable ${className}`}
+			pagination={pagination}
 		/>
 	);
 };

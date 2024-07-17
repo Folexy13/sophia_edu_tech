@@ -7,9 +7,9 @@ import {
 	StudentsIcon2,
 } from "../../../assets";
 import { CalendarOutlined } from "@ant-design/icons";
-import { Table } from "antd";
 import DonutChart from "../../../components/charts/doughnut";
 import Bar from "../../../components/charts/barCharts";
+import { Table } from "../../../components";
 
 const dataSource = [
 	{
@@ -146,7 +146,7 @@ const options = {
 const Overview: React.FC = () => {
 	return (
 		<Layout title="Overview">
-			<div className="container mx-auto p-4">
+			<div className="container mx-auto px-0 sm:px-4 p-4">
 				<div className="mb-[30px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 					<div className="flex items-center px-[20px] gap-2 h-[100px] bg-white rounded-[8px] border-[#DBDBDB] border-1">
 						<StudentsIcon2 />
@@ -181,7 +181,7 @@ const Overview: React.FC = () => {
 
 				<div className="grid grid-cols-1 md:grid-cols-2  gap-4">
 					<div className="px-[20px] gap-2 h-[300px] bg-white rounded-[8px] border-[#DBDBDB] border-1">
-						<header className="p-3 flex items-center justify-between">
+						<header className="p-3 flex-col sm:flex-row flex items-center justify-between">
 							<h2 className="text-[16px] inter-bold">Earning Overview</h2>
 							<div className="rounded-[5px] border py-1 px-2 border-[#B6B6B6]">
 								<span>05/06/2022 - 05/06/2022 </span>
@@ -192,22 +192,18 @@ const Overview: React.FC = () => {
 					</div>
 
 					<div className="px-[20px] gap-2 h-[300px] bg-white rounded-[8px] border-[#DBDBDB] border-1">
-						<header className="p-3 flex items-center justify-between">
+						<header className="p-3 flex flex-col sm:flex-rowitems-center justify-between">
 							<h2 className="text-[16px] inter-bold">Sales</h2>
 							<div className="rounded-[5px] border py-1 px-2 border-[#B6B6B6]">
 								<span>05/06/2022 - 05/06/2022 </span>
 								<CalendarOutlined />
 							</div>
 						</header>
-						<Table
-							dataSource={dataSource}
-							columns={columns}
-							pagination={false}
-						/>
+						<Table data={dataSource} columns={columns} pagination={false} />
 					</div>
 				</div>
 
-				<div className="grid grid-cols-1 md:grid-cols-3  gap-4 my-[30px] px-[20px]  h-[300px] bg-white rounded-[8px] border-[#DBDBDB] border-1">
+				<div className="grid grid-cols-1 md:grid-cols-3  gap-4 my-[30px] px-[20px] sm:py-0 py-[10px] min-h-[300px] sm:min-h-0 sm:h-[300px] bg-white rounded-[8px] border-[#DBDBDB] border-1">
 					<div className="relative flex flex-col items-center justify-center">
 						<h2 className="font-medium inter-bold text-[16px]">Courses</h2>
 						<DonutChart
@@ -215,8 +211,10 @@ const Overview: React.FC = () => {
 							data={data}
 							options={options}
 						/>
-						<div className="absolute bottom-[109px]">
-							<p className="inter-normal text-[14px] text-center">Course</p>
+						<div className="absolute bottom-[82px] sm:bottom-[109px]">
+							<p className="inter-normal text-[12px] sm:text-[14px] text-center">
+								Course
+							</p>
 							<p className="inter-bold text-[16px] text-center">500</p>
 						</div>
 						<div className="flex gap-3">
@@ -243,8 +241,10 @@ const Overview: React.FC = () => {
 							data={data}
 							options={options}
 						/>
-						<div className="absolute bottom-[109px]">
-							<p className="inter-normal text-[14px] text-center">Student</p>
+						<div className="absolute bottom-[82px] sm:bottom-[109px]">
+							<p className="inter-normal text-[12px] sm:text-[14px] text-center">
+								Student
+							</p>
 							<p className="inter-bold text-[16px] text-center">500</p>
 						</div>
 						<div className="flex gap-3">
@@ -271,8 +271,10 @@ const Overview: React.FC = () => {
 							data={data}
 							options={options}
 						/>
-						<div className="absolute bottom-[109px]">
-							<p className="inter-normal text-[14px] text-center">Earning</p>
+						<div className="absolute bottom-[82px] sm:bottom-[109px]">
+							<p className="inter-normal text-[12px] sm:text-[14px] text-center">
+								Earning
+							</p>
 							<p className="inter-bold text-[16px] text-center">500</p>
 						</div>
 						<div className="flex gap-3">

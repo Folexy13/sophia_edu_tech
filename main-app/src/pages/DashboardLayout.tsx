@@ -1,6 +1,11 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { Button, Dropdown, Layout, Menu, MenuProps, Space } from "antd";
-import { DownOutlined, SettingOutlined } from "@ant-design/icons";
+import { Button, Drawer, Dropdown, Layout, Menu, MenuProps, Space } from "antd";
+import {
+	CloseOutlined,
+	DownOutlined,
+	MenuOutlined,
+	SettingOutlined,
+} from "@ant-design/icons";
 import {
 	avatar,
 	CourseIcon,
@@ -22,6 +27,14 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 	const [activeKey, setActiveKey] = useState<string>("1");
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
+
+	const [open, setOpen] = useState(false);
+	const onClose = () => {
+		setOpen(false);
+	};
+	const showDrawer = () => {
+		setOpen(true);
+	};
 	useEffect(() => {
 		if (pathname === URL.OVERVIEW) {
 			setActiveKey("1");
@@ -67,11 +80,11 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 	];
 	const getMenuItemClass = (key: string) =>
 		activeKey === key
-			? "!text-[#581A57] !bg-[#F5F5F5] !border-r-3 !border-[#F5F5F5] !font-bold !text-[16px] !my-[20px]"
+			? "!text-[#581A57] !bg-[#F5F5F5] !border-r-[#581A57] !border-r-[5px] !border-[#F5F5F5] !font-bold !text-[16px] !my-[20px]"
 			: "!text-[#808080] !text-[16px] !inter-normal !my-[20px]";
 	return (
 		<Layout style={{ minHeight: "100vh" }}>
-			<Sider theme="light" className="!min-w-[300px]">
+			<Sider theme="light" className="!min-w-[300px] !hidden md:!block">
 				<div className="justify-center p-4 flex ">
 					<img
 						src={Logo}
@@ -136,19 +149,93 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 					</Menu.Item>
 				</Menu>
 			</Sider>
-			<Layout className="site-layout">
-				<Header
-					className="!px-[20px] bg-white flex justify-between items-center"
-					style={{ padding: 0 }}
-				>
-					<h2 className=" font-semibold inter-bold text-[24px]">{title}</h2>
+			<Layout className="site-layout ">
+				<Header className="!px-[20px] sm:!pr-[20px] !pr-0 bg-white flex justify-between items-center">
+					<h2 className=" font-semibold inter-bold text-[24px] !hidden md:!block">
+						{title}
+					</h2>
+					<div className="flex gap-6 md:!hidden">
+						<MenuOutlined
+							className="text-[18px] cursor-pointer"
+							onClick={showDrawer}
+						/>
+						<img
+							src={Logo}
+							alt="logo"
+							width={100}
+							style={{ maxWidth: "100%", maxHeight: "100%" }}
+						/>
+					</div>
+					<Drawer
+						title={
+							<div className="justify-between flex ">
+								<img
+									src={Logo}
+									alt="logo"
+									width={100}
+									style={{ maxWidth: "100%", maxHeight: "100%" }}
+								/>
+								<CloseOutlined style={{ color: "red" }} onClick={onClose} />
+							</div>
+						}
+						placement={"left"}
+						closable={false}
+						onClose={onClose}
+						open={open}
+					>
+						<div className="!min-w-[300px] ">
+							<Menu
+								theme="light"
+								mode="inline"
+								selectedKeys={[activeKey]}
+								onClick={handleMenuClick}
+								className="rounded-0"
+							>
+								<Menu.Item
+									key="1"
+									icon={<OverviewIcon />}
+									className={getMenuItemClass("1")}
+								>
+									Overviews
+								</Menu.Item>
+								<Menu.Item
+									key="2"
+									icon={<CourseIcon />}
+									className={getMenuItemClass("2")}
+								>
+									Courses
+								</Menu.Item>
+								<Menu.Item
+									key="3"
+									icon={<StudentsIcon />}
+									className={getMenuItemClass("3")}
+								>
+									Students
+								</Menu.Item>
+								<Menu.Item
+									key="4"
+									icon={<Wallet2Icon />}
+									className={getMenuItemClass("4")}
+								>
+									Wallet
+								</Menu.Item>
+								<Menu.Item
+									key="5"
+									icon={<SettingOutlined />}
+									className={getMenuItemClass("5")}
+								>
+									Settings
+								</Menu.Item>
+							</Menu>
+						</div>
+					</Drawer>
 					<div className="flex gap-3 items-center">
 						<NotificationBell className="cursor-pointer" />
 						<Dropdown
 							className="border-0 bg-transparent mt-[7px] !shadow-none "
 							menu={{ items: dropdown }}
 						>
-							<Button>
+							<Button className="pl-0 sm:pl-[15px]">
 								<Space>
 									<img src={avatar} alt=".." width={30} />
 									<DownOutlined />
@@ -159,8 +246,8 @@ const DashboardLayout: React.FC<{ children: ReactNode; title: string }> = ({
 				</Header>
 				<Content style={{ margin: "0 16px" }}>
 					<div
-						className="site-layout-background"
-						style={{ padding: 24, minHeight: 360 }}
+						className="site-layout-background p-0 sm:p-[24px]"
+						style={{ minHeight: 360 }}
 					>
 						{children}
 					</div>

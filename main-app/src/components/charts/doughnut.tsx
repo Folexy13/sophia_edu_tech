@@ -19,7 +19,7 @@ interface DonutChartProps {
 }
 
 const DonutChart: React.FC<DonutChartProps> = ({ data, options }) => (
-	<Card className="m-2 !border-none ">
+	<Card className="m-2 !border-none">
 		{/* <h3 className="text-xl font-bold mb-4">{title}</h3> */}
 		<Doughnut data={data} options={options} />
 	</Card>

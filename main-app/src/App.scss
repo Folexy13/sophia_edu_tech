@@ -105,3 +105,26 @@ button:disabled {
 	border-color: transparent !important;
 	box-shadow: none !important;
 }
+
+:where(.css-dev-only-do-not-override-mzwlov).ant-drawer .ant-drawer-body {
+	padding: 0;
+}
+
+:where(.css-dev-only-do-not-override-mzwlov).ant-menu-inline .ant-menu-item {
+	margin-inline: 0;
+	padding-inline: 0;
+	width: 100%;
+	border-radius: unset !important;
+}
+
+@media (max-width: 768px) {
+	.customtable {
+		overflow-x: auto;
+		th {
+			font-size: 12px;
+		}
+	}
+	:where(.css-dev-only-do-not-override-mzwlov).ant-card-bordered {
+		background: transparent !important;
+	}
+}
