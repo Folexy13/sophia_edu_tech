@@ -488,7 +488,7 @@ const Profile: React.FC<any> = () => {
 								block
 								loading={isLoading}
 								disabled={isLoading}
-								className="my-[15px] text-white bg-[#581A57]"
+								className="my-[15px] p-[10px] text-white bg-[#581A57]"
 							>
 								Update
 							</Button>
