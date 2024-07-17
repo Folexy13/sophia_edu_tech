@@ -114,5 +114,10 @@ export const APPCONSTANTS = {
 			name: "Instructor Courses",
 			icon: UserOutlined,
 		},
+		{
+			path: URL.CREATE_COURSE,
+			name: "Instructor Create Courses",
+			icon: UserOutlined,
+		},
 	],
 };

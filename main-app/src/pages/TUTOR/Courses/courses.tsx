@@ -3,6 +3,8 @@ import Layout from "../../DashboardLayout";
 import { Card, Form, Input, TableColumnsType } from "antd";
 import { FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
+import { useNavigate } from "react-router-dom";
+import { URL } from "../../../utils/constants";
 const columns: TableColumnsType<any> = [
 	{
 		title: "Course Category",
@@ -42,6 +44,7 @@ for (let i = 0; i < 106; i++) {
 	});
 }
 const Courses: React.FC = () => {
+	const nav = useNavigate();
 	return (
 		<Layout title="Courses">
 			<Card className="my-4 p-3">
@@ -70,6 +73,7 @@ const Courses: React.FC = () => {
 						/>
 						<Button
 							label="Upload Course"
+							onclick={() => nav(URL.CREATE_COURSE)}
 							className="text-[#fff] p-3 bg-[#581A57]  border rounded-[5px]"
 						/>
 					</div>

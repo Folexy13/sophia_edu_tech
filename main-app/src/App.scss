@@ -95,3 +95,13 @@ button:disabled {
 		justify-content: center !important;
 	}
 }
+
+:where(.css-dev-only-do-not-override-mzwlov).ant-select-outlined:not(
+		.ant-select-customize-input
+	)
+	.ant-select-selector {
+	border: none !important;
+	outline: none !important;
+	border-color: transparent !important;
+	box-shadow: none !important;
+}

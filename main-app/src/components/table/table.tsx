@@ -86,7 +86,13 @@ const Table: React.FC<{
 				rowSelection={rowSelection ? rowSelection : section}
 			/>
 		);
-	return <AntTable dataSource={data} columns={columns} className={className} />;
+	return (
+		<AntTable
+			dataSource={data}
+			columns={columns}
+			className={`customtable ${className}`}
+		/>
+	);
 };
 
 Table.defaultProps = {
