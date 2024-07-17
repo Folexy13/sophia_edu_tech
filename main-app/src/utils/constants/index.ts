@@ -26,6 +26,7 @@ export const URL = {
 	COURSES: "/instructor/courses",
 	CREATE_COURSE: "/instructor/courses/create",
 	STUDENTS_LIST: "/instructor/students",
+	TUTOR_WALLET: "/instructor/wallet",
 };
 
 export const APPCONSTANTS = {
@@ -122,7 +123,12 @@ export const APPCONSTANTS = {
 		},
 		{
 			path: URL.STUDENTS_LIST,
-			name: "Instructor Create Courses",
+			name: "Instructor Student List",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.TUTOR_WALLET,
+			name: "Instructor wallet",
 			icon: UserOutlined,
 		},
 	],
