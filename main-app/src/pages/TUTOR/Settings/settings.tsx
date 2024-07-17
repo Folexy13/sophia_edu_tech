@@ -6,10 +6,10 @@ import { avatar } from "../../../assets";
 const Settings: React.FC = () => {
 	return (
 		<Layout title="Settings">
-			<Form layout="vertical">
+			<Form layout="vertical" className="p-4 sm:p-0">
 				{/* Profile Picture */}
-				<div className="flex gap-2 my-[28px]">
-					<div className="w-1/2">
+				<div className="flex flex-col sm:flex-row gap-2 my-[28px]">
+					<div className="w-full sm:w-1/2">
 						<div>
 							<h3 className="mb-[10px] text-[24px] font-semibold">
 								Profile Picture
@@ -19,7 +19,7 @@ const Settings: React.FC = () => {
 							</p>
 						</div>
 					</div>
-					<div className="w-1/2">
+					<div className="w-full sm:w-1/2">
 						<Form.Item className="inter-normal" name="picture">
 							<div className="bg-white w-[200px] gap-8 p-[18px] h-[220px] rounded-[10px] justify-center items-center flex flex-col">
 								<img src={avatar} alt="..." width={70} />
@@ -31,8 +31,8 @@ const Settings: React.FC = () => {
 					</div>
 				</div>
 				{/* Personal Information */}
-				<div className="flex gap-2 my-[28px]">
-					<div className="w-1/2">
+				<div className="flex flex-col sm:flex-row gap-2 my-[28px]">
+					<div className="w-full sm:w-1/2">
 						<div>
 							<h3 className="mb-[10px] text-[24px] font-semibold">
 								Personal Information
@@ -42,7 +42,7 @@ const Settings: React.FC = () => {
 							</p>
 						</div>
 					</div>
-					<div className="w-1/2">
+					<div className="w-full sm:w-1/2">
 						<Form.Item
 							label="Full Name"
 							className="inter-normal"
@@ -68,8 +68,8 @@ const Settings: React.FC = () => {
 				</div>
 
 				{/* Password INfo */}
-				<div className="flex gap-2 my-[28px]">
-					<div className="w-1/2">
+				<div className="flex flex-col sm:flex-row gap-2 my-[28px]">
+					<div className="w-full sm:w-1/2">
 						<div>
 							<h3 className="mb-[10px] text-[24px] font-semibold">
 								Reset Password
@@ -79,7 +79,7 @@ const Settings: React.FC = () => {
 							</p>
 						</div>
 					</div>
-					<div className="w-1/2">
+					<div className="w-full sm:w-1/2">
 						<Form.Item
 							label="Current Password"
 							className="inter-normal"
@@ -109,9 +109,12 @@ const Settings: React.FC = () => {
 						</Form.Item>
 					</div>
 				</div>
-				<div className="flex gap-2 my-[28px]">
-					<div className="w-1/2" style={{ visibility: "hidden" }}></div>
-					<div className="w-1/2">
+				<div className="flex flex-col sm:flex-row gap-2 my-[28px]">
+					<div
+						className="w-full sm:w-1/2 hidden sm:block"
+						style={{ visibility: "hidden" }}
+					></div>
+					<div className="w-full sm:w-1/2">
 						<Button
 							htmlType="submit"
 							block
