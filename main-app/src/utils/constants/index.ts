@@ -28,6 +28,18 @@ export const URL = {
 	STUDENTS_LIST: "/instructor/students",
 	TUTOR_WALLET: "/instructor/wallet",
 	SETTINGS: "/instructor/settings",
+
+	//Admin URL
+	ADMIN_OVERVIEW: "/admin/overview",
+	ADMIN_COURSES: "/admin/courses",
+	TUTOR_LIST: "/admin/instructors",
+	ADMIN_WALLET: "/admin/wallet",
+	ADMIN_SETTINGS: "/admin/settings",
+	ADMIN_USERS: "/admin/user/:id",
+	ADMIN_STUDENTS: "/admin/instructor/:slug/students",
+	ADMIN_CREATE_INSTRUCTOR: "/admin/create-instructor",
+	ADMIN_BLOGS: "/admin/blog",
+	ADMIN_CREATE_BLOGS: "/admin/create-blog",
 };
 
 export const APPCONSTANTS = {
@@ -135,6 +147,56 @@ export const APPCONSTANTS = {
 		{
 			path: URL.SETTINGS,
 			name: "Instructor settings",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_OVERVIEW,
+			name: "admin settings",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_COURSES,
+			name: "admin courses",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.TUTOR_LIST,
+			name: "admin instructors",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_STUDENTS,
+			name: "admin instructors",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_CREATE_INSTRUCTOR,
+			name: "admin instructors",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_WALLET,
+			name: "admin instructors",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_BLOGS,
+			name: "admin instructors",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_CREATE_BLOGS,
+			name: "admin instructors",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_SETTINGS,
+			name: "admin instructors",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_USERS,
+			name: "admin users",
 			icon: UserOutlined,
 		},
 	],

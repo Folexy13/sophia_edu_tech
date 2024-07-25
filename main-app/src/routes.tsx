@@ -27,6 +27,18 @@ import {
 	StudentsPage,
 	TutorWalletPage,
 } from "./pages/TUTOR";
+import {
+	AdminBlogPage,
+	AdminCoursePage,
+	AdminCreateBlogPage,
+	AdminCreateInstructorPage,
+	AdminEditUserPage,
+	AdminInstructorsPage,
+	AdminOverviewPage,
+	AdminSettingsPage,
+	AdminStudentsPage,
+	AdminTutorWalletPage,
+} from "./pages/ADMIN";
 
 const Router: React.FC = () => {
 	const authenticated = getStoredAuthToken();
@@ -136,6 +148,50 @@ const Router: React.FC = () => {
 						<Route
 							path={APPCONSTANTS.ROUTES[19].path}
 							element={<SettingsPage />}
+						/>
+						<Route
+							path={APPCONSTANTS.ROUTES[20].path}
+							element={<AdminOverviewPage />}
+						/>
+						<Route
+							path={APPCONSTANTS.ROUTES[21].path}
+							element={<AdminCoursePage />}
+						/>
+						<Route
+							path={APPCONSTANTS.ROUTES[22].path}
+							element={<AdminInstructorsPage />}
+						/>
+						<Route
+							path={APPCONSTANTS.ROUTES[23].path}
+							element={<AdminStudentsPage />}
+						/>
+
+						<Route
+							path={APPCONSTANTS.ROUTES[24].path}
+							element={<AdminCreateInstructorPage />}
+						/>
+						<Route
+							path={APPCONSTANTS.ROUTES[25].path}
+							element={<AdminTutorWalletPage />}
+						/>
+
+						<Route
+							path={APPCONSTANTS.ROUTES[26].path}
+							element={<AdminBlogPage />}
+						/>
+
+						<Route
+							path={APPCONSTANTS.ROUTES[27].path}
+							element={<AdminCreateBlogPage />}
+						/>
+
+						<Route
+							path={APPCONSTANTS.ROUTES[28].path}
+							element={<AdminSettingsPage />}
+						/>
+						<Route
+							path={APPCONSTANTS.ROUTES[29].path}
+							element={<AdminEditUserPage />}
 						/>
 					</>
 				)}

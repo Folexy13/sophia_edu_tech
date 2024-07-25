@@ -47,6 +47,23 @@ button {
 :where(.css-dev-only-do-not-override-mzwlov).ant-modal .ant-modal-title {
 	text-align: center;
 }
+.ant-checkbox-checked .ant-checkbox-inner {
+	background-color: #800080; /* Purple color */
+	border-color: #800080; /* Purple color */
+	&:hover {
+		background-color: #800080; /* Purple color */
+		border-color: #800080;
+	}
+}
+
+.ant-checkbox-checked::after {
+	border-color: #800080; /* Purple color */
+}
+
+// .checkbox-group .ant-checkbox-wrapper {
+// 	display: block; /* Each checkbox on a new line */
+// 	margin-bottom: 8px; /* Optional: Add some spacing between checkboxes */
+// }
 .homepage_btn {
 	&:hover {
 		background: #581a57b4 !important;

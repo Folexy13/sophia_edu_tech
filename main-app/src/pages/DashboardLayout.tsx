@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import {
 	avatar,
+	BlogIcon,
 	CourseIcon,
 	Logo,
 	NotificationBell,
@@ -22,9 +23,11 @@ const { Header, Sider, Content } = Layout;
 
 const DashboardLayout: React.FC<{
 	children: ReactNode;
-	title: string;
+	title: any;
 	hasMargin?: boolean;
-}> = ({ children, title, hasMargin }) => {
+	isAdmin?: boolean;
+	onclick?: any;
+}> = ({ children, title, hasMargin, isAdmin, onclick }) => {
 	const [activeKey, setActiveKey] = useState<string>("1");
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
@@ -37,32 +40,70 @@ const DashboardLayout: React.FC<{
 		setOpen(true);
 	};
 	useEffect(() => {
-		if (pathname === URL.OVERVIEW) {
+		if (pathname === URL.OVERVIEW || pathname === URL.ADMIN_OVERVIEW) {
 			setActiveKey("1");
-		} else if (pathname === URL.COURSES || pathname === URL.CREATE_COURSE) {
+		} else if (
+			pathname === URL.COURSES ||
+			pathname === URL.ADMIN_COURSES ||
+			pathname === URL.CREATE_COURSE
+		) {
 			setActiveKey("2");
-		} else if (pathname === URL.STUDENTS_LIST) {
+		} else if (
+			pathname === URL.STUDENTS_LIST ||
+			pathname === URL.TUTOR_LIST ||
+			pathname === URL.ADMIN_STUDENTS
+		) {
 			setActiveKey("3");
-		} else if (pathname === URL.TUTOR_WALLET) {
+		} else if (pathname === URL.TUTOR_WALLET || pathname === URL.ADMIN_WALLET) {
 			setActiveKey("4");
-		} else if (pathname === URL.SETTINGS) {
+		} else if (
+			pathname === URL.SETTINGS ||
+			pathname === URL.ADMIN_BLOGS ||
+			pathname === URL.ADMIN_CREATE_BLOGS
+		) {
 			setActiveKey("5");
+		} else {
+			setActiveKey("6");
 		}
-		return () => {};
-	}, [pathname]);
-
+	}, [pathname, URL, setActiveKey]);
 	const handleMenuClick = (e: any) => {
 		setActiveKey(e.key);
 		if (e.key === "1") {
-			navigate(URL.OVERVIEW);
+			if (isAdmin) {
+				navigate(URL.ADMIN_OVERVIEW);
+			} else {
+				navigate(URL.OVERVIEW);
+			}
+			setActiveKey("1");
 		} else if (e.key === "2") {
-			navigate(URL.COURSES);
+			if (isAdmin) {
+				navigate(URL.ADMIN_COURSES);
+			} else {
+				navigate(URL.COURSES);
+			}
+			setActiveKey("2");
 		} else if (e.key === "3") {
-			navigate(URL.STUDENTS_LIST);
+			if (isAdmin) {
+				navigate(URL.TUTOR_LIST);
+			} else {
+				navigate(URL.STUDENTS_LIST);
+			}
+			setActiveKey("3");
 		} else if (e.key === "4") {
-			navigate(URL.TUTOR_WALLET);
+			if (isAdmin) {
+				navigate(URL.ADMIN_WALLET);
+			} else {
+				navigate(URL.TUTOR_WALLET);
+			}
+			setActiveKey("4");
 		} else if (e.key === "5") {
-			navigate(URL.SETTINGS);
+			if (isAdmin) {
+				navigate(URL.ADMIN_BLOGS);
+			} else {
+				navigate(URL.SETTINGS);
+			}
+		} else {
+			navigate(URL.ADMIN_SETTINGS);
 		}
 	};
 	const dropdown: MenuProps["items"] = [
@@ -126,7 +167,7 @@ const DashboardLayout: React.FC<{
 						}
 						className={getMenuItemClass("3")}
 					>
-						Students
+						{isAdmin ? "Instructors" : "Students"}
 					</Menu.Item>
 					<Menu.Item
 						key="4"
@@ -137,22 +178,51 @@ const DashboardLayout: React.FC<{
 					>
 						Wallet
 					</Menu.Item>
-					<Menu.Item
-						key="5"
-						icon={
-							<SettingOutlined
-								color={activeKey == "5" ? "#581A57" : "#808080"}
-							/>
-						}
-						className={getMenuItemClass("5")}
-					>
-						Settings
-					</Menu.Item>
+					{isAdmin ? (
+						<>
+							<Menu.Item
+								key="5"
+								icon={
+									<BlogIcon color={activeKey == "5" ? "#581A57" : "#808080"} />
+								}
+								className={getMenuItemClass("5")}
+							>
+								Blog
+							</Menu.Item>
+
+							<Menu.Item
+								key="6"
+								icon={
+									<SettingOutlined
+										color={activeKey == "6" ? "#581A57" : "#808080"}
+									/>
+								}
+								className={getMenuItemClass("6")}
+							>
+								Settings
+							</Menu.Item>
+						</>
+					) : (
+						<Menu.Item
+							key="5"
+							icon={
+								<SettingOutlined
+									color={activeKey == "5" ? "#581A57" : "#808080"}
+								/>
+							}
+							className={getMenuItemClass("5")}
+						>
+							Settings
+						</Menu.Item>
+					)}
 				</Menu>
 			</Sider>
 			<Layout className="site-layout ">
 				<Header className="!px-[20px] sm:!pr-[20px] !pr-0 bg-white flex justify-between items-center">
-					<h2 className=" font-semibold inter-bold text-[24px] !hidden md:!block">
+					<h2
+						className="cursor-pointer font-semibold inter-bold text-[24px] !hidden md:!block"
+						onClick={onclick}
+					>
 						{title}
 					</h2>
 					<div className="flex gap-6 md:!hidden">
