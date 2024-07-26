@@ -83,7 +83,7 @@ const WalletPage: React.FC = () => {
 		setType(type);
 	};
 
-	const isMobile = useScreenSize();
+	const { isMobile } = useScreenSize();
 	return (
 		<Layout title="Wallet" hasMargin={!isMobile}>
 			<Card className="my-4 p-3 course_card">

@@ -13,7 +13,6 @@ const instructorNames = [
 	"Jane Smith",
 	"Chris Johnson",
 ];
-const courses = ["Agriculture", "Engineering", "Mathematics", "Physics"];
 
 const columns: TableColumnsType<any> = [
 	{
@@ -39,7 +38,7 @@ const columns: TableColumnsType<any> = [
 ];
 
 const BlogsPage: React.FC = () => {
-	const isMobile = useScreenSize();
+	const { isMobile } = useScreenSize();
 	const nav = useNavigate();
 	const getDropdownItems = (id: number) => [
 		{

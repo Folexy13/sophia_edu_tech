@@ -43,7 +43,7 @@ const columns: TableColumnsType<any> = [
 ];
 
 const SettingssPage: React.FC = () => {
-	const isMobile = useScreenSize();
+	const { isMobile } = useScreenSize();
 	const nav = useNavigate();
 	const getDropdownItems = (id: number) => [
 		{

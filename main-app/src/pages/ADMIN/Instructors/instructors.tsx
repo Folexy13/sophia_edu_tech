@@ -46,7 +46,7 @@ const columns: TableColumnsType<any> = [
 ];
 
 const StudentsPage: React.FC = () => {
-	const isMobile = useScreenSize();
+	const { isMobile } = useScreenSize();
 	const nav = useNavigate();
 	const getDropdownItems = (id: number) => [
 		{

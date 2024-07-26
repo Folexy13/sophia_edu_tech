@@ -4,6 +4,7 @@ export interface UserProps {
 	email: string;
 	password: string;
 	phone?: string;
+	profile_image?: string;
 	location?: any;
 	confirm_password: string;
 	licenses_certifications?: any[];

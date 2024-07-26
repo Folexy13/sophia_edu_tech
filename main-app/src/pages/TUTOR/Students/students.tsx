@@ -69,7 +69,7 @@ for (let i = 0; i < 106; i++) {
 }
 
 const StudentsPage: React.FC = () => {
-	const isMobile = useScreenSize();
+	const { isMobile } = useScreenSize();
 	return (
 		<Layout title="Students" hasMargin={!isMobile}>
 			<Card className="my-4 p-3 course_card">

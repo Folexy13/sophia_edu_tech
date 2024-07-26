@@ -12,15 +12,19 @@ import {
 import "./navbar.scss";
 import { DownOutlined } from "@ant-design/icons";
 import { BellOutlined, MessageOutlined, PlusOutlined } from "@ant-design/icons";
-import { avatar, Logo } from "../../assets";
+import { Logo } from "../../assets";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../utils/constants";
+import { getAvatar } from "../../utils/helperFunction";
+import { truncate } from "lodash";
+import { useScreenSize } from "../../utils/hooks/useScreen";
 
 const { Title } = Typography;
 
-const Navbar: React.FC<any> = () => {
+const Navbar: React.FC<{ data: any }> = ({ data }) => {
 	const navigate = useNavigate();
 	type MenuItem = Required<MenuProps>["items"][number];
+	const { isTablet } = useScreenSize();
 	const items: MenuItem[] = [
 		{
 			key: "home",
@@ -106,61 +110,105 @@ const Navbar: React.FC<any> = () => {
 				className="logo cursor-pointer"
 				onClick={() => navigate("/")}
 			>
-				<img src={Logo} alt="..." style={{ width: 108 }} />
+				<img src={Logo} alt="..." className="md-920:w-[108px] w-[60px]" />
 			</Title>
 			<Input
 				placeholder="Search"
 				// enterButton="Search"
 				size="large"
 				allowClear
-				className="w-[200px] sm:w-[250px] rounded-3xl p-2 ml-[12px] md:ml-0 md:p-3"
+				className={`${
+					isTablet ? "w-[50%]" : "w-[250px]"
+				}   rounded-3xl p-2 ml-[12px] md:ml-0 md:p-3`}
 			/>
-			<div className="none">
-				<Menu
-					onClick={onClick}
-					style={{ width: 256 }}
-					mode="horizontal"
-					items={items}
-				/>
-			</div>
-			<div className="flex gap-6">
-				<div className="flex">
-					<div
-						className="cursor-pointer"
-						onClick={() => navigate(URL.NOTIFICATION)}
-					>
-						<Badge dot={true} className="cursor">
-							<BellOutlined style={{ fontSize: "20px", marginLeft: "20px" }} />
-						</Badge>
+			{isTablet ? (
+				<>
+					<div className="flex !gap-[20px]">
+						<div
+							className="cursor-pointer"
+							onClick={() => navigate(URL.NOTIFICATION)}
+						>
+							<Badge dot={true} className="cursor">
+								<BellOutlined
+									className="sm:text-[24px] text-[18px]"
+									style={{ marginLeft: "20px" }}
+								/>
+							</Badge>
+						</div>
+						<Dropdown menu={{ items: dropdown }}>
+							<Space>
+								<img
+									src={getAvatar(data?.profile_image)}
+									alt=".."
+									width={30}
+									className="w-[30px] md-920:w-[60px]"
+									style={{ borderRadius: "50%" }}
+								/>
+
+								<DownOutlined />
+							</Space>
+						</Dropdown>
 					</div>
-					<div
-						className="cursor-pointer"
-						onClick={() => navigate(URL.NOTIFICATION)}
-					>
-						<Badge dot className="cursor">
-							<MessageOutlined
-								style={{ fontSize: "20px", marginLeft: "20px" }}
-							/>
-						</Badge>
+				</>
+			) : (
+				<>
+					<div className="none">
+						<Menu
+							onClick={onClick}
+							// style={{ width: 256 }}
+							mode="horizontal"
+							items={items}
+						/>
 					</div>
-				</div>
-				<div
-					className="flex upload cursor-pointer"
-					onClick={() => navigate(URL.UPLOAD)}
-				>
-					<PlusOutlined style={{ fontSize: "20px", marginLeft: "20px" }} />
-					<p className="text-[#581A57] text-sm font-[inter]">Upload</p>
-				</div>
-			</div>
-			<Dropdown menu={{ items: dropdown }}>
-				<Button>
-					<Space>
-						<img src={avatar} alt=".." width={30} />
-						<span>Aluko Opeyemi</span>
-						<DownOutlined />
-					</Space>
-				</Button>
-			</Dropdown>
+					<div className="flex gap-6">
+						<div className="flex">
+							<div
+								className="cursor-pointer"
+								onClick={() => navigate(URL.NOTIFICATION)}
+							>
+								<Badge dot={true} className="cursor">
+									<BellOutlined
+										style={{ fontSize: "20px", marginLeft: "20px" }}
+									/>
+								</Badge>
+							</div>
+							<div
+								className="cursor-pointer"
+								onClick={() => navigate(URL.NOTIFICATION)}
+							>
+								<Badge dot className="cursor">
+									<MessageOutlined
+										style={{ fontSize: "20px", marginLeft: "20px" }}
+									/>
+								</Badge>
+							</div>
+						</div>
+						<div
+							className="flex upload cursor-pointer"
+							onClick={() => navigate(URL.UPLOAD)}
+						>
+							<PlusOutlined style={{ fontSize: "20px", marginLeft: "20px" }} />
+							<p className="text-[#581A57] text-sm font-[inter]">Upload</p>
+						</div>
+					</div>
+					<Dropdown menu={{ items: dropdown }}>
+						<Button>
+							<Space>
+								<img
+									src={getAvatar(data?.profile_image)}
+									alt=".."
+									width={30}
+									style={{ borderRadius: "50%" }}
+								/>
+
+								<span>{truncate(data?.full_name, { length: 20 })}</span>
+
+								<DownOutlined />
+							</Space>
+						</Button>
+					</Dropdown>
+				</>
+			)}
 		</div>
 	);
 };

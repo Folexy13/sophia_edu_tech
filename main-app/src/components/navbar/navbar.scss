@@ -8,6 +8,10 @@
 	transition: 0.3s ease all;
 	background-color: #fff;
 	border-radius: 10px;
+	@media (max-width: 680px) {
+		width: 100% !important;
+		padding: 10px !important;
+	}
 	&.fixed {
 		position: fixed;
 		top: 0;
@@ -49,6 +53,5 @@
 		.ant-dropdown-link2 {
 			display: block;
 		}
-		padding: 5px 20px;
 	}
 }

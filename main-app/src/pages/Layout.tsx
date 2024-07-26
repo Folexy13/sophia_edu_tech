@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Menu, Layout as AntdLayout } from "antd";
 import {
 	HomeOutlined,
@@ -7,12 +7,25 @@ import {
 	DownOutlined,
 } from "@ant-design/icons";
 import { Navbar } from "../components";
+import { ClientRequest } from "../requests";
+import { useUser } from "../store";
 const { Footer } = AntdLayout;
 const Layout: React.FC<any> = ({ children }) => {
+	const { setUser, user } = useUser();
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			const res: any = await ClientRequest.getMe();
+			if (res) {
+				setUser(res); // Set user data in Zustand store
+			}
+		};
+		fetchUser();
+	}, [setUser]);
 	return (
 		<div className="relative ">
-			<div className="p-[10px] md:p-[40px]">
-				<Navbar />
+			<div className="p-[30px] px-[20px] md-920:p-[40px]">
+				<Navbar data={user} />
 			</div>
 			<div>{children}</div>
 			<Footer

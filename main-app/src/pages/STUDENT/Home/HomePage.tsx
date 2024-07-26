@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "../../Layout";
+import { truncate } from "lodash";
 import {
 	AddressLocator,
 	avatar,
@@ -16,9 +17,12 @@ import { Button } from "../../../components";
 import { Dropdown, MenuProps, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../../utils/constants";
+import { useUser } from "../../../store";
+import { getAvatar } from "../../../utils/helperFunction";
 // import { Modal } from "../../../components";
 const HomePage: React.FC = () => {
 	const nav = useNavigate();
+	const { user } = useUser();
 
 	const items: MenuProps["items"] = [
 		{
@@ -37,25 +41,41 @@ const HomePage: React.FC = () => {
 				{/* First Section */}
 				<div className="overflow-y-auto flex-[0.25] min-h-[400px] bg-white rounded-lg border-[#B6B6B6] border flex flex-col items-center justify-center">
 					{/* profile image */}
-					<img src={avatar} alt="profile_image" width={100} />
-					<p className="font-semibold text-[16px]">Aluko Opeyemi</p>
+					<img
+						src={getAvatar(user?.profile_image)}
+						alt="profile_image"
+						width={100}
+						style={{ borderRadius: "50%" }}
+					/>
+					<p className="font-semibold text-[16px]">{user?.full_name}</p>
 					<p className="text-[#808080] text-[14px] my-[10px] flex gap-2 items-center">
 						<AddressLocator />
 						<span>Location</span>
 					</p>
 					<p className="text-[#666666] font-normal  text-[16px] leading-[25px] my-[10px]">
-						{" "}
-						MSc. Forensic SCience..
+						{user &&
+							user.education &&
+							user.education[0] &&
+							user.education[0].degree}
 					</p>
 					<p className="text-[#666666] font-normal  text-[16px] leading-[25px] my-[10px]">
-						Editor, The guardian news..
+						{user &&
+							user.education &&
+							user.education[0] &&
+							truncate(user.education[0].field_of_study, { length: 20 })}
 					</p>
 					<p className="text-[#666666] font-normal  text-[16px] leading-[25px] my-[10px]">
-						AWS, Azure
+						{user &&
+							user.licenses_certifications &&
+							user.licenses_certifications[0] &&
+							truncate(user.licenses_certifications[0].name, {
+								length: 20,
+							})}
 					</p>
 
 					<Button
 						label="View Profile"
+						onclick={() => nav(URL.BIO)}
 						className="text-white bg-[#581A57] p-3 homepage_btn"
 					/>
 				</div>

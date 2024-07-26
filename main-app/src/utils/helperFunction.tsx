@@ -11,3 +11,11 @@ export const getRandomDate = () => {
 		date.getMonth() + 1
 	}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}pm`;
 };
+
+export const getAvatar = (avatar?: string) => {
+	if (avatar) {
+		return avatar;
+	} else {
+		return "https://p7.hiclipart.com/preview/247/564/869/computer-icons-user-profile-clip-art-user-avatar-thumbnail.jpg";
+	}
+};

@@ -58,9 +58,12 @@
 		}
 	}
 	.first-container {
-		padding: 100px;
+		padding: 40px;
 		height: 100%;
 
+		@media (min-width: 1200px) {
+			padding: 100px;
+		}
 		.main {
 			height: 510px;
 			margin: 40px 0;
@@ -80,7 +83,8 @@
 						right: 123px;
 					}
 					@media (max-width: 1400px) {
-						right: 18px;
+						right: 70px;
+						bottom: 100px;
 					}
 				}
 			}

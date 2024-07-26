@@ -39,7 +39,7 @@ const columns: TableColumnsType<any> = [
 ];
 
 const WalletPage: React.FC = () => {
-	const isMobile = useScreenSize();
+	const { isMobile } = useScreenSize();
 	const nav = useNavigate();
 
 	const data: any = [];
