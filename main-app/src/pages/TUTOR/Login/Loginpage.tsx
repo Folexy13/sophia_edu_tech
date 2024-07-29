@@ -41,12 +41,12 @@ const Loginpage: React.FC<any> = () => {
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
 		try {
-			const res: any = await AuthRequest.login(values); // Assuming AuthRequest returns a promise
+			const res: any = await AuthRequest.instructorLogin(values); // Assuming AuthRequest returns a promise
 			console.log(res); // Log response if needed
 			onSuccess("Login successful!"); // Trigger success alert
 			onLogin(res?.access_token);
-			setStoredAuthToken(res?.access_token, "student");
-			nav(URL.HOME);
+			setStoredAuthToken(res?.access_token, "instructor");
+			nav(URL.OVERVIEW);
 		} catch (error: any) {
 			console.error("Login error:", error);
 			AlertFailure(error.message); // Trigger failure alert

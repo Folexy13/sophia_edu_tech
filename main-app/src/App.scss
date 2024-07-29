@@ -146,6 +146,12 @@ button:disabled {
 	}
 }
 
+:where(.css-dev-only-do-not-override-mzwlov).ant-btn-default:not(:disabled):not(
+		.ant-btn-disabled
+	):hover {
+	border-color: unset;
+}
+
 .course_card {
 	width: 100%;
 	overflow: auto;

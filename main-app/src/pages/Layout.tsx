@@ -6,12 +6,25 @@ import {
 	PlusOutlined,
 	DownOutlined,
 } from "@ant-design/icons";
-import { Navbar } from "../components";
+import { Modal, Navbar } from "../components";
 import { ClientRequest } from "../requests";
-import { useUser } from "../store";
+import { useModal, useUser } from "../store";
 const { Footer } = AntdLayout;
 const Layout: React.FC<any> = ({ children }) => {
 	const { setUser, user } = useUser();
+	const {
+		visible,
+		modalTitle,
+		modalContent,
+		confirmLoading,
+		onCancel,
+		toggleModal,
+	} = useModal();
+
+	const handleCancel = () => {
+		onCancel();
+		toggleModal();
+	};
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -27,7 +40,17 @@ const Layout: React.FC<any> = ({ children }) => {
 			<div className="p-[30px] px-[20px] md-920:p-[40px]">
 				<Navbar data={user} />
 			</div>
-			<div>{children}</div>
+			<div>
+				{children}
+				<Modal
+					isOpen={visible}
+					onClose={handleCancel}
+					title={modalTitle}
+					confirmLoading={confirmLoading}
+				>
+					{modalContent}
+				</Modal>
+			</div>
 			<Footer
 				className="flex justify-between md:hidden w-full "
 				style={{ position: "fixed", bottom: 0, width: "100%" }}

@@ -18,11 +18,24 @@ import { URL } from "../../utils/constants";
 import { getAvatar } from "../../utils/helperFunction";
 import { truncate } from "lodash";
 import { useScreenSize } from "../../utils/hooks/useScreen";
+import { useModal } from "../../store";
+import { LogOutModal } from "..";
 
 const { Title } = Typography;
 
 const Navbar: React.FC<{ data: any }> = ({ data }) => {
 	const navigate = useNavigate();
+	const { showConfirmModal } = useModal();
+
+	const showLogout = () => {
+		showConfirmModal(
+			"",
+			<LogOutModal />,
+			() => console.log("Confirmed"),
+			() => console.log("Cancelled")
+		);
+	};
+
 	type MenuItem = Required<MenuProps>["items"][number];
 	const { isTablet } = useScreenSize();
 	const items: MenuItem[] = [
@@ -71,6 +84,14 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 				</div>
 			),
 			disabled: true,
+		},
+		{
+			key: "6",
+			label: (
+				<div className="text-[#f00]" onClick={showLogout}>
+					Logout
+				</div>
+			),
 		},
 	];
 

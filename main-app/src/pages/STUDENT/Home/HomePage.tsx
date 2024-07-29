@@ -36,7 +36,6 @@ const HomePage: React.FC = () => {
 	];
 	return (
 		<Layout>
-			{/* <Modal isOpen={true} /> */}
 			<div className="flex px-[80px]  gap-4 items-start pb-[20px]">
 				{/* First Section */}
 				<div className="overflow-y-auto flex-[0.25] min-h-[400px] bg-white rounded-lg border-[#B6B6B6] border flex flex-col items-center justify-center">

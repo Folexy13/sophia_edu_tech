@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { create } from "zustand";
 export interface UserProps {
 	full_name: string;
@@ -32,6 +33,27 @@ interface AlertState {
 	onReset: () => void;
 }
 
+interface ModalState {
+	visible: boolean;
+	modalTitle: ReactNode;
+	modalContent: ReactNode;
+	confirmLoading: boolean;
+	onOk: () => void;
+	onCancel: () => void;
+	toggleModal: () => void;
+	showConfirmModal: (
+		title: ReactNode,
+		content: ReactNode,
+		onOk: () => void,
+		onCancel: () => void
+	) => void;
+	showConfirmLoadingModal: (
+		title: ReactNode,
+		content: ReactNode,
+		onOk: () => void
+	) => void;
+}
+
 // Define the UserState interface that includes UserProps and related actions
 interface UserState {
 	user: UserProps | null;
@@ -60,6 +82,33 @@ export const useAlert = create<AlertState>((set) => ({
 	onFailure: (message: string) => set({ status: "error", message }),
 	onInfo: (message: string) => set({ status: "error", message }),
 	onReset: () => set({ status: null, message: null }),
+}));
+
+export const useModal = create<ModalState>((set) => ({
+	visible: false,
+	modalTitle: "",
+	modalContent: "",
+	confirmLoading: false,
+	onOk: () => {},
+	onCancel: () => {},
+	toggleModal: () => set((state) => ({ visible: !state.visible })),
+	showConfirmModal: (title, content, onOk, onCancel) =>
+		set(() => ({
+			visible: true,
+			modalTitle: title,
+			modalContent: content,
+			onOk,
+			onCancel,
+			confirmLoading: false,
+		})),
+	showConfirmLoadingModal: (title, content, onOk) =>
+		set(() => ({
+			visible: true,
+			modalTitle: title,
+			modalContent: content,
+			onOk,
+			confirmLoading: true,
+		})),
 }));
 
 export const useAuthToken = () => useAuth((state) => state.token);

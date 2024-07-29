@@ -14,6 +14,7 @@ interface IButtonProps {
 	onhover?: () => void;
 	label: string;
 	loading?: boolean;
+	disabled?: boolean;
 	type?: string; // Added type prop
 	iconColor?: string; // Added type prop
 	active?: boolean;
@@ -31,11 +32,13 @@ const Button: React.FC<IButtonProps> = ({
 	icon,
 	iconColor,
 	type, // Default type is empty string
+	disabled,
 }) => {
 	if (type === "tab") {
 		return (
 			<AntdButton
 				loading={loading}
+				disabled={disabled}
 				className={[
 					"border-[0] border-t-[2px] rounded-0 flex flex-col items-center justify-center",
 					active
@@ -54,6 +57,7 @@ const Button: React.FC<IButtonProps> = ({
 	} else {
 		return (
 			<AntdButton
+				disabled={disabled}
 				loading={loading}
 				className={className}
 				block={block}

@@ -83,6 +83,66 @@ class ClientRequests {
 			throw new Error(errorMessage);
 		}
 	};
+
+	sendMessage = async (payload: any) => {
+		try {
+			const response = await api.post(`/messages`, payload);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+
+	getMessages = async () => {
+		try {
+			const response = await api.get(`/messages`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+
+	getMessage = async (userId: number) => {
+		try {
+			const response = await api.get(`/messages/${userId}`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+
+	markReadMessage = async (message_id: string) => {
+		try {
+			const response = await api.put(`/messages/${message_id}`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
 }
 
 const clientRequests = new ClientRequests();

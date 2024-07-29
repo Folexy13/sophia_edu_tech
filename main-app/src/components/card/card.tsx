@@ -26,7 +26,6 @@ const Container: React.FC<ICardProps> = ({
 	buttonText,
 	buttonColor,
 	isSubscribed,
-	buttonLink,
 }) => {
 	const [open, setOpen] = useState(false);
 	const [buttonLoading, setButtonLoading] = useState({

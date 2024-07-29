@@ -28,6 +28,7 @@ export const URL = {
 	STUDENTS_LIST: "/instructor/students",
 	TUTOR_WALLET: "/instructor/wallet",
 	SETTINGS: "/instructor/settings",
+	TUTORLOGIN: "/instructor/login",
 
 	//Admin URL
 	ADMIN_OVERVIEW: "/admin/overview",
@@ -40,6 +41,7 @@ export const URL = {
 	ADMIN_CREATE_INSTRUCTOR: "/admin/create-instructor",
 	ADMIN_BLOGS: "/admin/blog",
 	ADMIN_CREATE_BLOGS: "/admin/create-blog",
+	ADMIN_LOGIN: "/admin/login",
 };
 
 export const APPCONSTANTS = {
@@ -196,6 +198,16 @@ export const APPCONSTANTS = {
 		},
 		{
 			path: URL.ADMIN_USERS,
+			name: "admin users",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.TUTORLOGIN,
+			name: "admin users",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_LOGIN,
 			name: "admin users",
 			icon: UserOutlined,
 		},

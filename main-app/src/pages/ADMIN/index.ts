@@ -8,3 +8,4 @@ export { default as AdminStudentsPage } from "./Instructors/students";
 export { default as AdminBlogPage } from "./Blogs/blogs";
 export { default as AdminCreateBlogPage } from "./Blogs/create";
 export { default as AdminCreateInstructorPage } from "./Instructors/create";
+export { default as AdminLogin } from "./Login/Loginpage";

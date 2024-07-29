@@ -21,7 +21,7 @@ import { useAlert, useAuth } from "../../../store";
 import { setStoredAuthToken } from "../../../utils/storage";
 import { APPCONSTANTS, URL } from "../../../utils/constants";
 type FieldType = {
-	email?: string;
+	username?: string;
 	password?: string;
 	remember?: string;
 };
@@ -41,12 +41,12 @@ const Loginpage: React.FC<any> = () => {
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
 		try {
-			const res: any = await AuthRequest.login(values); // Assuming AuthRequest returns a promise
+			const res: any = await AuthRequest.adminLogin(values); // Assuming AuthRequest returns a promise
 			console.log(res); // Log response if needed
 			onSuccess("Login successful!"); // Trigger success alert
 			onLogin(res?.access_token);
-			setStoredAuthToken(res?.access_token, "student");
-			nav(URL.HOME);
+			setStoredAuthToken(res?.access_token, "admin");
+			nav(URL.ADMIN_OVERVIEW);
 		} catch (error: any) {
 			console.error("Login error:", error);
 			AlertFailure(error.message); // Trigger failure alert
@@ -107,9 +107,9 @@ const Loginpage: React.FC<any> = () => {
 							// autoComplete="off"
 						>
 							<Form.Item
-								label="Email address"
+								label="Username"
 								className="inter-normal"
-								name={"email"}
+								name={"username"}
 							>
 								<Input />
 							</Form.Item>

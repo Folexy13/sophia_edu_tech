@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../DashboardLayout";
-import { Button, Form, Input, Select } from "antd";
 
+import { Button, Form, FormProps, Input, Select } from "antd";
+import { AdminRequest } from "../../../requests";
+import { useAlert } from "../../../store";
+type FieldType = {
+	email?: string;
+	password?: string;
+	remember?: string;
+};
 const CreateCoursePage: React.FC = () => {
 	const [form] = Form.useForm();
+	const [loading, setLoading] = useState(false);
+	const { onFailure: AlertFailure, onSuccess } = useAlert();
+
 	const [moduleNumber, setModuleNumber] = useState<number>(1);
 
 	useEffect(() => {
@@ -15,28 +25,51 @@ const CreateCoursePage: React.FC = () => {
 		const numberOfModules = form.getFieldValue("number_of_module");
 		setModuleNumber(numberOfModules || 1);
 	};
+	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
+		setLoading(true);
+		try {
+			const res: any = await AdminRequest.createInstructor(values); // Assuming AuthRequest returns a promise
+			console.log(res); // Log response if needed
+			onSuccess("Instructor created successfully!");
+			form.resetFields();
+		} catch (error: any) {
+			console.error("Login error:", error);
+			AlertFailure(error.message); // Trigger failure alert
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
+		errorInfo: any
+	) => {
+		console.log("Failed:", errorInfo);
+	};
 
 	return (
 		<Layout title="Instructor" isAdmin>
 			{/* Personal information secion */}
-			<div className="flex flex-col sm:flex-row gap-2 my-[28px] items-start">
-				<div className="w-full sm:w-1/2">
-					<div>
-						<h3 className="mb-[10px] text-[24px] font-semibold">
-							Personal Information
-						</h3>
-						<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-							This section contains instructor details like name,phone etc.
-						</p>
+			<Form
+				layout="vertical"
+				form={form}
+				onFinish={onFinish}
+				onValuesChange={handleValuesChange}
+				initialValues={{}}
+				onFinishFailed={onFinishFailed}
+				className="p-4 sm:p-0"
+			>
+				<div className="flex flex-col sm:flex-row gap-2 my-[28px] items-start">
+					<div className="w-full sm:w-1/2">
+						<div>
+							<h3 className="mb-[10px] text-[24px] font-semibold">
+								Personal Information
+							</h3>
+							<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+								This section contains instructor details like name,phone etc.
+							</p>
+						</div>
 					</div>
-				</div>
-				<div className="w-full sm:w-1/2">
-					<Form
-						layout="vertical"
-						form={form}
-						onValuesChange={handleValuesChange}
-						initialValues={{}}
-					>
+					<div className="w-full sm:w-1/2">
 						<Form.Item
 							label="Full Name"
 							className="inter-normal"
@@ -47,7 +80,7 @@ const CreateCoursePage: React.FC = () => {
 						<Form.Item
 							label="Email Address"
 							className="inter-normal"
-							name={"email_address"}
+							name={"email"}
 						>
 							<Input
 								placeholder="folajimiopeyemisax13@gmail.com"
@@ -57,37 +90,30 @@ const CreateCoursePage: React.FC = () => {
 						<Form.Item
 							label="Phone Number"
 							className="inter-normal"
-							name={"course_title"}
+							name={"phone"}
 						>
 							<Input placeholder="+443232424242" className="p-2" />
 						</Form.Item>
-					</Form>
-				</div>
-			</div>
-
-			{/* Assign courses section */}
-			<div className="flex flex-col sm:flex-row gap-2 my-[28px] items-start">
-				<div className="w-full sm:w-1/2">
-					<div>
-						<h3 className="mb-[10px] text-[24px] font-semibold">
-							Assign Course
-						</h3>
-						<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-							Attach a course to the instructor
-						</p>
 					</div>
 				</div>
-				<div className="w-full sm:w-1/2">
-					<Form
-						layout="vertical"
-						form={form}
-						onValuesChange={handleValuesChange}
-						initialValues={{ number_of_module: 1 }}
-					>
+
+				{/* Assign courses section */}
+				<div className="flex flex-col sm:flex-row gap-2 my-[28px] items-start">
+					<div className="w-full sm:w-1/2">
+						<div>
+							<h3 className="mb-[10px] text-[24px] font-semibold">
+								Assign Course
+							</h3>
+							<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+								Attach a course to the instructor
+							</p>
+						</div>
+					</div>
+					<div className="w-full sm:w-1/2">
 						<Form.Item
 							label="Course Category"
 							className="inter-normal"
-							name={"course_category"}
+							name={"course"}
 						>
 							<Select
 								placeholder="Select a Category"
@@ -161,7 +187,7 @@ const CreateCoursePage: React.FC = () => {
 								label={`Module ${i + 1}`}
 								key={i}
 								className="inter-normal"
-								name={`module_${i + 1}_title`}
+								name={["modules", i, "description"]}
 							>
 								<Input
 									className="p-[12px]"
@@ -177,48 +203,41 @@ const CreateCoursePage: React.FC = () => {
 								Add More
 							</Button>
 						</Form.Item>
-					</Form>
-				</div>
-			</div>
-
-			{/* Create Password section */}
-			<div className="flex flex-col sm:flex-row gap-2 my-[28px] items-start">
-				<div className="w-full sm:w-1/2">
-					<div>
-						<h3 className="mb-[10px] text-[24px] font-semibold">
-							Create Password
-						</h3>
-						<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-							Create Password for instructor
-						</p>
 					</div>
 				</div>
-				<div className="w-full sm:w-1/2">
-					<Form
-						layout="vertical"
-						form={form}
-						onValuesChange={handleValuesChange}
-						initialValues={{}}
-					>
+
+				{/* Create Password section */}
+				<div className="flex flex-col sm:flex-row gap-2 my-[28px] items-start">
+					<div className="w-full sm:w-1/2">
+						<div>
+							<h3 className="mb-[10px] text-[24px] font-semibold">
+								Create Password
+							</h3>
+							<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+								Create Password for instructor
+							</p>
+						</div>
+					</div>
+					<div className="w-full sm:w-1/2">
 						<Form.Item
 							label="Password"
 							className="inter-normal"
-							name={"full_name"}
+							name={"password"}
 						>
 							<Input placeholder="**********" type="password" className="p-2" />
 						</Form.Item>
 						<Button
-							htmlType="submit"
 							block
-							loading={false}
-							disabled={false}
+							loading={loading}
+							htmlType="submit"
+							disabled={loading}
 							className="my-[15px] p-[10px] text-white bg-[#581A57]"
 						>
 							Send email
 						</Button>
-					</Form>
+					</div>
 				</div>
-			</div>
+			</Form>
 		</Layout>
 	);
 };

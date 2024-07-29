@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Modal as AntModal, Button } from "antd";
+import React from "react";
+import { Modal as AntModal } from "antd";
 
 const CustomModal: React.FC<any> = ({
 	isOpen,
