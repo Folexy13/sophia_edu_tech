@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../../Layout";
 import { WalletIcon } from "../../../assets";
-import { Space, Table, TableProps, Tag } from "antd";
+import { Table, TableProps, Tag } from "antd";
 import { WalletModal } from "./wallet_modal";
 interface DataType {
 	key: string;

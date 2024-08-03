@@ -1,5 +1,4 @@
 import api from "../Api";
-import { UserProps } from "../store";
 
 class ClientRequests {
 	createCourse = async (data: any) => {

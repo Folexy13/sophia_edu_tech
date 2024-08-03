@@ -16,6 +16,6 @@ module.exports = {
 		],
 		// Add or modify rules as needed
 		"no-console": "off", // Disable warnings for console.log statements
-		"no-unused-vars": "off", // Keep warnings but not errors
+		"no-unused-vars": "warn", // Keep warnings but not errors
 	},
 };

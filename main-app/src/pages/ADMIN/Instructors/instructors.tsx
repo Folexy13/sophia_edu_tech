@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Layout from "../../DashboardLayout";
 import { Card, Dropdown, Form, Input, Space, TableColumnsType } from "antd";
 import { avatar, FilterIcon } from "../../../assets";
@@ -49,7 +49,7 @@ const columns: TableColumnsType<any> = [
 const StudentsPage: React.FC = () => {
 	const { isMobile } = useScreenSize();
 	const nav = useNavigate();
-	const [instructor, setInstructors] = useState([]);
+	// const [instructor, setInstructors] = useState([])
 
 	useEffect(() => {
 		const fetchData = async () => {

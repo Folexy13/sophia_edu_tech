@@ -53,7 +53,6 @@ const Profile: React.FC<any> = () => {
 	const { setUser, user } = useUser();
 	const [isLoading, setIsLoading] = useState(false);
 	const [removing, setRemoving] = useState(0);
-	const [adding, setAdding] = useState(0);
 	const [entities, setEntities] = useState<{ [key in EntityType]?: any[] }>({
 		education: initialProfileValues.education,
 		licenses_certifications: initialProfileValues.licenses_certifications,
@@ -208,19 +207,19 @@ const Profile: React.FC<any> = () => {
 		}));
 	};
 
-	const saveEntity = async (
-		index: string,
-		entity: "education" | "licenses_certifications" | "work_experience",
-		data: any
-	) => {
-		try {
-			setAdding(parseInt(index) + 1);
-			await ClientRequest.addProfileEntity(index, entity, data);
-		} catch (error) {
-		} finally {
-			setAdding(0);
-		}
-	};
+	// const saveEntity = async (
+	// 	index: string,
+	// 	entity: "education" | "licenses_certifications" | "work_experience",
+	// 	data: any
+	// ) => {
+	// 	try {
+	// 		setAdding(parseInt(index) + 1);
+	// 		await ClientRequest.addProfileEntity(index, entity, data);
+	// 	} catch (error) {
+	// 	} finally {
+	// 		setAdding(0);
+	// 	}
+	// };
 
 	const removeEntity = async (index: number, entity: EntityType) => {
 		setRemoving(index + 1);

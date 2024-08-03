@@ -15,7 +15,7 @@ import { UploadIcon } from "../../../assets";
 
 const CreateCoursePage: React.FC = () => {
 	const [form] = Form.useForm();
-	const [moduleNumber, setModuleNumber] = useState<number>(1);
+	const [_, setModuleNumber] = useState<number>(1);
 	const nav = useNavigate();
 	useEffect(() => {
 		const numberOfModules = form.getFieldValue("number_of_module");

@@ -5,8 +5,7 @@ import { avatar, FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
 import { getRandomDate, getRandomItem } from "../../../utils/helperFunction";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
-import { useNavigate } from "react-router-dom";
-import { URL } from "../../../utils/constants";
+
 const instructorNames = [
 	"Aluko Folajimi",
 	"John Doe",
@@ -40,7 +39,7 @@ const columns: TableColumnsType<any> = [
 
 const WalletPage: React.FC = () => {
 	const { isMobile } = useScreenSize();
-	const nav = useNavigate();
+	// const nav = useNavigate();
 
 	const data: any = [];
 	for (let i = 0; i < 106; i++) {

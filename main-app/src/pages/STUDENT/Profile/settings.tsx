@@ -9,7 +9,7 @@ import { useAlert } from "../../../store";
 
 const Profile: React.FC<any> = () => {
 	const { Option } = Select;
-	const [isLoading, setIsLoading] = useState(true);
+	const [_, setIsLoading] = useState(true);
 	const { onFailure } = useAlert();
 	const [selectedItems, setSelectedItems] = useState<string[]>([]);
 

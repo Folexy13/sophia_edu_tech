@@ -1,6 +1,6 @@
 import axios, { AxiosHeaders } from "axios";
 import { getStoredAuthToken, removeStoredAuthToken } from "../utils/storage";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 export const baseurl = "https://carlomagg675.pythonanywhere.com";
 // export const socket = io(baseurl);
 const api = axios.create({

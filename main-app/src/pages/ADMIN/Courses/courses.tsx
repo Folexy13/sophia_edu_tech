@@ -3,8 +3,7 @@ import Layout from "../../DashboardLayout";
 import { Card, Form, Input, TableColumnsType } from "antd";
 import { FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
-import { useNavigate } from "react-router-dom";
-import { URL } from "../../../utils/constants";
+// import { useNavigate } from "react-router-dom";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 const columns: TableColumnsType<any> = [
 	{
@@ -45,7 +44,7 @@ for (let i = 0; i < 50; i++) {
 	});
 }
 const Courses: React.FC = () => {
-	const nav = useNavigate();
+	// const nav = useNavigate();
 	const { isMobile } = useScreenSize();
 	return (
 		<Layout title="Courses" hasMargin={!isMobile} isAdmin>

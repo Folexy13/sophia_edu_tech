@@ -9,7 +9,7 @@ import {
 	social_science_data,
 } from "../../../utils/constants";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const CreateCoursePage: React.FC = () => {
 	const [form] = Form.useForm();
@@ -17,7 +17,7 @@ const CreateCoursePage: React.FC = () => {
 	const [category, setCategory] = useState<string>("");
 	const [type, setType] = useState<string>("");
 	const [step, setStep] = useState<number>(1);
-	const nav = useNavigate();
+	// const nav = useNavigate();
 	useEffect(() => {
 		const numberOfModules = form.getFieldValue("number_of_module");
 		setModuleNumber(numberOfModules || 1);
