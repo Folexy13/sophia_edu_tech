@@ -213,3 +213,53 @@ export const APPCONSTANTS = {
 		},
 	],
 };
+
+export const applied_science_data = [
+	"Agriculture",
+	"Architecture  and Design",
+	"Business",
+	"Education",
+	"Engineering and technology",
+	"Environmental studies and  forestry",
+	"Family and consumer science",
+	"Human physical performance and recreation",
+	"Journalism, media studies and communication",
+	"Law",
+	"Library and museum studies",
+	"Medicine and health",
+	"Military sciences",
+	"Public administration",
+	"Public policy",
+	"Social work",
+	"Transportation",
+];
+export const formal_science_data = ["Computer Science", "Mathematics"];
+export const humanities_data = [
+	"Performing arts",
+	"Visual Arts",
+	"History",
+	"Languagesw and literature",
+	"Law",
+	"Philosophy",
+	"Religious Studies",
+	"Divinity",
+	"Theology",
+];
+export const natural_science_data = [
+	"Biology",
+	"Chemistry",
+	"Earth science",
+	"Astronomy",
+	"Physics",
+];
+export const social_science_data = [
+	"Antropoly",
+	"Archaeology",
+	"Economics",
+	"Geography",
+	"Linguistics",
+	"Political science",
+	"Psychology",
+	"Sociology",
+	"Social work",
+];

@@ -41,8 +41,7 @@ const Loginpage: React.FC<any> = () => {
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
 		try {
-			const res: any = await AuthRequest.instructorLogin(values); // Assuming AuthRequest returns a promise
-			console.log(res); // Log response if needed
+			const res: any = await AuthRequest.instructorLogin(values);
 			onSuccess("Login successful!"); // Trigger success alert
 			onLogin(res?.access_token);
 			setStoredAuthToken(res?.access_token, "instructor");

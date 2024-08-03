@@ -40,7 +40,7 @@ const Layout: React.FC<any> = ({ children }) => {
 			<div className="p-[30px] px-[20px] md-920:p-[40px]">
 				<Navbar data={user} />
 			</div>
-			<div>
+			<div className="sm:mb-0 mb-[58px]">
 				{children}
 				<Modal
 					isOpen={visible}

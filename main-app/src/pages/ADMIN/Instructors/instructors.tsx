@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../DashboardLayout";
 import { Card, Dropdown, Form, Input, Space, TableColumnsType } from "antd";
 import { avatar, FilterIcon } from "../../../assets";
@@ -7,6 +7,7 @@ import { getRandomDate, getRandomItem } from "../../../utils/helperFunction";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../../utils/constants";
+import { AdminRequest } from "../../../requests";
 const instructorNames = [
 	"Aluko Folajimi",
 	"John Doe",
@@ -48,6 +49,16 @@ const columns: TableColumnsType<any> = [
 const StudentsPage: React.FC = () => {
 	const { isMobile } = useScreenSize();
 	const nav = useNavigate();
+	const [instructor, setInstructors] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const resp = await AdminRequest.getInstructors();
+			console.log(resp);
+		};
+		fetchData();
+	}, []);
+
 	const getDropdownItems = (id: number) => [
 		{
 			key: "1",

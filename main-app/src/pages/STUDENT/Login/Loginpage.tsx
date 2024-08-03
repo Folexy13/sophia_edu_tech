@@ -65,7 +65,7 @@ const Loginpage: React.FC<any> = () => {
 		console.error("Google login failed:", error);
 	};
 	return (
-		<div className="login">
+		<div className="student_login">
 			<Row style={{}}>
 				{/* Desktop View */}
 				<Col xs={{ span: 0 }} lg={{ span: 12 }}>
@@ -172,7 +172,7 @@ const Loginpage: React.FC<any> = () => {
 								</div>
 							</Form.Item>
 							<GoogleLogin
-								clientId="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" // Replace with your actual client ID
+								clientId="721301716315-o03cg1fbq3kj16730r309rq850n8v29h.apps.googleusercontent.com" // Replace with your actual client ID
 								buttonText="Login with Google"
 								onSuccess={responseGoogle}
 								onFailure={onFailure}

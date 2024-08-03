@@ -309,10 +309,11 @@ export const ThreeDotsIcon: React.FC<any> = ({ className }) => {
 	);
 };
 
-export const PDFIcon: React.FC<any> = () => {
+export const PDFIcon: React.FC<any> = ({ className }) => {
 	return (
 		<svg
 			width="61"
+			className={className}
 			height="72"
 			viewBox="0 0 61 72"
 			fill="none"
