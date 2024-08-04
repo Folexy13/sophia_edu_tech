@@ -8,7 +8,7 @@ export default defineConfig({
 		outDir: "dist", // Output directory for the build
 		rollupOptions: {
 			input: {
-				main: "./main-app/index.html", // Make sure this points to your main-app entry
+				main: "./main-app/dist/index.html", // Make sure this points to your main-app entry
 			},
 		},
 	},
