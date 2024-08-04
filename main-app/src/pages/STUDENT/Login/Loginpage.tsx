@@ -32,11 +32,6 @@ const Loginpage: React.FC<any> = () => {
 	const { onLogin } = useAuth();
 	const nav = useNavigate();
 	// const responseGoogle = (
-	// 	response: GoogleLoginResponse | GoogleLoginResponseOffline
-	// ) => {
-	// 	// Handle the response from Google login here
-	// 	console.log(response);
-	// };
 
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
