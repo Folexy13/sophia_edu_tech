@@ -16,6 +16,12 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
-	"include": ["src"],
+	"include": [
+		"main-app/**/*" // Include only files in main-app
+	],
+	"exclude": [
+		"node_modules",
+		"landing-page/**/*" // Exclude landing-page if necessary
+	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
