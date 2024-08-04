@@ -11,11 +11,11 @@ import {
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { googleIcon, Logo, student, woman } from "../../../assets";
-import {
-	GoogleLogin,
-	GoogleLoginResponse,
-	GoogleLoginResponseOffline,
-} from "react-google-login";
+// import {
+// 	GoogleLogin,
+// 	GoogleLoginResponse,
+// 	GoogleLoginResponseOffline,
+// } from "react-google-login";
 import { AuthRequest } from "../../../requests";
 import { useAlert, useAuth } from "../../../store";
 import { setStoredAuthToken } from "../../../utils/storage";
@@ -31,12 +31,12 @@ const Loginpage: React.FC<any> = () => {
 	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
 	const { onLogin } = useAuth();
 	const nav = useNavigate();
-	const responseGoogle = (
-		response: GoogleLoginResponse | GoogleLoginResponseOffline
-	) => {
-		// Handle the response from Google login here
-		console.log(response);
-	};
+	// const responseGoogle = (
+	// 	response: GoogleLoginResponse | GoogleLoginResponseOffline
+	// ) => {
+	// 	// Handle the response from Google login here
+	// 	console.log(response);
+	// };
 
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
@@ -171,7 +171,7 @@ const Loginpage: React.FC<any> = () => {
 									<span className="line"></span>
 								</div>
 							</Form.Item>
-							<GoogleLogin
+							{/* <GoogleLogin
 								clientId="721301716315-o03cg1fbq3kj16730r309rq850n8v29h.apps.googleusercontent.com" // Replace with your actual client ID
 								buttonText="Login with Google"
 								onSuccess={responseGoogle}
@@ -192,7 +192,7 @@ const Loginpage: React.FC<any> = () => {
 										Google
 									</AntDButton>
 								)}
-							/>
+							/> */}
 						</Form>
 					</div>
 				</Col>

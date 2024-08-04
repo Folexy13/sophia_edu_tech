@@ -9,11 +9,11 @@ import {
 	woman,
 } from "../../../../../landing-page/src/assets";
 import { URL } from "../../../../../landing-page/src/constants";
-import {
-	GoogleLogin,
-	GoogleLoginResponse,
-	GoogleLoginResponseOffline,
-} from "react-google-login";
+// import {
+// 	GoogleLogin,
+// 	GoogleLoginResponse,
+// 	GoogleLoginResponseOffline,
+// } from "react-google-login";
 import { AuthRequest } from "../../../requests";
 import { useAlert } from "../../../store";
 type FieldType = {
@@ -23,12 +23,12 @@ type FieldType = {
 	confirm_password?: string;
 };
 const Registerpage: React.FC<any> = () => {
-	const responseGoogle = (
-		response: GoogleLoginResponse | GoogleLoginResponseOffline
-	) => {
-		// Handle the response from Google login here
-		console.log(response);
-	};
+	// const responseGoogle = (
+	// 	response: GoogleLoginResponse | GoogleLoginResponseOffline
+	// ) => {
+	// 	// Handle the response from Google login here
+	// 	console.log(response);
+	// };
 	const nav = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
@@ -156,7 +156,7 @@ const Registerpage: React.FC<any> = () => {
 									<span className="line"></span>
 								</div>
 							</Form.Item>
-							<GoogleLogin
+							{/* <GoogleLogin
 								clientId="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" // Replace with your actual client ID
 								buttonText="Login with Google"
 								onSuccess={responseGoogle}
@@ -177,7 +177,7 @@ const Registerpage: React.FC<any> = () => {
 										Google
 									</AntDButton>
 								)}
-							/>
+							/> */}
 						</Form>
 					</div>
 				</Col>
