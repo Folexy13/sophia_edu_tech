@@ -10,7 +10,7 @@ import {
 	Checkbox,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { googleIcon, Logo, student, woman } from "../../../assets";
+import { Logo, student, woman } from "../../../assets";
 // import {
 // 	GoogleLogin,
 // 	GoogleLoginResponse,
@@ -59,10 +59,10 @@ const Loginpage: React.FC<any> = () => {
 	) => {
 		console.log("Failed:", errorInfo);
 	};
-	const onFailure = (error: any) => {
-		// Handle errors here
-		console.error("Google login failed:", error);
-	};
+	// const onFailure = (error: any) => {
+	// 	// Handle errors here
+	// 	console.error("Google login failed:", error);
+	// };
 	return (
 		<div className="login">
 			<Row style={{}}>

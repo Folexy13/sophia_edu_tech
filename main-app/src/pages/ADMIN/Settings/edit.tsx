@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../DashboardLayout";
 import { Button, Checkbox, Form, Input, Select } from "antd";
-import { CheckboxValueType } from "antd/es/checkbox/Group";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -18,9 +17,9 @@ const options = [
 ];
 
 const Settings: React.FC = () => {
-	const [checkedValues, setCheckedValues] = useState<CheckboxValueType[]>([]);
+	const [checkedValues, setCheckedValues] = useState<any[]>([]);
 
-	const onChange = (checkedValues: CheckboxValueType[]) => {
+	const onChange = (checkedValues: any[]) => {
 		console.log("checkedValues:", checkedValues);
 		setCheckedValues(checkedValues);
 	};

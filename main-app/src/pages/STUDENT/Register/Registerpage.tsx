@@ -29,10 +29,10 @@ const Registerpage: React.FC<any> = () => {
 	const [loading, setLoading] = useState(false);
 	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
 
-	const onFailure = (error: any) => {
-		// Handle errors here
-		console.error("Google login failed:", error);
-	};
+	// const onFailure = (error: any) => {
+	// 	// Handle errors here
+	// 	console.error("Google login failed:", error);
+	// };
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
 		try {
