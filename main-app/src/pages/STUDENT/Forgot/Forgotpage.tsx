@@ -47,7 +47,7 @@ const Forgotpage: React.FC<any> = () => {
 							</Form.Item>
 
 							<Form.Item className="inter-normal">
-								<Button label="Send email" height={50} width={"100%"}>
+								<Button label="Send email" height={50} width={"100%"} />
 							</Form.Item>
 						</Form>
 					</div>
