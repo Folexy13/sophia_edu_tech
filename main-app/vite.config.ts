@@ -9,7 +9,7 @@ export default defineConfig({
 		// By default, Vite expects index.html in the root of the project, if your structure is different adjust accordingly
 		rollupOptions: {
 			input: {
-				main: "src/main.tsx", // Path to your main entry file if not using index.html
+				main: "index.html", // Path to your main entry file if not using index.html
 			},
 		},
 	},
