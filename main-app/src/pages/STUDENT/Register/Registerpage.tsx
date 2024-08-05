@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import "./Registerpage.styles.scss";
 import { Col, Form, Input, Row, Button as AntDButton, FormProps } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import {
-	googleIcon,
-	logo,
-	student,
-	woman,
-} from "../../../../../landing-page/src/assets";
-import { URL } from "../../../../../landing-page/src/constants";
+
 // import {
 // 	GoogleLogin,
 // 	GoogleLoginResponse,
@@ -16,6 +10,8 @@ import { URL } from "../../../../../landing-page/src/constants";
 // } from "react-google-login";
 import { AuthRequest } from "../../../requests";
 import { useAlert } from "../../../store";
+import { URL } from "../../../utils/constants";
+import { Logo, student, woman } from "../../../assets";
 type FieldType = {
 	full_name?: string;
 	email?: string;
@@ -64,7 +60,7 @@ const Registerpage: React.FC<any> = () => {
 					<div className="first-container">
 						<Link to={URL.HOME}>
 							<img
-								src={logo}
+								src={Logo}
 								alt="Login"
 								style={{ maxWidth: "100%", maxHeight: "100%" }}
 							/>
@@ -83,7 +79,7 @@ const Registerpage: React.FC<any> = () => {
 					<div className="register-container" style={{}}>
 						<Link to={URL.HOME} className="midlogo">
 							<img
-								src={logo}
+								src={Logo}
 								alt="Login"
 								style={{ maxWidth: "100%", maxHeight: "100%" }}
 							/>

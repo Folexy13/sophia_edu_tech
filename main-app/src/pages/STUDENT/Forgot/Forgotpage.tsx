@@ -1,10 +1,10 @@
 import React from "react";
 import "./Forgotpage.styles.scss";
 import { Col, Form, Input, Row } from "antd";
-import { Button } from "../../../../../landing-page/src/components";
-import { logo, student, woman } from "../../../../../landing-page/src/assets";
-import { URL } from "../../../../../landing-page/src/constants";
 import { Link } from "react-router-dom";
+import { Button } from "../../../components";
+import { URL } from "../../../utils/constants";
+import { Logo, student, woman } from "../../../assets";
 
 const Forgotpage: React.FC<any> = () => {
 	return (
@@ -14,7 +14,7 @@ const Forgotpage: React.FC<any> = () => {
 				<Col xs={{ span: 0 }} lg={{ span: 12 }}>
 					<div className="first-container">
 						<img
-							src={logo}
+							src={Logo}
 							alt="forgot"
 							style={{ maxWidth: "100%", maxHeight: "100%" }}
 						/>
@@ -32,7 +32,7 @@ const Forgotpage: React.FC<any> = () => {
 					<div className="forgot-container" style={{}}>
 						<Link to={URL.HOME} className="midlogo">
 							<img
-								src={logo}
+								src={Logo}
 								alt="Login"
 								style={{ maxWidth: "100%", maxHeight: "100%" }}
 							/>
@@ -47,9 +47,7 @@ const Forgotpage: React.FC<any> = () => {
 							</Form.Item>
 
 							<Form.Item className="inter-normal">
-								<Button height={50} width={"100%"}>
-									Send email
-								</Button>
+								<Button label="Send email" height={50} width={"100%"}>
 							</Form.Item>
 						</Form>
 					</div>

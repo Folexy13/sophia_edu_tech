@@ -17,7 +17,8 @@
 		"noFallthroughCasesInSwitch": true
 	},
 	"include": [
-		"main-app/**/*" // Include only files in main-app
+		"main-app/**/*", // Include only files in main-app
+		"./src/**/*"
 	],
 	"exclude": [
 		"node_modules",
