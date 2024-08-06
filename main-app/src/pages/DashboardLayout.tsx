@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import {
 	Button,
 	Drawer,
@@ -160,228 +160,232 @@ const DashboardLayout: React.FC<{
 		activeKey === key
 			? "!text-[#581A57] !bg-[#F5F5F5] !border-r-[#581A57] !border-r-[5px] !border-[#F5F5F5] !font-bold !text-[16px] !my-[20px]"
 			: "!text-[#808080] !text-[16px] !inter-normal !my-[20px]";
+
 	return (
 		<AntDLayout style={{ minHeight: "100vh" }}>
-			{
-				<Fragment>
-					<Sider theme="light" className="!min-w-[300px] !hidden md:!block">
-						<div className="justify-center p-4 flex ">
-							<img
-								src={Logo}
-								alt="logo"
-								width={100}
-								style={{ maxWidth: "100%", maxHeight: "100%" }}
-							/>
-						</div>
-						<Menu
-							theme="light"
-							mode="inline"
-							selectedKeys={[activeKey]}
-							onClick={handleMenuClick}
-							className="rounded-0"
-						>
+			<Sider
+				theme="light"
+				className="!min-w-[300px] !hidden md:!block z-40"
+				style={{ height: "100vh", position: "fixed", left: 0, top: 0 }}
+			>
+				<div className="justify-center p-4 flex ">
+					<img
+						src={Logo}
+						alt="logo"
+						width={100}
+						style={{ maxWidth: "100%", maxHeight: "100%" }}
+					/>
+				</div>
+				<Menu
+					theme="light"
+					mode="inline"
+					selectedKeys={[activeKey]}
+					onClick={handleMenuClick}
+					className="rounded-0"
+				>
+					<Menu.Item
+						key="1"
+						icon={
+							<OverviewIcon color={activeKey == "1" ? "#581A57" : "#808080"} />
+						}
+						className={getMenuItemClass("1")}
+					>
+						Overviews
+					</Menu.Item>
+					<Menu.Item
+						key="2"
+						icon={
+							<CourseIcon color={activeKey == "2" ? "#581A57" : "#808080"} />
+						}
+						className={getMenuItemClass("2")}
+					>
+						Courses
+					</Menu.Item>
+					<Menu.Item
+						key="3"
+						icon={
+							<StudentsIcon color={activeKey == "3" ? "#581A57" : "#808080"} />
+						}
+						className={getMenuItemClass("3")}
+					>
+						{isAdmin ? "Instructors" : "Students"}
+					</Menu.Item>
+					<Menu.Item
+						key="4"
+						icon={
+							<Wallet2Icon color={activeKey == "4" ? "#581A57" : "#808080"} />
+						}
+						className={getMenuItemClass("4")}
+					>
+						Wallet
+					</Menu.Item>
+					{isAdmin ? (
+						<>
 							<Menu.Item
-								key="1"
+								key="5"
 								icon={
-									<OverviewIcon
-										color={activeKey == "1" ? "#581A57" : "#808080"}
-									/>
+									<BlogIcon color={activeKey == "5" ? "#581A57" : "#808080"} />
 								}
-								className={getMenuItemClass("1")}
+								className={getMenuItemClass("5")}
 							>
-								Overviews
+								Blog
 							</Menu.Item>
-							<Menu.Item
-								key="2"
-								icon={
-									<CourseIcon
-										color={activeKey == "2" ? "#581A57" : "#808080"}
-									/>
-								}
-								className={getMenuItemClass("2")}
-							>
-								Courses
-							</Menu.Item>
-							<Menu.Item
-								key="3"
-								icon={
-									<StudentsIcon
-										color={activeKey == "3" ? "#581A57" : "#808080"}
-									/>
-								}
-								className={getMenuItemClass("3")}
-							>
-								{isAdmin ? "Instructors" : "Students"}
-							</Menu.Item>
-							<Menu.Item
-								key="4"
-								icon={
-									<Wallet2Icon
-										color={activeKey == "4" ? "#581A57" : "#808080"}
-									/>
-								}
-								className={getMenuItemClass("4")}
-							>
-								Wallet
-							</Menu.Item>
-							{isAdmin ? (
-								<>
-									<Menu.Item
-										key="5"
-										icon={
-											<BlogIcon
-												color={activeKey == "5" ? "#581A57" : "#808080"}
-											/>
-										}
-										className={getMenuItemClass("5")}
-									>
-										Blog
-									</Menu.Item>
 
-									<Menu.Item
-										key="6"
-										icon={
-											<SettingOutlined
-												color={activeKey == "6" ? "#581A57" : "#808080"}
-											/>
-										}
-										className={getMenuItemClass("6")}
-									>
-										Settings
-									</Menu.Item>
-								</>
-							) : (
-								<Menu.Item
-									key="5"
-									icon={
-										<SettingOutlined
-											color={activeKey == "5" ? "#581A57" : "#808080"}
-										/>
-									}
-									className={getMenuItemClass("5")}
-								>
-									Settings
-								</Menu.Item>
-							)}
-						</Menu>
-					</Sider>
-					<AntDLayout className="site-layout ">
-						<Header className="!px-[20px] sm:!pr-[20px] !pr-0 bg-white flex justify-between items-center">
-							<h2
-								className="cursor-pointer font-semibold inter-bold text-[24px] !hidden md:!block"
-								onClick={onclick}
+							<Menu.Item
+								key="6"
+								icon={
+									<SettingOutlined
+										color={activeKey == "6" ? "#581A57" : "#808080"}
+									/>
+								}
+								className={getMenuItemClass("6")}
 							>
-								{title}
-							</h2>
-							<div className="flex gap-6 md:!hidden">
-								<MenuOutlined
-									className="text-[18px] cursor-pointer"
-									onClick={showDrawer}
+								Settings
+							</Menu.Item>
+						</>
+					) : (
+						<Menu.Item
+							key="5"
+							icon={
+								<SettingOutlined
+									color={activeKey == "5" ? "#581A57" : "#808080"}
 								/>
+							}
+							className={getMenuItemClass("5")}
+						>
+							Settings
+						</Menu.Item>
+					)}
+				</Menu>
+			</Sider>
+			<AntDLayout className="sm:ml-[300px]">
+				<Header
+					className="px-[10px] sm:!px-[20px] z-20 fixed top-0 left-0 right-0 w-[calc(100% - 300px)] bg-white flex justify-between items-center"
+					style={{
+						background: "#ffffff",
+						boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+					}}
+				>
+					<h2
+						className="cursor-pointer font-semibold inter-bold text-[24px] !hidden md:!block"
+						onClick={onclick}
+					>
+						{title}
+					</h2>
+					<div className="flex gap-6 md:!hidden">
+						<MenuOutlined
+							className="text-[18px] cursor-pointer"
+							onClick={showDrawer}
+						/>
+						<img
+							src={Logo}
+							alt="logo"
+							width={100}
+							style={{ maxWidth: "100%", maxHeight: "100%" }}
+						/>
+					</div>
+					<Drawer
+						title={
+							<div className="justify-between flex ">
 								<img
 									src={Logo}
 									alt="logo"
 									width={100}
 									style={{ maxWidth: "100%", maxHeight: "100%" }}
 								/>
+								<CloseOutlined style={{ color: "red" }} onClick={onClose} />
 							</div>
-							<Drawer
-								title={
-									<div className="justify-between flex ">
-										<img
-											src={Logo}
-											alt="logo"
-											width={100}
-											style={{ maxWidth: "100%", maxHeight: "100%" }}
-										/>
-										<CloseOutlined style={{ color: "red" }} onClick={onClose} />
-									</div>
-								}
-								placement={"left"}
-								closable={false}
-								onClose={onClose}
-								open={open}
-							>
-								<div className="!min-w-[300px] ">
-									<Menu
-										theme="light"
-										mode="inline"
-										selectedKeys={[activeKey]}
-										onClick={handleMenuClick}
-										className="rounded-0"
-									>
-										<Menu.Item
-											key="1"
-											icon={<OverviewIcon />}
-											className={getMenuItemClass("1")}
-										>
-											Overviews
-										</Menu.Item>
-										<Menu.Item
-											key="2"
-											icon={<CourseIcon />}
-											className={getMenuItemClass("2")}
-										>
-											Courses
-										</Menu.Item>
-										<Menu.Item
-											key="3"
-											icon={<StudentsIcon />}
-											className={getMenuItemClass("3")}
-										>
-											Students
-										</Menu.Item>
-										<Menu.Item
-											key="4"
-											icon={<Wallet2Icon />}
-											className={getMenuItemClass("4")}
-										>
-											Wallet
-										</Menu.Item>
-										<Menu.Item
-											key="5"
-											icon={<SettingOutlined />}
-											className={getMenuItemClass("5")}
-										>
-											Settings
-										</Menu.Item>
-									</Menu>
-								</div>
-							</Drawer>
-							<div className="flex gap-3 items-center">
-								<NotificationBell className="cursor-pointer" />
-								<Dropdown
-									className="border-0 bg-transparent mt-[7px] !shadow-none "
-									menu={{ items: dropdown }}
-								>
-									<Button className="pl-0 sm:pl-[15px]">
-										<Space>
-											<img src={avatar} alt=".." width={30} />
-											<DownOutlined />
-										</Space>
-									</Button>
-								</Dropdown>
-							</div>
-						</Header>
-						<Content style={{ margin: hasMargin ? "0 16px" : "0" }}>
-							<div
-								className="site-layout-background p-0 sm:p-[24px]"
-								style={{ minHeight: 360 }}
-							>
-								{children}
-							</div>
-						</Content>
-					</AntDLayout>
-					<Modal
-						isOpen={visible}
-						onClose={handleCancel}
-						title={modalTitle}
-						confirmLoading={confirmLoading}
+						}
+						placement={"left"}
+						closable={false}
+						onClose={onClose}
+						open={open}
 					>
-						{modalContent}
-					</Modal>
-				</Fragment>
-			}
+						<div className="!min-w-[300px] ">
+							<Menu
+								theme="light"
+								mode="inline"
+								selectedKeys={[activeKey]}
+								onClick={handleMenuClick}
+								className="rounded-0"
+							>
+								<Menu.Item
+									key="1"
+									icon={<OverviewIcon />}
+									className={getMenuItemClass("1")}
+								>
+									Overviews
+								</Menu.Item>
+								<Menu.Item
+									key="2"
+									icon={<CourseIcon />}
+									className={getMenuItemClass("2")}
+								>
+									Courses
+								</Menu.Item>
+								<Menu.Item
+									key="3"
+									icon={<StudentsIcon />}
+									className={getMenuItemClass("3")}
+								>
+									Students
+								</Menu.Item>
+								<Menu.Item
+									key="4"
+									icon={<Wallet2Icon />}
+									className={getMenuItemClass("4")}
+								>
+									Wallet
+								</Menu.Item>
+								<Menu.Item
+									key="5"
+									icon={<SettingOutlined />}
+									className={getMenuItemClass("5")}
+								>
+									Settings
+								</Menu.Item>
+							</Menu>
+						</div>
+					</Drawer>
+					<div className="flex gap-3 items-center">
+						<NotificationBell className="cursor-pointer" />
+						<Dropdown
+							className="border-0 bg-transparent !shadow-none "
+							menu={{ items: dropdown }}
+						>
+							<Button className="pl-0 sm:pl-[15px]">
+								<Space>
+									<img src={avatar} alt=".." width={30} />
+									<DownOutlined />
+								</Space>
+							</Button>
+						</Dropdown>
+					</div>
+				</Header>
+				<Content
+					style={{
+						margin: hasMargin ? "64px 16px" : "64px 0",
+						paddingTop: "16px",
+						paddingBottom: "16px",
+						overflow: "auto",
+					}}
+				>
+					<div
+						className="site-layout-background p-0 sm:p-[24px]"
+						style={{ minHeight: "calc(100vh - 64px)", overflowY: "auto" }}
+					>
+						{children}
+					</div>
+				</Content>
+			</AntDLayout>
+			<Modal
+				isOpen={visible}
+				onClose={handleCancel}
+				title={modalTitle}
+				confirmLoading={confirmLoading}
+			>
+				{modalContent}
+			</Modal>
 		</AntDLayout>
 	);
 };

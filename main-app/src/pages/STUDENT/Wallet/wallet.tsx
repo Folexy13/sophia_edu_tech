@@ -153,7 +153,7 @@ const Wallet: React.FC<any> = () => {
 					<Table
 						columns={columns}
 						dataSource={data}
-						className="w-full customtable my-[30px]"
+						className="w-full customtable my-[30px] bg-white whitespace-nowrap"
 					/>
 					<WalletModal
 						handleSubmit={handleSubmit}

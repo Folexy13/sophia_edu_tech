@@ -208,6 +208,7 @@ const Profile: React.FC<any> = () => {
 		value: UserProps
 	) => {
 		setIsLoading(true);
+		console.log(value);
 		try {
 			if (form.getFieldValue("education")[0]?.school === "0") {
 				form.setFieldsValue({

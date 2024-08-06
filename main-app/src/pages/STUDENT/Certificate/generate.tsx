@@ -23,11 +23,11 @@ const Generate: React.FC<any> = () => {
 				</p>
 
 				<Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-					<Form.Item label="Amount">
+					<Form.Item label="Course">
 						<Input
-							name="amount"
+							name="course"
 							className="p-2"
-							placeholder="Enter the amount"
+							placeholder="Type three words of the learning development course"
 						/>
 					</Form.Item>
 					<Form.Item label="Publication Title">
@@ -56,7 +56,7 @@ const Generate: React.FC<any> = () => {
 							label={"Generate"}
 							loading={loading}
 							onclick={handleSubmit}
-							className="mr-[10px] p-[8px] w-[200px] hover:!bg-[#581A57] focus:!bg-[#581A57] bg-[#581A57] hover:!text-white focus:!text-white text-white mb-[80px]"
+							className="mr-[10px] p-[20px] w-[200px] hover:!bg-[#581A57] focus:!bg-[#581A57] bg-[#581A57] hover:!text-white focus:!text-white text-white mb-[80px]"
 						/>
 					</div>
 				</Form>

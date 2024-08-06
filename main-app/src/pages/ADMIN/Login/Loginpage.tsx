@@ -151,49 +151,6 @@ const Loginpage: React.FC<any> = () => {
 									Log in
 								</AntDButton>
 							</Form.Item>
-							<Form.Item
-								className="inter-normal"
-								style={{ textAlign: "center" }}
-							>
-								Don't have an account?{" "}
-								<Link
-									to={URL.REGISTER}
-									className="inter-bold"
-									style={{ color: "#581A57" }}
-								>
-									Become a member
-								</Link>
-							</Form.Item>
-							<Form.Item>
-								<div className="option">
-									<span className="line"></span>
-									<p style={{ marginTop: 30 }}>or</p>
-									<span className="line"></span>
-								</div>
-							</Form.Item>
-							{/**	<GoogleLogin
-								clientId="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" // Replace with your actual client ID
-								buttonText="Login with Google"
-								onSuccess={responseGoogle}
-								onFailure={onFailure}
-								cookiePolicy={"single_host_origin"}
-								render={(renderProps) => (
-									<AntDButton
-										onClick={renderProps.onClick}
-										block
-										icon={<img src={googleIcon} alt="..." width={20} />}
-										style={{
-											backgroundColor: "#fff",
-											color: "#000",
-											margin: "auto",
-											border: "1px solid #d9d9d9",
-										}}
-									>
-										Google
-									</AntDButton>
-								)}
-							/>
-						 */}
 						</Form>
 					</div>
 				</Col>

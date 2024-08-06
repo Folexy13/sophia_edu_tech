@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "../../DashboardLayout";
 
 import { Button, Form, FormProps, Input, Select } from "antd";
@@ -14,17 +14,6 @@ const CreateCoursePage: React.FC = () => {
 	const [loading, setLoading] = useState(false);
 	const { onFailure: AlertFailure, onSuccess } = useAlert();
 
-	const [moduleNumber, setModuleNumber] = useState<number>(1);
-
-	useEffect(() => {
-		const numberOfModules = form.getFieldValue("number_of_module");
-		setModuleNumber(numberOfModules || 1);
-	}, [form]);
-
-	const handleValuesChange = () => {
-		const numberOfModules = form.getFieldValue("number_of_module");
-		setModuleNumber(numberOfModules || 1);
-	};
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
 		try {
@@ -53,7 +42,7 @@ const CreateCoursePage: React.FC = () => {
 				layout="vertical"
 				form={form}
 				onFinish={onFinish}
-				onValuesChange={handleValuesChange}
+				// onValuesChange={}
 				initialValues={{}}
 				onFinishFailed={onFinishFailed}
 				className="p-4 sm:p-0"
@@ -128,7 +117,7 @@ const CreateCoursePage: React.FC = () => {
 							</Select>
 						</Form.Item>
 						<Form.Item
-							label="Course Type / Name"
+							label="Course Type"
 							className="inter-normal"
 							name={"course_type"}
 						>
@@ -153,48 +142,9 @@ const CreateCoursePage: React.FC = () => {
 								<Select.Option value="Engineering">Engineering</Select.Option>
 							</Select>
 						</Form.Item>
-						<Form.Item
-							label="Brief about the course"
-							className="inter-normal"
-							name={"course_briefing"}
-						>
-							<Input.TextArea
-								className="p-2"
-								placeholder="Write a short descr. about course"
-							/>
+						<Form.Item label="Amount" className="inter-normal" name={"amount"}>
+							<Input className="p-2" />
 						</Form.Item>
-						<Form.Item
-							label="Number of Modules"
-							className="inter-normal"
-							name={"number_of_module"}
-						>
-							<Select
-								defaultValue={1}
-								className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
-							>
-								<Select.Option value={1}>1</Select.Option>
-								<Select.Option value={2}>2</Select.Option>
-								<Select.Option value={3}>3</Select.Option>
-								<Select.Option value={4}>4</Select.Option>
-								<Select.Option value={5}>5</Select.Option>
-								<Select.Option value={"5 + Apply & Conclusion"}>
-									5 + Apply & Conclusion
-								</Select.Option>
-							</Select>
-						</Form.Item>
-						{Array.from({ length: moduleNumber }, (_, i) => (
-							<Form.Item
-								label={`Module ${i + 1}`}
-								key={i}
-								className="inter-normal"
-								name={["modules", i, "description"]}
-							>
-								<Input
-									className="p-[12px]"
-									placeholder={`Write a short description (max word of 200)`}
-								/>
-							</Form.Item>
-						))}
 						<Form.Item className="w-full ml-auto justify-end flex">
 							<Button className="bg-[#DBDBDB] text-[#3A3A3A] text-[14px] rounded-[8px]">
 								Delete
@@ -231,7 +181,7 @@ const CreateCoursePage: React.FC = () => {
 							loading={loading}
 							htmlType="submit"
 							disabled={loading}
-							className="my-[15px] p-[10px] text-white bg-[#581A57]"
+							className="my-[15px] p-[20px] text-white bg-[#581A57]"
 						>
 							Send email
 						</Button>
