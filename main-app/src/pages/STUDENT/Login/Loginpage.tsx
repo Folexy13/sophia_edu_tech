@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import "./Loginpage.styles.scss";
-import {
-	Col,
-	Form,
-	Input,
-	Row,
-	Button as AntDButton,
-	FormProps,
-	Checkbox,
-} from "antd";
+import { Col, Form, Input, Row, Button as AntDButton, FormProps } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Logo, student, woman } from "../../../assets";
 // import {
