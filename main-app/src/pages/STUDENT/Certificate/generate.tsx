@@ -13,11 +13,11 @@ const Generate: React.FC<any> = () => {
 	};
 	return (
 		<Layout>
-			<div className="w-3/5 mx-auto">
-				<h2 className="text-[24px] text-center my-[20px] font-semibold">
+			<div className="w-[90%] sm:w-3/5 mx-auto">
+				<h2 className="text-[24px] sm:text-center my-[20px] font-semibold">
 					Generate Certificate
 				</h2>
-				<p className="text-[16px] text-center mb-[20px]">
+				<p className="text-[16px] sm:text-center mb-[20px]">
 					Publish your work from the learning development course and generate a
 					certificate of achievement.
 				</p>
@@ -56,7 +56,7 @@ const Generate: React.FC<any> = () => {
 							label={"Generate"}
 							loading={loading}
 							onclick={handleSubmit}
-							className="mr-[10px] p-[8px] w-[200px] bg-[#581A57] text-white"
+							className="mr-[10px] p-[8px] w-[200px] hover:!bg-[#581A57] focus:!bg-[#581A57] bg-[#581A57] hover:!text-white focus:!text-white text-white mb-[80px]"
 						/>
 					</div>
 				</Form>

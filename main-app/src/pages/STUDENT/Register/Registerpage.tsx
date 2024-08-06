@@ -133,7 +133,7 @@ const Registerpage: React.FC<any> = () => {
 								</AntDButton>
 							</Form.Item>
 							<Form.Item
-								className="inter-normal"
+								className="font-inter text-[16px] leading-[19.36px]"
 								style={{ textAlign: "center" }}
 							>
 								Already have an account?{" "}

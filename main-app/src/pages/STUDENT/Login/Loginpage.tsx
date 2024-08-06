@@ -115,14 +115,7 @@ const Loginpage: React.FC<any> = () => {
 							>
 								<Input.Password />
 							</Form.Item>
-							<div className="flex justify-between">
-								<Form.Item<FieldType>
-									name="remember"
-									valuePropName="checked"
-									// wrapperCol={{ offset: 8, span: 16 }}
-								>
-									<Checkbox>Remember me</Checkbox>
-								</Form.Item>
+							<div className="flex justify-end">
 								<Form.Item className="inter-bold">
 									<Link
 										to={URL.FORGOT_PASSWORD}
@@ -130,6 +123,7 @@ const Loginpage: React.FC<any> = () => {
 											color: APPCONSTANTS.APP_DARK_PURPLE,
 											float: "right",
 										}}
+										className="font-inter"
 									>
 										Forgot password?
 									</Link>
@@ -147,13 +141,13 @@ const Loginpage: React.FC<any> = () => {
 								</AntDButton>
 							</Form.Item>
 							<Form.Item
-								className="inter-normal"
+								className="font-inter text-[16px] leading-[19.36px]"
 								style={{ textAlign: "center" }}
 							>
 								Don't have an account?{" "}
 								<Link
 									to={URL.REGISTER}
-									className="inter-bold"
+									className="font-inter font-medium"
 									style={{ color: "#581A57" }}
 								>
 									Become a member

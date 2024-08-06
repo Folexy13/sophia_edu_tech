@@ -127,14 +127,16 @@ const Wallet: React.FC<any> = () => {
 	};
 	return (
 		<Layout>
-			<div className="w-4/5 mx-auto  wallet">
+			<div className="w-[90%] relative sm:w-4/5 mx-auto  wallet">
 				<div className="flex flex-col mt-[50px]  items-center justify-center">
 					<h4 className="text-[#808080] text-[16px]">Total Balance</h4>
-					<h2 className="font-semibold text-[58.44px]">$25,000.00</h2>
+					<h2 className="font-semibold text-[48px] sm:text-[58.44px]">
+						$25,000.00
+					</h2>
 					<div className="flex gap-4">
 						<div
 							onClick={() => handleToggleButton("top_up")}
-							className="py-[40px] px-[100px] flex cursor-pointer flex-col items-center bg-[#581A57] text-white rounded-md"
+							className="py-[20px] whitespace-nowrap sm:py-[40px] px-[60px] sm:px-[100px] flex cursor-pointer flex-col items-center bg-[#581A57] text-white rounded-md"
 						>
 							<WalletIcon />
 							<p>Top Up</p>
@@ -142,7 +144,7 @@ const Wallet: React.FC<any> = () => {
 
 						<div
 							onClick={() => handleToggleButton("withdraw")}
-							className="py-[40px] px-[100px] cursor-pointer flex flex-col items-center bg-[#008FE4] text-white rounded-md"
+							className="py-[20px] sm:py-[40px] px-[60px] sm:px-[100px] cursor-pointer flex flex-col items-center bg-[#008FE4] text-white rounded-md"
 						>
 							<WalletIcon />
 							<p>Withdraw</p>
@@ -151,7 +153,7 @@ const Wallet: React.FC<any> = () => {
 					<Table
 						columns={columns}
 						dataSource={data}
-						className="w-full my-[30px]"
+						className="w-full customtable my-[30px]"
 					/>
 					<WalletModal
 						handleSubmit={handleSubmit}

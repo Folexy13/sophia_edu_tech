@@ -52,13 +52,13 @@ const Layout: React.FC<any> = ({ children }) => {
 				</Modal>
 			</div>
 			<Footer
-				className="flex justify-between md:hidden w-full "
+				className="flex justify-between md:hidden w-full p-0 "
 				style={{ position: "fixed", bottom: 0, width: "100%" }}
 			>
 				<Menu
 					mode="horizontal"
 					style={{ lineHeight: "inherit" }}
-					className="w-full p-3"
+					className="w-full p-3 flex justify-center"
 				>
 					<Menu.Item key="home" className="custom-menu-item">
 						<div className="flex flex-col items-center">

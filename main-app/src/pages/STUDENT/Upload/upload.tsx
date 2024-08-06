@@ -44,11 +44,11 @@ const Upload: React.FC<any> = () => {
 	}
 	return (
 		<Layout>
-			<div className="w-3/5 mx-auto upload">
-				<h2 className="text-[24px] text-center my-[20px] font-semibold">
+			<div className="w-[90%] sm:w-3/5 mx-auto upload">
+				<h2 className="text-[24px] sm:text-center my-[20px] font-semibold">
 					Enterprise Project
 				</h2>
-				<p className="text-[16px] text-center mb-[20px]">
+				<p className="text-[16px] sm:text-center mb-[20px]">
 					Upload your enterprise project here. This may include some or all of
 					the following: business plan that explains the business idea of your
 					project, DOI of research work supporting your project, website or
@@ -102,7 +102,7 @@ const Upload: React.FC<any> = () => {
 							label={"Submit"}
 							loading={loading}
 							onclick={handleSubmit}
-							className="p-[8px] w-[200px] bg-[#581A57] text-white"
+							className="p-[20px] w-full sm:w-[200px] bg-[#581A57] text-white mb-[90px]"
 						/>
 					</div>
 				</Form>

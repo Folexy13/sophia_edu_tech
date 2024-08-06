@@ -51,8 +51,11 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 				</span>
 			),
 			children: [
-				{ key: "/learnings/courses", label: "Courses" },
-				{ key: "/learnings/tutorials", label: "Tutorials" },
+				{ key: "/learnings/courses", label: "Learning Development courses" },
+				{
+					key: "/learnings/tutorials",
+					label: "Social Entrepreneurship and Innovation courses",
+				},
 			],
 		},
 	];
@@ -83,7 +86,7 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 					Generate Certificates
 				</div>
 			),
-			disabled: true,
+			// disabled: true,
 		},
 		{
 			key: "6",
@@ -173,14 +176,13 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 				</>
 			) : (
 				<>
-					<div className="none">
-						<Menu
-							onClick={onClick}
-							// style={{ width: 256 }}
-							mode="horizontal"
-							items={items}
-						/>
-					</div>
+					<Menu
+						onClick={onClick}
+						// overflowedIndicator={false}
+						style={{ width: 256 }}
+						mode="horizontal"
+						items={items}
+					/>
 					<div className="flex gap-6">
 						<div className="flex">
 							<div
@@ -195,7 +197,7 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 							</div>
 							<div
 								className="cursor-pointer"
-								onClick={() => navigate(URL.NOTIFICATION)}
+								onClick={() => navigate(URL.MESSAGING)}
 							>
 								<Badge dot className="cursor">
 									<MessageOutlined
@@ -213,7 +215,7 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 						</div>
 					</div>
 					<Dropdown menu={{ items: dropdown }}>
-						<Button>
+						<Button className="hover:!border-[#581A57] border-[#581A57] bg-[#F5F5F5] hover:!bg-[#F5F5F5] py-[20px] hover:!text-[#581A57]">
 							<Space>
 								<img
 									src={getAvatar(data?.profile_image)}

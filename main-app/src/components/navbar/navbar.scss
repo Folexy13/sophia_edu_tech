@@ -54,4 +54,8 @@
 			display: block;
 		}
 	}
+
+	:where(.css-dev-only-do-not-override-d2lrxs).ant-menu-horizontal {
+		border-bottom: 0 !important;
+	}
 }

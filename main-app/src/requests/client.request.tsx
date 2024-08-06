@@ -99,7 +99,7 @@ class ClientRequests {
 		}
 	};
 
-	getMessages = async () => {
+	getMyMessages = async () => {
 		try {
 			const response = await api.get(`/messages`);
 			return response;
@@ -114,7 +114,7 @@ class ClientRequests {
 		}
 	};
 
-	getMessage = async (userId: number) => {
+	getFriendMessage = async (userId: number) => {
 		try {
 			const response = await api.get(`/messages/${userId}`);
 			return response;

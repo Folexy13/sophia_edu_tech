@@ -42,28 +42,32 @@ const HomePage: React.FC = () => {
 		<Layout>
 			<div className="flex sm:flex-row flex-col px-[10px] sm:px-[80px] gap-4 items-start pb-[20px]">
 				{/* First Section */}
-				<div className="overflow-y-auto order-1  flex w-full flex-[0.25] min-h-[300px] sm:min-h-[400px] bg-white rounded-lg border-[#B6B6B6] border flex-col items-center justify-center">
+				<div className="overflow-y-auto order-1  hidden sm:flex w-full flex-[0.25] min-h-[300px] sm:min-h-[400px] bg-white rounded-lg border-[#B6B6B6] border flex-col items-center justify-center">
 					{/* Profile image */}
 					<img
 						src={getAvatar(user?.profile_image)}
 						alt="Profile"
-						className="w-[50px] sm:w-[100px] sm:mt-0 mt-[-40px]"
+						className="w-[50px] sm:w-[84px] sm:mt-0 mt-[-40px]"
 						style={{ borderRadius: "50%" }}
 					/>
-					<p className="font-semibold text-[16px]">{user?.full_name}</p>
+					<p className="font-semibold text-[16px] font-inter leading-[25.89px]">
+						{user?.full_name}
+					</p>
 					<p className="text-[#808080] text-[14px] my-[10px] flex gap-2 items-center">
 						<AddressLocator />
-						<span>Location</span>
+						<span className="text-[14px] font-inter leading-[22.4px]">
+							Location
+						</span>
 					</p>
 					{hasEducation && (
 						<>
 							{hasEducation.degree && (
-								<p className="text-[#666666] font-normal text-[16px] leading-[25px] my-[10px]">
+								<p className="text-[#666666] font-normal font-inter text-[16px] leading-[25px] my-[10px]">
 									{hasEducation.degree}
 								</p>
 							)}
 							{hasEducation.field_of_study && (
-								<p className="text-[#666666] font-normal text-[16px] leading-[25px] my-[10px]">
+								<p className="text-[#666666] font-normal font-inter text-[16px] leading-[25px] my-[10px]">
 									{truncate(hasEducation.field_of_study, { length: 20 })}
 								</p>
 							)}
@@ -71,7 +75,7 @@ const HomePage: React.FC = () => {
 					)}
 
 					{hasLicensesCertifications && (
-						<p className="text-[#666666] font-normal text-[16px] leading-[25px] my-[10px]">
+						<p className="text-[#666666] font-normal font-inter text-[16px] leading-[25px] my-[10px]">
 							{truncate(hasLicensesCertifications.name, { length: 20 })}
 						</p>
 					)}
@@ -96,12 +100,12 @@ const HomePage: React.FC = () => {
 									<img
 										src={avatar}
 										alt="User"
-										className="w-[30px] sm:w-[50px]"
+										className="w-[30px] sm:w-[40px]"
 									/>
-									<p className="text-[#581A57] font-medium text-[12px] sm:text-[16px]">
+									<p className="text-[#581A57] font-inter leading-[25.89px] font-medium text-[12px] sm:text-[16px]">
 										Temitope Tiamiyu
 									</p>
-									<p className="text-[#808080] text-[10px] sm:text-[14px]">
+									<p className="text-[#808080] text-[10px] sm:text-[14px] leading-[22.4px]">
 										Uploaded a paper
 									</p>
 								</div>
@@ -116,10 +120,10 @@ const HomePage: React.FC = () => {
 							{/* Body */}
 							<div className="flex items-center my-[10px] border-[#F2F2F2] border-b pb-2">
 								<div>
-									<p className="my-[10px] text-[16px] sm:text-[18px]">
+									<p className="leading-[25.6px] playfair-display-normal text-[16px] sm:text-[18px]">
 										Lorem ipsum dolor sit amet consectetur.
 									</p>
-									<p className="text-[12px] sm:text-[16px] text-[#666666]">
+									<p className="text-[12px] leading-[25.89px] font-inter sm:text-[16px] text-[#666666]">
 										Lorem ipsum dolor sit amet consectetur. Neque turpis etiam
 										suspendisse arcu ridiculus vel. Tempus eget in sed tortor.
 										Lorem ipsum dolor sit amet consectetur. Neque turpis etiam
@@ -147,30 +151,32 @@ const HomePage: React.FC = () => {
 
 							{/* Footer */}
 							<div className="flex justify-between items-center text-[xx-small] sm:text-[small]">
-								<div className="flex gap-1 sm:gap-3 items-center">
-									<p className="flex gap-1 sm:gap-2 items-center">
+								<div className="flex gap-1 sm:gap-2 items-center">
+									<p className="flex gap-1 font-inter text-[12px] sm:gap-2 items-center">
 										<LikeIcon />
 										<span>Upvote</span>
 									</p>
 
-									<p className="flex gap-1 sm:gap-2 items-center">
+									<p className="flex gap-1 font-inter text-[12px] sm:gap-2 items-center">
 										<DislikeIcon />
 										<span>Downvote</span>
 									</p>
-									<p className="flex gap-1 sm:gap-2 items-center">
+									<p className="flex gap-1 font-inter text-[12px] sm:gap-2 items-center">
 										<CommentIcon />
 										<span>Comment</span>
 									</p>
 								</div>
 
-								<div className="hidden sm:flex sm:gap-3 items-center">
-									<p>10 Upvote</p>
+								<div className="hidden sm:flex sm:gap-2 items-center">
+									<p className="flex font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
+										10 Upvote
+									</p>
 
-									<p className="flex gap-1 sm:gap-2 items-center">
+									<p className="flex font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
 										<IndicatorIcon color="#2D2D2D" />
 										<span>100 Downvote</span>
 									</p>
-									<p className="flex gap-1 sm:gap-2 items-center">
+									<p className="flex font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
 										<IndicatorIcon color="#2D2D2D" />
 										<span>100 Comments</span>
 									</p>
@@ -181,8 +187,8 @@ const HomePage: React.FC = () => {
 				</div>
 
 				{/* Third Section */}
-				<div className="overflow-y-auto order-2 sm:order-3 flex-[0.25] max-h-[900px] p-2 rounded-lg bg-white">
-					<h2 className="text-[20px] border-[#F2F2F2] border-b pb-2 mb-3">
+				<div className="overflow-y-auto order-2 sm:order-3 w-full sm:w-fit sm:flex-[0.25] max-h-[900px] p-2 rounded-lg bg-white">
+					<h2 className="text-[14px] leading-[32px] sm:text-[20px] font-inter border-[#F2F2F2] border-b pb-2 mb-2">
 						Recently Read
 					</h2>
 					{Array.from({ length: 4 }).map((_, i) => (
@@ -190,12 +196,16 @@ const HomePage: React.FC = () => {
 							className="bg-[#F5F5F5] p-2 rounded-sm mb-2 cursor-pointer"
 							key={i}
 						>
-							<p className="playfair-display-normal text-[16px] sm:text-[18px]">
+							<p className="playfair-display-normal text-[#121212] leading-[25.6px] text-[14px] sm:text-[16px]">
 								Lorem ipsum dolor sit amet consectetur. Pretium scelerisque
 								velit sollicitudin id.
 							</p>
-							<p className="text-[#808080] text-[14px]">Aluko Opeyemi</p>
-							<p className="text-[#808080] text-[14px]">2014</p>
+							<p className="text-[#808080] text-[14px] font-inter leading-[22.4px]">
+								Aluko Opeyemi
+							</p>
+							<p className="text-[#808080] text-[14px] font-inter leading-[22.4px]">
+								2014
+							</p>
 						</div>
 					))}
 				</div>

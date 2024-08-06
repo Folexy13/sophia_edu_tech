@@ -15,10 +15,14 @@ body {
 	background: #b6b6b640;
 	font-family: inter !important;
 }
+
 li,
 p,
 button {
-	font-family: inter !important;
+	font-family: "Inter" !important;
+	font-weight: 400px;
+	font-size: 16px;
+	line-height: 25.89px;
 }
 :where(.css-dev-only-do-not-override-mzwlov).ant-menu-horizontal {
 	border-bottom: none !important;
@@ -160,4 +164,18 @@ button:disabled {
 		min-width: 1042px;
 		overflow-x: auto;
 	}
+}
+
+.hidden-scrollbar {
+	overflow: auto; /* Allows scrolling */
+}
+
+/* WebKit-based browsers */
+.hidden-scrollbar::-webkit-scrollbar {
+	display: none; /* Hides the scrollbar */
+}
+
+/* Firefox */
+.hidden-scrollbar {
+	scrollbar-width: none; /* Hides the scrollbar */
 }

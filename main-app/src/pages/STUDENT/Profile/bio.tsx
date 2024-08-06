@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "../../Layout";
 import { AddressLocator, profileBG } from "../../../assets";
-import { Avatar, Button, Form, FormProps, Input } from "antd";
+import { Avatar, Button, Form, FormProps, Input, message } from "antd";
 import "./profile.styles.scss";
 
 import dayjs from "dayjs";
@@ -9,6 +9,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useAlert, UserProps, useUser } from "../../../store";
 import { ClientRequest } from "../../../requests";
 import { getAvatar } from "../../../utils/helperFunction";
+import axios from "axios";
 
 dayjs.extend(customParseFormat);
 
@@ -62,6 +63,68 @@ const Profile: React.FC<any> = () => {
 		initialProfileValues
 	);
 	const fileInputRef: any = useRef(null);
+
+	const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY";
+	const getLocationFromCoords = async (
+		lat: number,
+		lon: number
+	): Promise<{ country: string; city: string }> => {
+		try {
+			const response = await axios.get(
+				`https://maps.googleapis.com/maps/api/geocode/json`,
+				{
+					params: {
+						latlng: `${lat},${lon}`,
+						key: GOOGLE_MAPS_API_KEY,
+					},
+				}
+			);
+
+			const results = response.data.results;
+			if (results.length > 0) {
+				const addressComponents = results[0].address_components;
+				const country =
+					addressComponents.find((component: any) =>
+						component.types.includes("country")
+					)?.long_name || "Unknown";
+				const city =
+					addressComponents.find((component: any) =>
+						component.types.includes("locality")
+					)?.long_name || "Unknown";
+
+				return { country, city };
+			} else {
+				return { country: "Unknown", city: "Unknown" };
+			}
+		} catch (error) {
+			console.error("Error fetching location data:", error);
+			return { country: "Unknown", city: "Unknown" };
+		}
+	};
+	const handleClick = () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				async (position) => {
+					const { latitude, longitude } = position.coords;
+					const locationData = await getLocationFromCoords(latitude, longitude);
+					form.setFieldsValue({
+						location: {
+							country_region: locationData.country,
+							city: locationData.city,
+						},
+					});
+					message.success("Location fetched sucessfully!.");
+				},
+				(error) => {
+					console.log(error);
+					message.error("Failed to get location.");
+					// setLocation(null);
+				}
+			);
+		} else {
+			message.error("Geolocation is not supported by this browser.");
+		}
+	};
 	useEffect(() => {
 		setProfile(user);
 		if (user) {
@@ -307,7 +370,7 @@ const Profile: React.FC<any> = () => {
 									Personal Information
 								</h3>
 								<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-									Take an insight into your user name and bio
+									Input your username and bio here
 								</p>
 							</div>
 						</div>
@@ -333,7 +396,7 @@ const Profile: React.FC<any> = () => {
 									Location
 								</h3>
 								<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-									Get insight into your location
+									Input your location here
 								</p>
 							</div>
 						</div>
@@ -346,7 +409,11 @@ const Profile: React.FC<any> = () => {
 								<Input placeholder="Nigeria" className="p-2" />
 							</Form.Item>
 							<Form.Item className="inter-normal mt-[-20px]">
-								<Button type="link" className="text-[#581A57] p-0">
+								<Button
+									type="link"
+									className="text-[#581A57] p-0"
+									onClick={handleClick}
+								>
 									Use current Location
 								</Button>
 							</Form.Item>
@@ -369,7 +436,7 @@ const Profile: React.FC<any> = () => {
 									Education
 								</h3>
 								<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-									your educational background
+									Input your educational background here
 								</p>
 							</div>
 						</div>
@@ -467,7 +534,7 @@ const Profile: React.FC<any> = () => {
 									Work Experience
 								</h3>
 								<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-									How long have you been in the work industry?
+									Input your work experience(s) here
 								</p>
 							</div>
 						</div>
@@ -671,7 +738,7 @@ const Profile: React.FC<any> = () => {
 								block
 								loading={isLoading}
 								disabled={isLoading}
-								className="my-[15px] p-[10px] text-white bg-[#581A57]"
+								className="my-[15px] p-[20px] text-white bg-[#581A57]"
 							>
 								Update
 							</Button>

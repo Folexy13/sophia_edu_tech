@@ -33,6 +33,74 @@ export const SmileyIcon: React.FC<any> = () => {
 	);
 };
 
+export const SendArrow: React.FC<any> = ({ className, onclick }) => {
+	return (
+		<svg
+			width="50"
+			height="50"
+			onClick={onclick}
+			viewBox="0 0 50 50"
+			className={className}
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<g filter="url(#filter0_d_336_1461)">
+				<circle cx="25" cy="21" r="20" fill="#581A57" />
+			</g>
+			<g clip-path="url(#clip0_336_1461)">
+				<path
+					d="M36.124 18.907L32.245 15.029C32.0575 14.8415 31.8032 14.7362 31.538 14.7362C31.2728 14.7362 31.0185 14.8415 30.831 15.029C30.6435 15.2165 30.5382 15.4708 30.5382 15.736C30.5382 16.0012 30.6435 16.2555 30.831 16.443L34.386 20H14C13.7348 20 13.4804 20.1053 13.2929 20.2929C13.1054 20.4804 13 20.7348 13 21V21C13 21.2652 13.1054 21.5196 13.2929 21.7071C13.4804 21.8946 13.7348 22 14 22H34.447L30.831 25.615C30.738 25.7079 30.6643 25.8182 30.6139 25.9396C30.5636 26.061 30.5377 26.1911 30.5377 26.3225C30.5377 26.4539 30.5636 26.584 30.6139 26.7054C30.6643 26.8268 30.738 26.9371 30.831 27.03C31.0185 27.2175 31.2728 27.3228 31.538 27.3228C31.8032 27.3228 32.0575 27.2175 32.245 27.03L36.125 23.151C36.6859 22.5872 37.0007 21.8241 37.0006 21.0288C37.0004 20.2335 36.6852 19.4706 36.124 18.907Z"
+					fill="white"
+				/>
+			</g>
+			<defs>
+				<filter
+					id="filter0_d_336_1461"
+					x="0"
+					y="0"
+					width="50"
+					height="50"
+					filterUnits="userSpaceOnUse"
+					color-interpolation-filters="sRGB"
+				>
+					<feFlood flood-opacity="0" result="BackgroundImageFix" />
+					<feColorMatrix
+						in="SourceAlpha"
+						type="matrix"
+						values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+						result="hardAlpha"
+					/>
+					<feOffset dy="4" />
+					<feGaussianBlur stdDeviation="2.5" />
+					<feComposite in2="hardAlpha" operator="out" />
+					<feColorMatrix
+						type="matrix"
+						values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+					/>
+					<feBlend
+						mode="normal"
+						in2="BackgroundImageFix"
+						result="effect1_dropShadow_336_1461"
+					/>
+					<feBlend
+						mode="normal"
+						in="SourceGraphic"
+						in2="effect1_dropShadow_336_1461"
+						result="shape"
+					/>
+				</filter>
+				<clipPath id="clip0_336_1461">
+					<rect
+						width="24"
+						height="24"
+						fill="white"
+						transform="translate(13 9)"
+					/>
+				</clipPath>
+			</defs>
+		</svg>
+	);
+};
 export const OpenBookIcon: React.FC<any> = () => {
 	return (
 		<svg
