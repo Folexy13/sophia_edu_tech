@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
 							<Button
 								color={APPCONSTANTS.APP_DARK_PURPLE}
 								background="#fff"
-								className="reg_btn"
+								className="reg_btn inter-bold"
 							>
 								Sign Up
 							</Button>
@@ -69,10 +69,7 @@ const Footer: React.FC = () => {
 							padding: "20px",
 						}}
 					>
-						<h2
-							className="playfair-display-bold"
-							style={{ color: "#fff", marginLeft: "-29px" }}
-						>
+						<h2 className="playfair-display-bold" style={{ color: "#fff" }}>
 							More
 						</h2>
 						<ul>

@@ -12,7 +12,7 @@ const SetPasswordpage: React.FC<any> = () => {
 			<Row style={{}}>
 				{/* Desktop View */}
 				<Col xs={{ span: 0 }} lg={{ span: 12 }}>
-					<div className="first-container">
+					<div className="first-contain">
 						<img
 							src={logo}
 							alt="regsister"
@@ -29,7 +29,7 @@ const SetPasswordpage: React.FC<any> = () => {
 					</div>
 				</Col>
 				<Col xs={{ span: 24 }} lg={{ span: 12 }}>
-					<div className="setpassword-container" style={{}}>
+					<div className="setpassword-contain" style={{}}>
 						<Link to={URL.HOME} className="midlogo">
 							<img
 								src={logo}

@@ -12,12 +12,14 @@ import {
 
 const AboutPage: React.FC = () => {
 	return (
-		<div className="about">
-			<div className="container">
+		<div className="about sm:px-0 px-[10px]">
+			<div className="contain">
 				<Navbar />
-				<h2>About us</h2>
+				<h2 className="playfair-display-bold text-left sm:text-center">
+					About us
+				</h2>
 				<p
-					className="playfair-display-normal"
+					className="inter-normal text-left sm:text-center"
 					style={{ marginBottom: 18, lineHeight: 2 }}
 				>
 					Sophia is an ambitious for-profit education technology and career
@@ -28,7 +30,7 @@ const AboutPage: React.FC = () => {
 					potential investors and employers.
 				</p>
 				<div className="div">
-					<Button className="abtBtn">Sign Up</Button>
+					<Button className="abtBtn inter-medium">Sign Up</Button>
 				</div>
 			</div>
 			<section>
@@ -41,7 +43,7 @@ const AboutPage: React.FC = () => {
 				>
 					<Col xs={{ span: 24 }} lg={{ span: 12 }}>
 						<p
-							className="playfair-display-normal"
+							className="inter-normal"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							Sophia came up as a solution to a felt need and challenges
@@ -50,7 +52,7 @@ const AboutPage: React.FC = () => {
 							adequately.
 						</p>
 						<p
-							className="playfair-display-normal"
+							className="inter-normal"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							“Sophia” borrowed its name from the Greek word “Σοφία” or “Sophía”
@@ -62,7 +64,7 @@ const AboutPage: React.FC = () => {
 							fields of study
 						</p>
 						<p
-							className="playfair-display-normal"
+							className="inter-normal"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							Sophia leverages on the potentials offered by latest technologies,
@@ -118,7 +120,7 @@ const AboutPage: React.FC = () => {
 						<img src={badge} width={30} alt="" style={{ marginBottom: 10 }} />
 						<h2 style={{ marginBottom: 10 }}>Mission</h2>
 						<p
-							className="playfair-display-normal"
+							className="inter-normal"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							To provide inclusive and equitable access to quality higher
@@ -166,7 +168,7 @@ const AboutPage: React.FC = () => {
 						/>
 						<h2 style={{ marginBottom: 10 }}>Vision</h2>
 						<p
-							className="playfair-display-normal"
+							className="inter-normal"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							To substantially increase the number of youths and adults who have

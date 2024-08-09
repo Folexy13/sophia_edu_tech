@@ -15,10 +15,10 @@ import { Col, Row } from "antd";
 const Contactpage: React.FC<any> = () => {
 	return (
 		<div className="contact">
-			<div className="container">
+			<div className="contain">
 				<Navbar />
 				<h2 style={{ textAlign: "center" }}>Contact Us</h2>
-				<div className="img_container">
+				<div className="img_contain">
 					<img src={womanCall} alt="" />
 				</div>
 			</div>

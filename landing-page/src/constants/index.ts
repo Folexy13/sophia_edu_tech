@@ -68,7 +68,7 @@ export const APPCONSTANTS = {
 };
 export const applied_science_data = [
 	"Agriculture",
-	"Architecture  and Design",
+	"Architecture and design",
 	"Business",
 	"Education",
 	"Engineering and technology",
@@ -90,7 +90,7 @@ export const humanities_data = [
 	"Performing arts",
 	"Visual Arts",
 	"History",
-	"Languagesw and literature",
+	"Languages and literature",
 	"Law",
 	"Philosophy",
 	"Religious Studies",
@@ -105,7 +105,7 @@ export const natural_science_data = [
 	"Physics",
 ];
 export const social_science_data = [
-	"Antropoly",
+	"Anthropology",
 	"Archaeology",
 	"Economics",
 	"Geography",

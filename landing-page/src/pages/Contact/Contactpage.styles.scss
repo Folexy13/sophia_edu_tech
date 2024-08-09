@@ -4,22 +4,22 @@
 		font-size: 40px;
 		margin: 30px 0;
 	}
-	.img_container {
+	.img_contain {
 		height: 317px;
 		border-radius: 10px;
 		overflow: hidden; /* Hide overflowing parts */
 		position: relative;
 		margin: 30px 0;
 		img {
-			width: 100%; /* Make sure image fills container width */
-			height: 100%; /* Make sure image fills container height */
-			object-fit: cover; /* Cover the container, maintaining aspect ratio */
-			position: absolute; /* Position image relative to container */
+			width: 100%; /* Make sure image fills contain width */
+			height: 100%; /* Make sure image fills contain height */
+			object-fit: cover; /* Cover the contain, maintaining aspect ratio */
+			position: absolute; /* Position image relative to contain */
 			top: 0;
 			left: 0;
 		}
 	}
-	.container {
+	.contain {
 		width: 85%;
 		min-height: 60vh;
 		// background-color: red;

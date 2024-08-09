@@ -12,6 +12,9 @@
 	@media (max-width: 1150px) {
 		.img1 {
 			width: 80%;
+			@media (max-width: 680px) {
+				width: 100%;
+			}
 		}
 		h2 {
 			font-size: 43px;
@@ -19,7 +22,7 @@
 	}
 	.button {
 		@media (max-width: 980px) {
-			width: 100% !important;
+			// width: 100% !important;
 			margin: 20px 0;
 		}
 	}
@@ -91,7 +94,7 @@
 	}
 	.hero-text {
 		@media (max-width: 980px) {
-			flex-direction: column-reverse !important;
+			flex-direction: column !important;
 			.xlx {
 				margin: auto;
 			}

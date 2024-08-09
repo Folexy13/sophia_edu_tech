@@ -6,7 +6,7 @@ import { Card } from "antd";
 const TermsPage: React.FC = () => {
 	return (
 		<div className="privacy">
-			<div className="container">
+			<div className="contain">
 				<Navbar />
 
 				<h2>Privacy Policy</h2>

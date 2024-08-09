@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
 							The integrated learning development platform.
 						</h2>
 						<p
-							className="playfair-display-normal"
+							className="inter-normal text-[18px]"
 							style={{ marginBottom: 18, lineHeight: 2 }}
 						>
 							Learn the most important skills to succeed in your chosen course
@@ -79,7 +79,7 @@ const HomePage: React.FC = () => {
 							style={{ width: "50%" }}
 						>
 							<h3
-								className="playfair-display-normal"
+								className="playfair-display-medium"
 								style={{ marginBottom: 18, lineHeight: 2 }}
 							>
 								Learning Development courses
@@ -118,9 +118,12 @@ const HomePage: React.FC = () => {
 							xl={12}
 							style={{ width: "50%" }}
 						>
-							<h2 className="playfair-display-bold">
+							<h3
+								className="playfair-display-medium"
+								style={{ marginBottom: 18, lineHeight: 2 }}
+							>
 								Social Entrepreneurship and Innovation courses
-							</h2>
+							</h3>
 						</Col>
 						<Col
 							xs={24}
@@ -142,38 +145,37 @@ const HomePage: React.FC = () => {
 			<section className="">
 				<div className="compartment">
 					<h2 className="playfair-display-bold">
-						Things you can do with <span>SOPHIA</span>
+						Things you can do with{" "}
+						<span className="text-[#581A57]">SOPHIA</span>
 					</h2>
 					<Row align="top" justify="space-between" className="hero-text">
 						<Col xs={{ span: 24 }} lg={{ span: 12 }}>
 							<div className="flex">
 								<img src={badge} alt="..." width={20} />
-								<p className="playfair-display-normal">Become a member</p>
+								<p className="inter-normal">Become a member</p>
 							</div>
 							<div className="flex">
 								<img src={badge} alt="..." width={20} />
-								<p className="playfair-display-normal">
+								<p className="inter-normal">
 									Enroll and take your learning development courses
 								</p>
 							</div>
 							<div className="flex">
 								<img src={badge} alt="..." width={20} />
-								<p className="playfair-display-normal">
+								<p className="inter-normal">
 									Enroll and take your social entrepreneurship and innovation
 									courses
 								</p>
 							</div>
 							<div className="flex">
 								<img src={badge} alt="..." width={20} />
-								<p className="playfair-display-normal">
+								<p className="inter-normal">
 									Publish your work and generate certificate of achievement
 								</p>
 							</div>
 							<div className="flex">
 								<img src={badge} alt="..." width={20} />
-								<p className="playfair-display-normal">
-									Upload your enterprise project
-								</p>
+								<p className="inter-normal">Upload your enterprise project</p>
 							</div>
 						</Col>
 						<Col
