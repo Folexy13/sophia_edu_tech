@@ -8,6 +8,7 @@ import {
 	SetNewPasswordPage,
 	Termspage,
 } from "./pages";
+import ComingSoon from "./pages/404";
 
 const Router: React.FC = () => {
 	return (
@@ -22,6 +23,7 @@ const Router: React.FC = () => {
 					element={<SetNewPasswordPage />}
 				/>
 				<Route path={APPCONSTANTS.ROUTES[8].path} element={<ContactPage />} />
+				<Route path="*" element={<ComingSoon />} />
 			</Routes>
 		</BrowserRouter>
 	);
