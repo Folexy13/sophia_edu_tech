@@ -44,7 +44,7 @@ const HomePage: React.FC = () => {
 					<Col
 						xs={{ span: 24 }}
 						lg={{ span: 12 }}
-						className="xlx"
+						className="xlx flex justify-end"
 						style={{
 							// width: "50%",
 							textAlign: "center",
