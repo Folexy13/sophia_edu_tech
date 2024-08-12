@@ -77,7 +77,11 @@ const Layout: React.FC<any> = ({ children }) => {
 					style={{ lineHeight: "inherit" }}
 					className="w-full p-3 flex justify-center"
 				>
-					<Menu.Item key="home" className="custom-menu-item">
+					<Menu.Item
+						key="home"
+						className="custom-menu-item"
+						onClick={() => navigate("/")}
+					>
 						<div className="flex flex-col items-center">
 							<HomeOutlined />
 							<span>Home</span>
@@ -95,13 +99,21 @@ const Layout: React.FC<any> = ({ children }) => {
 							</div>
 						</Menu.Item>
 					</Dropdown>
-					<Menu.Item key="upload" className="custom-menu-item">
+					<Menu.Item
+						key="upload"
+						className="custom-menu-item"
+						onClick={() => navigate(URL.UPLOAD)}
+					>
 						<div className="flex flex-col items-center">
 							<PlusOutlined />
 							<span>Upload</span>
 						</div>
 					</Menu.Item>
-					<Menu.Item key="messages" className="custom-menu-item">
+					<Menu.Item
+						key="messages"
+						className="custom-menu-item"
+						onClick={() => navigate(URL.MESSAGING)}
+					>
 						<div className="flex flex-col items-center">
 							<MessageOutlined />
 							<span>Messages</span>
