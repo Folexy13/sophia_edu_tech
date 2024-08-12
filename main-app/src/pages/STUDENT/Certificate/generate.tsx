@@ -76,7 +76,10 @@ const Generate: React.FC<any> = () => {
 							},
 						]}
 					>
-						<Input className="p-2" placeholder="Enter your publication name" />
+						<Input
+							className="p-2"
+							placeholder="Enter journal  or publisher name"
+						/>
 					</Form.Item>
 
 					<Form.Item
