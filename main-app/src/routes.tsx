@@ -5,12 +5,14 @@ import {
 	Route,
 	Navigate,
 	Outlet,
+	useLocation,
 } from "react-router-dom";
 import { getStoredAuthToken, getUserType } from "./utils/storage";
 
 import { APPCONSTANTS } from "./utils/constants";
 import {
 	AboutCoursePage,
+	CertPage,
 	CourseLearningPage,
 	CourseListingPage,
 	ForgotPasswordPage,
@@ -59,10 +61,10 @@ const Router: React.FC = () => {
 					path={APPCONSTANTS.ROUTES[13].path}
 					element={<ForgotPasswordPage />}
 				/>
-				<Route
+				{/* <Route
 					path="*"
 					element={<Navigate to={APPCONSTANTS.ROUTES[1].path} />}
-				/>
+				/> */}
 				<Route
 					path={APPCONSTANTS.ROUTES[30].path}
 					element={<TutorLoginPage />}
@@ -99,6 +101,7 @@ const Router: React.FC = () => {
 						path={APPCONSTANTS.ROUTES[9].path}
 						element={<GenerateCertPage />}
 					/>
+					<Route path={"/new/certificate"} element={<CertPage />} />
 					<Route
 						path={APPCONSTANTS.ROUTES[10].path}
 						element={<NotificationsPage />}
@@ -189,18 +192,32 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles }) => {
-	const token = getStoredAuthToken();
+	const token = getStoredAuthToken(); //true;
 	const userType = getUserType();
+	const location = useLocation();
+
+	// alert(userType);
 
 	if (!token) {
-		return <Navigate to="/login" />;
+		// Determine where the user is coming from and redirect accordingly
+		const fromPath = location.pathname;
+
+		if (fromPath.startsWith("/admin")) {
+			return <Navigate to={APPCONSTANTS.ROUTES[31].path} />;
+		} else if (fromPath.startsWith("/instructor")) {
+			return <Navigate to={APPCONSTANTS.ROUTES[30].path} />;
+		} else if (fromPath.startsWith("/student")) {
+			return <Navigate to="/login" />; // Assuming "/login" is the student login page
+		} else {
+			return <Navigate to="/login" />; // Default to student login
+		}
 	}
 
 	if (!allowedRoles.includes(userType || "")) {
 		if (userType === "student") {
 			return <Navigate to={APPCONSTANTS.ROUTES[0].path} />;
 		} else if (userType === "instructor") {
-			return <Navigate to={APPCONSTANTS.ROUTES[30].path} />;
+			return <Navigate to={APPCONSTANTS.ROUTES[14].path} />;
 		} else if (userType === "admin") {
 			return <Navigate to={APPCONSTANTS.ROUTES[20].path} />;
 		}

@@ -6,6 +6,7 @@ export { default as MyProfilePage } from "./Profile/settings";
 export { default as OthersProfilePage } from "./Profile/bio";
 export { default as WalletPage } from "./Wallet/wallet";
 export { default as GenerateCertPage } from "./Certificate/generate";
+export { default as CertPage } from "./Certificate/cert";
 export { default as NotificationsPage } from "./Notifications/notifications";
 export { default as UploadPage } from "./Upload/upload";
 export { default as MessagingPage } from "./Messaging/messaging";

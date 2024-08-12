@@ -16,6 +16,7 @@ import { Logo, student, woman } from "../../../assets";
 // 	GoogleLoginResponse,
 // 	GoogleLoginResponseOffline,
 // } from "react-google-login";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { AuthRequest } from "../../../requests";
 import { useAlert, useAuth } from "../../../store";
 import { setStoredAuthToken } from "../../../utils/storage";
@@ -120,14 +121,14 @@ const Loginpage: React.FC<any> = () => {
 							>
 								<Input.Password />
 							</Form.Item>
-							<div className="flex justify-between">
-								<Form.Item<FieldType>
+							<div className="flex justify-end">
+								{/* <Form.Item<FieldType>
 									name="remember"
 									valuePropName="checked"
 									// wrapperCol={{ offset: 8, span: 16 }}
 								>
 									<Checkbox>Remember me</Checkbox>
-								</Form.Item>
+								</Form.Item> */}
 								<Form.Item className="inter-bold">
 									<Link
 										to={URL.FORGOT_PASSWORD}
@@ -151,6 +152,24 @@ const Loginpage: React.FC<any> = () => {
 									Log in
 								</AntDButton>
 							</Form.Item>
+							<Form.Item>
+								<div className="option">
+									<span className="line"></span>
+									<p style={{ marginTop: 30 }}>or</p>
+									<span className="line"></span>
+								</div>
+							</Form.Item>
+							<GoogleOAuthProvider clientId="721301716315-o03cg1fbq3kj16730r309rq850n8v29h.apps.googleusercontent.com">
+								<GoogleLogin
+									useOneTap
+									onSuccess={(credentialResponse) => {
+										console.log(credentialResponse);
+									}}
+									onError={() => {
+										console.log("Login Failed");
+									}}
+								/>
+							</GoogleOAuthProvider>
 						</Form>
 					</div>
 				</Col>

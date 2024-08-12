@@ -12,7 +12,7 @@ export { default as smilingWoman } from "./images/smiling_woman.png";
 export { default as woman } from "./images/woman.svg";
 export { default as student } from "./images/student.svg";
 export { default as googleIcon } from "./images/google_icon.svg";
-
+export { default as LearningImg } from "./images/learning.png";
 export const SmileyIcon: React.FC<any> = () => {
 	return (
 		<svg
@@ -499,11 +499,12 @@ export const WarningIcon: React.FC<any> = () => {
 	);
 };
 
-export const LikeIcon: React.FC<any> = () => {
+export const LikeIcon: React.FC<any> = ({ className }) => {
 	return (
 		<svg
 			width="16"
 			height="16"
+			className={className}
 			viewBox="0 0 16 16"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
@@ -523,11 +524,12 @@ export const LikeIcon: React.FC<any> = () => {
 	);
 };
 
-export const DislikeIcon: React.FC<any> = () => {
+export const DislikeIcon: React.FC<any> = ({ className }) => {
 	return (
 		<svg
 			width="16"
 			height="14"
+			className={className}
 			viewBox="0 0 16 14"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
@@ -540,10 +542,11 @@ export const DislikeIcon: React.FC<any> = () => {
 	);
 };
 
-export const CommentIcon: React.FC<any> = () => {
+export const CommentIcon: React.FC<any> = ({ className }) => {
 	return (
 		<svg
 			width="16"
+			className={className}
 			height="16"
 			viewBox="0 0 16 16"
 			fill="none"

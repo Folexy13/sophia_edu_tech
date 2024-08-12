@@ -6,17 +6,18 @@ import { useAlert, useAuth, useModal } from "../../store";
 const LogoutModal = () => {
 	const { toggleModal } = useModal();
 	const { onLogout } = useAuth();
-	const { onSuccess } = useAlert();
+	const { onSuccess, onFailure } = useAlert();
 	const [loading, setLoading] = useState(false);
 	const handleLogout = () => {
 		setLoading(true);
 		try {
-			clearAllCookies();
 			onLogout();
 			toggleModal();
 			onSuccess("Logged out.");
-			setTimeout(() => {});
-		} catch (error) {}
+			clearAllCookies();
+		} catch (error: any) {
+			onFailure(error?.message);
+		}
 	};
 
 	return (

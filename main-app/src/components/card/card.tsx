@@ -62,7 +62,7 @@ const Container: React.FC<ICardProps> = ({
 					<img
 						alt="example"
 						src={image} // Changed to use image prop
-						className="h-[150px] w-full object-cover rounded-[50%]"
+						className="h-[150px] w-full object-cover rounded-md"
 					/>
 					{/* Avatar */}
 					<Avatar
@@ -77,7 +77,7 @@ const Container: React.FC<ICardProps> = ({
 			<Meta
 				title={name}
 				description="Instructor" // Fixed static description
-				className="text-center mt-[10px]"
+				className="text-center !mt-[10px]"
 			/>
 			{/* Description */}
 			<p className="text-center">{description}</p>{" "}

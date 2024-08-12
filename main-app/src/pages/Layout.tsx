@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Menu, Layout as AntdLayout } from "antd";
+import { Menu, Layout as AntdLayout, Dropdown } from "antd";
 import {
 	HomeOutlined,
 	MessageOutlined,
@@ -9,6 +9,8 @@ import {
 import { Modal, Navbar } from "../components";
 import { ClientRequest } from "../requests";
 import { useModal, useUser } from "../store";
+import { useNavigate } from "react-router-dom";
+import { URL } from "../utils/constants";
 const { Footer } = AntdLayout;
 const Layout: React.FC<any> = ({ children }) => {
 	const { setUser, user } = useUser();
@@ -35,9 +37,24 @@ const Layout: React.FC<any> = ({ children }) => {
 		};
 		fetchUser();
 	}, [setUser]);
+	const navigate = useNavigate();
+	const learningMenu = (
+		<Menu>
+			<Menu.Item key="development" onClick={() => navigate(URL.COURSELISTING)}>
+				Learning Development courses
+			</Menu.Item>
+			<Menu.Item
+				key="social"
+				title="Social Entrepreneurship and Innovation courses"
+				onClick={() => navigate(URL.COURSELISTING, { state: "social" })}
+			>
+				Social Entrepreneurship and ...
+			</Menu.Item>
+		</Menu>
+	);
 	return (
 		<div className="relative ">
-			<div className="p-[30px] px-[20px] md-920:p-[40px]">
+			<div className="p-[30px] px-[10px] sm:px-[20px] md-920:p-[40px]">
 				<Navbar data={user} />
 			</div>
 			<div className="sm:mb-0 mb-[58px]">
@@ -66,12 +83,18 @@ const Layout: React.FC<any> = ({ children }) => {
 							<span>Home</span>
 						</div>
 					</Menu.Item>
-					<Menu.Item key="learning" className="custom-menu-item">
-						<div className="flex flex-col items-center">
-							<DownOutlined />
-							<span>Learning</span>
-						</div>
-					</Menu.Item>
+					<Dropdown
+						overlay={learningMenu}
+						trigger={["click"]}
+						placement="bottomRight"
+					>
+						<Menu.Item key="learning" className="custom-menu-item">
+							<div className="flex flex-col items-center">
+								<DownOutlined />
+								<span>Learning</span>
+							</div>
+						</Menu.Item>
+					</Dropdown>
 					<Menu.Item key="upload" className="custom-menu-item">
 						<div className="flex flex-col items-center">
 							<PlusOutlined />

@@ -40,9 +40,9 @@ const HomePage: React.FC = () => {
 
 	return (
 		<Layout>
-			<div className="flex sm:flex-row flex-col px-[10px] sm:px-[80px] gap-4 items-start pb-[20px]">
+			<div className="flex lg:flex-row flex-col px-[10px] lg:px-[80px] gap-4 items-start pb-[20px]">
 				{/* First Section */}
-				<div className="overflow-y-auto order-1  hidden sm:flex w-full flex-[0.25] min-h-[300px] sm:min-h-[400px] bg-white rounded-lg border-[#B6B6B6] border flex-col items-center justify-center">
+				<div className="overflow-y-auto order-1  hidden lg:flex w-full flex-[0.25] min-h-[300px] sm:min-h-[400px] bg-white rounded-lg border-[#B6B6B6] border flex-col items-center justify-center">
 					{/* Profile image */}
 					<img
 						src={getAvatar(user?.profile_image)}
@@ -88,7 +88,7 @@ const HomePage: React.FC = () => {
 				</div>
 
 				{/* Second Section */}
-				<div className="flex-[0.75] order-3 sm:order-2 w-full sm:max-h-[900px] sm:overflow-y-auto">
+				<div className="flex-[0.75] order-3 lg:order-2 w-full sm:max-h-[900px] sm:overflow-y-auto">
 					{Array.from({ length: 6 }).map((_, i) => (
 						<div
 							key={i}
@@ -151,32 +151,38 @@ const HomePage: React.FC = () => {
 
 							{/* Footer */}
 							<div className="flex justify-between items-center text-[xx-small] sm:text-[small]">
-								<div className="flex gap-1 sm:gap-2 items-center">
-									<p className="flex gap-1 font-inter text-[12px] sm:gap-2 items-center">
-										<LikeIcon />
+								<div className="flex gap-1 sm:gap-2 items-center ">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
+										<LikeIcon className="w-[10px] sm:w-[12px]" />
 										<span>Upvote</span>
 									</p>
 
-									<p className="flex gap-1 font-inter text-[12px] sm:gap-2 items-center">
-										<DislikeIcon />
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
+										<DislikeIcon className="w-[10px] sm:w-[12px]" />
 										<span>Downvote</span>
 									</p>
-									<p className="flex gap-1 font-inter text-[12px] sm:gap-2 items-center">
-										<CommentIcon />
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
+										<CommentIcon className="w-[10px] sm:w-[12px]" />
 										<span>Comment</span>
 									</p>
 								</div>
 
-								<div className="hidden sm:flex sm:gap-2 items-center">
-									<p className="flex font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
-										10 Upvote
+								<div className="flex  gap-1 sm:gap-2 items-center">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
+										<span
+											style={{ visibility: "hidden" }}
+											className="sm:!hidden"
+										>
+											<IndicatorIcon color="#2D2D2D" />
+										</span>
+										<span> 10 Upvote</span>
 									</p>
 
-									<p className="flex font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
 										<IndicatorIcon color="#2D2D2D" />
 										<span>100 Downvote</span>
 									</p>
-									<p className="flex font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[10px] gap-1 sm:gap-2 items-center">
 										<IndicatorIcon color="#2D2D2D" />
 										<span>100 Comments</span>
 									</p>
@@ -187,11 +193,11 @@ const HomePage: React.FC = () => {
 				</div>
 
 				{/* Third Section */}
-				<div className="overflow-y-auto order-2 sm:order-3 w-full sm:w-fit sm:flex-[0.25] max-h-[900px] p-2 rounded-lg bg-white">
+				<div className="sm:overflow-y-auto order-2 lg:order-3 w-full lg:w-fit sm:flex-[0.25] sm:max-h-[500px] p-2 rounded-lg bg-white">
 					<h2 className="text-[14px] leading-[32px] sm:text-[20px] font-inter border-[#F2F2F2] border-b pb-2 mb-2">
 						Recently Read
 					</h2>
-					{Array.from({ length: 4 }).map((_, i) => (
+					{Array.from({ length: 6 }).map((_, i) => (
 						<div
 							className="bg-[#F5F5F5] p-2 rounded-sm mb-2 cursor-pointer"
 							key={i}

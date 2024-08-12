@@ -15,7 +15,8 @@ interface IButtonProps {
 	label: string;
 	loading?: boolean;
 	disabled?: boolean;
-	type?: string; // Added type prop
+	htmlType?: "submit" | "reset" | "button"; // Added type propp
+	type?: string; // Added type propp
 	iconColor?: string; // Added type prop
 	active?: boolean;
 	icon?: any; // Added type prop
@@ -32,6 +33,7 @@ const Button: React.FC<IButtonProps> = ({
 	icon,
 	iconColor,
 	type, // Default type is empty string
+	htmlType,
 	disabled,
 }) => {
 	if (type === "tab") {
@@ -47,6 +49,7 @@ const Button: React.FC<IButtonProps> = ({
 					className,
 				].join(" ")}
 				block={block}
+				htmlType={htmlType}
 				onClick={onclick}
 				onMouseEnter={onhover}
 			>
@@ -58,6 +61,7 @@ const Button: React.FC<IButtonProps> = ({
 		return (
 			<AntdButton
 				disabled={disabled}
+				htmlType={htmlType}
 				loading={loading}
 				className={className}
 				block={block}

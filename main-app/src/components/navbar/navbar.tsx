@@ -51,9 +51,12 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 				</span>
 			),
 			children: [
-				{ key: "/learnings/courses", label: "Learning Development courses" },
 				{
-					key: "/learnings/tutorials",
+					key: "/learnings/development",
+					label: "Learning Development courses",
+				},
+				{
+					key: "/learnings/social",
 					label: "Social Entrepreneurship and Innovation courses",
 				},
 			],
@@ -102,10 +105,10 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 		console.log(e.key);
 		if (e.key === "home") {
 			navigate("/");
-		} else if (e.key === "/learnings/courses") {
-			navigate(URL.LEARNING);
-		} else if (e.key === "/learnings/tutorials") {
+		} else if (e.key === "/learnings/development") {
 			navigate(URL.COURSELISTING);
+		} else if (e.key === "/learnings/social") {
+			navigate(URL.COURSELISTING, { state: "social" });
 		}
 	};
 
@@ -165,7 +168,7 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 									src={getAvatar(data?.profile_image)}
 									alt=".."
 									width={30}
-									className="w-[30px] md-920:w-[60px]"
+									className="w-[30px] "
 									style={{ borderRadius: "50%" }}
 								/>
 

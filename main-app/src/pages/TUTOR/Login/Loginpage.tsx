@@ -20,6 +20,7 @@ import { AuthRequest } from "../../../requests";
 import { useAlert, useAuth } from "../../../store";
 import { setStoredAuthToken } from "../../../utils/storage";
 import { APPCONSTANTS, URL } from "../../../utils/constants";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 type FieldType = {
 	email?: string;
 	password?: string;
@@ -119,14 +120,14 @@ const Loginpage: React.FC<any> = () => {
 							>
 								<Input.Password />
 							</Form.Item>
-							<div className="flex justify-between">
-								<Form.Item<FieldType>
+							<div className="flex justify-end">
+								{/* <Form.Item<FieldType>
 									name="remember"
 									valuePropName="checked"
 									// wrapperCol={{ offset: 8, span: 16 }}
 								>
 									<Checkbox>Remember me</Checkbox>
-								</Form.Item>
+								</Form.Item> */}
 								<Form.Item className="inter-bold">
 									<Link
 										to={URL.FORGOT_PASSWORD}
@@ -150,19 +151,6 @@ const Loginpage: React.FC<any> = () => {
 									Log in
 								</AntDButton>
 							</Form.Item>
-							<Form.Item
-								className="inter-normal"
-								style={{ textAlign: "center" }}
-							>
-								Don't have an account?{" "}
-								<Link
-									to={URL.REGISTER}
-									className="inter-bold"
-									style={{ color: "#581A57" }}
-								>
-									Become a member
-								</Link>
-							</Form.Item>
 							<Form.Item>
 								<div className="option">
 									<span className="line"></span>
@@ -170,28 +158,17 @@ const Loginpage: React.FC<any> = () => {
 									<span className="line"></span>
 								</div>
 							</Form.Item>
-							{/* <GoogleLogin
-								clientId="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" // Replace with your actual client ID
-								buttonText="Login with Google"
-								onSuccess={responseGoogle}
-								onFailure={onFailure}
-								cookiePolicy={"single_host_origin"}
-								render={(renderProps) => (
-									<AntDButton
-										onClick={renderProps.onClick}
-										block
-										icon={<img src={googleIcon} alt="..." width={20} />}
-										style={{
-											backgroundColor: "#fff",
-											color: "#000",
-											margin: "auto",
-											border: "1px solid #d9d9d9",
-										}}
-									>
-										Google
-									</AntDButton>
-								)}
-							/> */}
+							<GoogleOAuthProvider clientId="721301716315-o03cg1fbq3kj16730r309rq850n8v29h.apps.googleusercontent.com">
+								<GoogleLogin
+									useOneTap
+									onSuccess={(credentialResponse) => {
+										console.log(credentialResponse);
+									}}
+									onError={() => {
+										console.log("Login Failed");
+									}}
+								/>
+							</GoogleOAuthProvider>
 						</Form>
 					</div>
 				</Col>

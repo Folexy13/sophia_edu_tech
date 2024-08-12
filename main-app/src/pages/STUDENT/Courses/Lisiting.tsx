@@ -4,7 +4,7 @@ import { Col, Input, Row } from "antd";
 import { Select } from "antd";
 import "./courses.scss";
 import { Card } from "../../../components";
-import { smilingWoman } from "../../../assets";
+import { LearningImg } from "../../../assets";
 
 const { Option } = Select;
 
@@ -15,7 +15,7 @@ const ListingPage: React.FC<any> = () => {
 	return (
 		<Layout>
 			<div className="courses">
-				<div className=" w-full relative bg-green-700 p-[100px] flex justify-between h-[350px]  ">
+				{/* <div className=" w-full relative bg-green-700 p-[100px] flex justify-between h-[350px]  ">
 					<p className="text-white text-[40px] leading-[64px] w-[500px]">
 						Learning Development Courses
 					</p>
@@ -24,7 +24,8 @@ const ListingPage: React.FC<any> = () => {
 						className="absolute bottom-0 right-[40px] z-50"
 						alt="smiling woman"
 					/>
-				</div>
+				</div> */}
+				<img src={LearningImg} className="w-full h-[332px]" />
 				<div className="px-[30px] py-10 w-[100%] sm:w-[95%] mx-auto">
 					<div className="flex justify-between">
 						<h3 className="text-[20px] font-semibold">Enrolled Course</h3>
@@ -49,6 +50,31 @@ const ListingPage: React.FC<any> = () => {
 							/>
 						</div>
 					</div>
+					<Row gutter={[16, 16]} className="my-4">
+						{Array(3)
+							.fill("*")
+							.map((_, index) => (
+								<Col key={index} className="gutter-row" span={8}>
+									<Card
+										image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTGhAJjvgxShaDTndohHFPFz8sFATlPDhNGA&s"
+										name="Aluko Folajimi"
+										avatar="https://www.bellanaija.com/wp-content/uploads/2017/05/dreamstime_m_63861851.jpg"
+										price="$2000"
+										description="Lorem ipsum dolor sit amet, consectetur adipiscing el aspect et status quo et type ullamcorper"
+										buttonText="Continue Learning"
+										buttonColor="#581A57"
+										subject="History"
+										buttonLink="..."
+										isSubscribed
+									/>
+								</Col>
+							))}
+					</Row>
+					<h3 className="text-[20px] font-semibold">
+						Applied Science{" "}
+						<span className="text-[#808080]"> {">"} Agriculture</span>
+					</h3>
+
 					<Row gutter={[16, 16]} className="my-4">
 						{Array(18)
 							.fill("*")

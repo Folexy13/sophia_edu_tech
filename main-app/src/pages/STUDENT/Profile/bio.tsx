@@ -1,7 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "../../Layout";
 import { AddressLocator, profileBG } from "../../../assets";
-import { Avatar, Button, Form, FormProps, Input, message } from "antd";
+import {
+	Avatar,
+	Button,
+	Form,
+	Select,
+	FormProps,
+	Input,
+	message,
+	Checkbox,
+} from "antd";
 import "./profile.styles.scss";
 
 import dayjs from "dayjs";
@@ -10,6 +19,8 @@ import { useAlert, UserProps, useUser } from "../../../store";
 import { ClientRequest } from "../../../requests";
 import { getAvatar } from "../../../utils/helperFunction";
 import axios from "axios";
+
+const { Option } = Select;
 
 dayjs.extend(customParseFormat);
 
@@ -63,6 +74,12 @@ const Profile: React.FC<any> = () => {
 		initialProfileValues
 	);
 	const fileInputRef: any = useRef(null);
+	const [checkedValues, setCheckedValues] = useState<any[]>([]);
+
+	const onChange = (checkedValue: any) => {
+		setCheckedValues(checkedValue);
+	};
+	const [activeTab, setActiveTab] = useState("1");
 
 	const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY";
 	const getLocationFromCoords = async (
@@ -348,313 +365,154 @@ const Profile: React.FC<any> = () => {
 						</div>
 
 						<div className="sm:flex gap-3 hidden">
-							<p className="text-[16px] font-medium mt-[18px] text-[#808080]">
+							<p
+								className={`text-[16px] font-medium cursor-pointer mt-[18px]  ${
+									activeTab === "1" ? "underline" : "text-[#808080]"
+								}`}
+								onClick={() => setActiveTab("1")}
+							>
 								Bio - information
 							</p>
-							<p className="text-[16px] font-medium mt-[18px] underline">
+							<p
+								className={`text-[16px] cursor-pointer font-medium mt-[18px] ${
+									activeTab == "2" ? "underline" : "text-[#808080]"
+								}`}
+								onClick={() => setActiveTab("2")}
+							>
 								Settings
 							</p>
 						</div>
 					</div>
 				</div>
-				<Form
-					form={form}
-					layout="vertical"
-					initialValues={initialProfileValues}
-					onFinish={handleUpdateProfile}
-				>
-					{/* Personal Information */}
-					<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
-						<div className="w-full md-920:w-1/2">
-							<div>
-								<h3 className="mb-[10px] text-[24px] font-semibold">
-									Personal Information
-								</h3>
-								<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-									Input your username and bio here
-								</p>
+				{activeTab === "1" ? (
+					<Form
+						form={form}
+						layout="vertical"
+						initialValues={initialProfileValues}
+						onFinish={handleUpdateProfile}
+					>
+						{/* Personal Information */}
+						<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
+							<div className="w-full md-920:w-1/2">
+								<div>
+									<h3 className="mb-[10px] text-[24px] font-semibold">
+										Personal Information
+									</h3>
+									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+										Input your username and bio here
+									</p>
+								</div>
 							</div>
-						</div>
-						<div className="w-full md-920:w-1/2">
-							<Form.Item
-								label="Full Name"
-								className="inter-normal"
-								name="full_name"
-							>
-								<Input placeholder="Aluko Folajimi" className="p-2" />
-							</Form.Item>
-							<Form.Item label="Bio" className="inter-normal" name="bio">
-								<Input.TextArea placeholder="I am a..." className="p-2" />
-							</Form.Item>
-						</div>
-					</div>
-
-					{/* location */}
-					<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
-						<div className="w-full md-920:w-1/2">
-							<div>
-								<h3 className="mb-[10px] text-[24px] font-semibold">
-									Location
-								</h3>
-								<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-									Input your location here
-								</p>
-							</div>
-						</div>
-						<div className="w-full md-920:w-1/2">
-							<Form.Item
-								label="Country/Region"
-								className="inter-normal"
-								name={["location", "country_region"]}
-							>
-								<Input placeholder="Nigeria" className="p-2" />
-							</Form.Item>
-							<Form.Item className="inter-normal mt-[-20px]">
-								<Button
-									type="link"
-									className="text-[#581A57] p-0"
-									onClick={handleClick}
+							<div className="w-full md-920:w-1/2">
+								<Form.Item
+									label="Full Name"
+									className="inter-normal"
+									name="full_name"
 								>
-									Use current Location
-								</Button>
-							</Form.Item>
-							<Form.Item
-								label="City"
-								className="inter-normal"
-								name={["location", "city"]}
-							>
-								<Input placeholder="Lagos" className="p-2" />
-							</Form.Item>
-						</div>
-					</div>
-
-					{/* Education */}
-
-					<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
-						<div className="w-full md-920:w-1/2">
-							<div>
-								<h3 className="mb-[10px] text-[24px] font-semibold">
-									Education
-								</h3>
-								<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-									Input your educational background here
-								</p>
+									<Input placeholder="Aluko Folajimi" className="p-2" />
+								</Form.Item>
+								<Form.Item label="Bio" className="inter-normal" name="bio">
+									<Input.TextArea placeholder="I am a..." className="p-2" />
+								</Form.Item>
 							</div>
 						</div>
 
-						<div className="w-full md-920:w-1/2">
-							{entities.education?.map((data: any, index: number) => (
-								<div key={index}>
-									<Form.Item
-										label="School"
-										className="inter-normal hidden"
-										name={["education", index, "id"]}
-									>
-										<Input
-											placeholder="University of Stafford"
-											className="p-2"
-											defaultValue={index + 1}
-											value="ggg"
-										/>
-									</Form.Item>
-									<Form.Item
-										label="School"
-										className="inter-normal"
-										name={["education", index, "school"]}
-									>
-										<Input
-											placeholder="University of Stafford"
-											className="p-2"
-										/>
-									</Form.Item>
-									<Form.Item
-										label="Degree"
-										className="inter-normal"
-										name={["education", index, "degree"]}
-									>
-										<Input placeholder="BSc. Agriculture" className="p-2" />
-									</Form.Item>
-									<Form.Item
-										label="Field of Study"
-										className="inter-normal"
-										name={["education", index, "field_of_study"]}
-									>
-										<Input placeholder="Engineering" className="p-2" />
-									</Form.Item>
-									<Form.Item
-										label="Start Date"
-										className="inter-normal w-full"
-										name={["education", index, "start_date"]}
-									>
-										<Input
-											placeholder="1902-02-02"
-											className="p-2"
-											type="date"
-										/>
-									</Form.Item>
-									<Form.Item
-										label="End Date"
-										className="inter-normal"
-										name={["education", index, "end_date"]}
-									>
-										<Input
-											placeholder="1902-02-02"
-											className="p-2"
-											type="date"
-										/>
-									</Form.Item>
-									<div className="flex gap-2 my-[26px] justify-end">
-										{index > 0 && (
-											<Button
-												htmlType="button"
-												loading={removing === data.id + 1}
-												disabled={removing === data.id + 1}
-												onClick={() => removeEntity(data.id, "education")}
-												className="bg-[#DBDBDB] !hover:bg-[#DBDBDB] text-[#3A3A3A] text-[14px] rounded-[8px]"
-											>
-												Remove
-											</Button>
-										)}
-										<Button
-											type="link"
-											onClick={() => addEntity("education")}
-											className="bg-[#3A3A3A] hover:!bg-[#3A3A3A] ml-[10px] text-[#fff] hover:!text-[#fff] text-[14px] rounded-[8px]"
-										>
-											Add More
-										</Button>
-									</div>
+						{/* location */}
+						<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
+							<div className="w-full md-920:w-1/2">
+								<div>
+									<h3 className="mb-[10px] text-[24px] font-semibold">
+										Location
+									</h3>
+									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+										Input your location here
+									</p>
 								</div>
-							))}
-						</div>
-					</div>
-					{/* Work experience */}
-					<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
-						<div className="w-full md-920:w-1/2">
-							<div>
-								<h3 className="mb-[10px] text-[24px] font-semibold">
-									Work Experience
-								</h3>
-								<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-									Input your work experience(s) here
-								</p>
+							</div>
+							<div className="w-full md-920:w-1/2">
+								<Form.Item
+									label="Country/Region"
+									className="inter-normal"
+									name={["location", "country_region"]}
+								>
+									<Input placeholder="Nigeria" className="p-2" />
+								</Form.Item>
+								<Form.Item className="inter-normal mt-[-20px]">
+									<Button
+										type="link"
+										className="text-[#581A57] p-0"
+										onClick={handleClick}
+									>
+										Use current Location
+									</Button>
+								</Form.Item>
+								<Form.Item
+									label="City"
+									className="inter-normal"
+									name={["location", "city"]}
+								>
+									<Input placeholder="Lagos" className="p-2" />
+								</Form.Item>
 							</div>
 						</div>
-						<div className="w-full md-920:w-1/2">
-							{entities.work_experience?.map((data: any, index: number) => (
-								<div key={index}>
-									<Form.Item
-										label="Company"
-										className="inter-normal"
-										name={["work_experience", index, "company"]}
-									>
-										<Input
-											placeholder="Chevron group of company"
-											className="p-2"
-										/>
-									</Form.Item>
-									<Form.Item
-										label="Role/Title"
-										className="inter-normal"
-										name={["work_experience", index, "role_title"]}
-									>
-										<Input placeholder="Senior Developer" className="p-2" />
-									</Form.Item>
-									<Form.Item
-										label="Job Description"
-										className="inter-normal"
-										name={["work_experience", index, "job_description"]}
-									>
-										<Input placeholder="Engineering" className="p-2" />
-									</Form.Item>
 
-									<Form.Item
-										label="Start Date"
-										className="inter-normal w-full"
-										name={["work_experience", index, "start_date"]}
-									>
-										<Input
-											placeholder="1902-02-02"
-											className="p-2"
-											type="date"
-										/>
-									</Form.Item>
-									<Form.Item
-										label="End Date"
-										className="inter-normal"
-										name={["work_experience", index, "end_date"]}
-									>
-										<Input
-											placeholder="1902-02-02"
-											className="p-2"
-											type="date"
-										/>
-									</Form.Item>
-									<div className="flex gap-2 my-[26px] justify-end">
-										{index > 0 && (
-											<Button
-												htmlType="button"
-												loading={removing === data.id + 1}
-												disabled={removing === data.id + 1}
-												onClick={() => removeEntity(data.id, "education")}
-												className="bg-[#DBDBDB] !hover:bg-[#DBDBDB] text-[#3A3A3A] text-[14px] rounded-[8px]"
-											>
-												Remove
-											</Button>
-										)}
-										<Button
-											type="link"
-											onClick={() => addEntity("work_experience")}
-											className="bg-[#3A3A3A] hover:!bg-[#3A3A3A] ml-[10px] text-[#fff] hover:!text-[#fff] text-[14px] rounded-[8px]"
-										>
-											Add More
-										</Button>
-									</div>
+						{/* Education */}
+
+						<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
+							<div className="w-full md-920:w-1/2">
+								<div>
+									<h3 className="mb-[10px] text-[24px] font-semibold">
+										Education
+									</h3>
+									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+										Input your educational background here
+									</p>
 								</div>
-							))}
-						</div>
-					</div>
-
-					{/* Licenses and Certifications */}
-					<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
-						<div className="w-full md-920:w-1/2">
-							<div>
-								<h3 className="mb-[10px] text-[24px] font-semibold">
-									Licenses and Certifications
-								</h3>
-								<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-									This is the area to showcase what you have got
-								</p>
 							</div>
-						</div>
-						<div className="w-full md-920:w-1/2">
-							{entities.licenses_certifications?.map(
-								(data: any, index: number) => (
+
+							<div className="w-full md-920:w-1/2">
+								{entities.education?.map((data: any, index: number) => (
 									<div key={index}>
 										<Form.Item
-											label="Name"
-											className="inter-normal"
-											name={["licenses_certifications", index, "name"]}
+											label="School"
+											className="inter-normal hidden"
+											name={["education", index, "id"]}
 										>
 											<Input
-												placeholder="Diploma in AGILE Methodology"
+												placeholder="University of Stafford"
+												className="p-2"
+												defaultValue={index + 1}
+												value="ggg"
+											/>
+										</Form.Item>
+										<Form.Item
+											label="School"
+											className="inter-normal"
+											name={["education", index, "school"]}
+										>
+											<Input
+												placeholder="University of Stafford"
 												className="p-2"
 											/>
 										</Form.Item>
 										<Form.Item
-											label="Issuing Organization"
+											label="Degree"
 											className="inter-normal"
-											name={[
-												"licenses_certifications",
-												index,
-												"issuing_organization",
-											]}
+											name={["education", index, "degree"]}
 										>
-											<Input placeholder="Microsoft" className="p-2" />
+											<Input placeholder="BSc. Agriculture" className="p-2" />
 										</Form.Item>
 										<Form.Item
-											label="Issue Date"
+											label="Field of Study"
 											className="inter-normal"
-											name={["licenses_certifications", index, "issue_date"]}
+											name={["education", index, "field_of_study"]}
+										>
+											<Input placeholder="Engineering" className="p-2" />
+										</Form.Item>
+										<Form.Item
+											label="Start Date"
+											className="inter-normal w-full"
+											name={["education", index, "start_date"]}
 										>
 											<Input
 												placeholder="1902-02-02"
@@ -662,45 +520,15 @@ const Profile: React.FC<any> = () => {
 												type="date"
 											/>
 										</Form.Item>
-
 										<Form.Item
-											label="Expiration Date"
+											label="End Date"
 											className="inter-normal"
-											name={[
-												"licenses_certifications",
-												index,
-												"expiration_date",
-											]}
+											name={["education", index, "end_date"]}
 										>
 											<Input
 												placeholder="1902-02-02"
 												className="p-2"
 												type="date"
-											/>
-										</Form.Item>
-										<Form.Item
-											label="Credential ID"
-											className="inter-normal"
-											name={[
-												"licenses_certifications",
-												index,
-												"credentials_id",
-											]}
-										>
-											<Input placeholder="#2CDMW34C" className="p-2" />
-										</Form.Item>
-										<Form.Item
-											label="Credential URL"
-											className="inter-normal"
-											name={[
-												"licenses_certifications",
-												index,
-												"credential_url",
-											]}
-										>
-											<Input
-												placeholder="https://placeholder.io"
-												className="p-2"
 											/>
 										</Form.Item>
 										<div className="flex gap-2 my-[26px] justify-end">
@@ -717,35 +545,403 @@ const Profile: React.FC<any> = () => {
 											)}
 											<Button
 												type="link"
-												onClick={() => addEntity("licenses_certifications")}
+												onClick={() => addEntity("education")}
 												className="bg-[#3A3A3A] hover:!bg-[#3A3A3A] ml-[10px] text-[#fff] hover:!text-[#fff] text-[14px] rounded-[8px]"
 											>
 												Add More
 											</Button>
 										</div>
 									</div>
-								)
-							)}
+								))}
+							</div>
 						</div>
-					</div>
-					<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
-						<div
-							className="w-full md-920:w-1/2"
-							style={{ visibility: "hidden" }}
-						></div>
-						<div className="w-full md-920:w-1/2">
-							<Button
-								htmlType="submit"
-								block
-								loading={isLoading}
-								disabled={isLoading}
-								className="my-[15px] p-[20px] text-white bg-[#581A57]"
-							>
-								Update
-							</Button>
+						{/* Work experience */}
+						<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
+							<div className="w-full md-920:w-1/2">
+								<div>
+									<h3 className="mb-[10px] text-[24px] font-semibold">
+										Work Experience
+									</h3>
+									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+										Input your work experience(s) here
+									</p>
+								</div>
+							</div>
+							<div className="w-full md-920:w-1/2">
+								{entities.work_experience?.map((data: any, index: number) => (
+									<div key={index}>
+										<Form.Item
+											label="Company"
+											className="inter-normal"
+											name={["work_experience", index, "company"]}
+										>
+											<Input
+												placeholder="Chevron group of company"
+												className="p-2"
+											/>
+										</Form.Item>
+										<Form.Item
+											label="Role/Title"
+											className="inter-normal"
+											name={["work_experience", index, "role_title"]}
+										>
+											<Input placeholder="Senior Developer" className="p-2" />
+										</Form.Item>
+										<Form.Item
+											label="Job Description"
+											className="inter-normal"
+											name={["work_experience", index, "job_description"]}
+										>
+											<Input placeholder="Engineering" className="p-2" />
+										</Form.Item>
+
+										<Form.Item
+											label="Start Date"
+											className="inter-normal w-full"
+											name={["work_experience", index, "start_date"]}
+										>
+											<Input
+												placeholder="1902-02-02"
+												className="p-2"
+												type="date"
+											/>
+										</Form.Item>
+										<Form.Item
+											label="End Date"
+											className="inter-normal"
+											name={["work_experience", index, "end_date"]}
+										>
+											<Input
+												placeholder="1902-02-02"
+												className="p-2"
+												type="date"
+											/>
+										</Form.Item>
+										<div className="flex gap-2 my-[26px] justify-end">
+											{index > 0 && (
+												<Button
+													htmlType="button"
+													loading={removing === data.id + 1}
+													disabled={removing === data.id + 1}
+													onClick={() => removeEntity(data.id, "education")}
+													className="bg-[#DBDBDB] !hover:bg-[#DBDBDB] text-[#3A3A3A] text-[14px] rounded-[8px]"
+												>
+													Remove
+												</Button>
+											)}
+											<Button
+												type="link"
+												onClick={() => addEntity("work_experience")}
+												className="bg-[#3A3A3A] hover:!bg-[#3A3A3A] ml-[10px] text-[#fff] hover:!text-[#fff] text-[14px] rounded-[8px]"
+											>
+												Add More
+											</Button>
+										</div>
+									</div>
+								))}
+							</div>
 						</div>
-					</div>
-				</Form>
+
+						{/* Licenses and Certifications */}
+						<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
+							<div className="w-full md-920:w-1/2">
+								<div>
+									<h3 className="mb-[10px] text-[24px] font-semibold">
+										Licenses and Certifications
+									</h3>
+									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+										This is the area to showcase what you have got
+									</p>
+								</div>
+							</div>
+							<div className="w-full md-920:w-1/2">
+								{entities.licenses_certifications?.map(
+									(data: any, index: number) => (
+										<div key={index}>
+											<Form.Item
+												label="Name"
+												className="inter-normal"
+												name={["licenses_certifications", index, "name"]}
+											>
+												<Input
+													placeholder="Diploma in AGILE Methodology"
+													className="p-2"
+												/>
+											</Form.Item>
+											<Form.Item
+												label="Issuing Organization"
+												className="inter-normal"
+												name={[
+													"licenses_certifications",
+													index,
+													"issuing_organization",
+												]}
+											>
+												<Input placeholder="Microsoft" className="p-2" />
+											</Form.Item>
+											<Form.Item
+												label="Issue Date"
+												className="inter-normal"
+												name={["licenses_certifications", index, "issue_date"]}
+											>
+												<Input
+													placeholder="1902-02-02"
+													className="p-2"
+													type="date"
+												/>
+											</Form.Item>
+
+											<Form.Item
+												label="Expiration Date"
+												className="inter-normal"
+												name={[
+													"licenses_certifications",
+													index,
+													"expiration_date",
+												]}
+											>
+												<Input
+													placeholder="1902-02-02"
+													className="p-2"
+													type="date"
+												/>
+											</Form.Item>
+											<Form.Item
+												label="Credential ID"
+												className="inter-normal"
+												name={[
+													"licenses_certifications",
+													index,
+													"credentials_id",
+												]}
+											>
+												<Input placeholder="#2CDMW34C" className="p-2" />
+											</Form.Item>
+											<Form.Item
+												label="Credential URL"
+												className="inter-normal"
+												name={[
+													"licenses_certifications",
+													index,
+													"credential_url",
+												]}
+											>
+												<Input
+													placeholder="https://placeholder.io"
+													className="p-2"
+												/>
+											</Form.Item>
+											<div className="flex gap-2 my-[26px] justify-end">
+												{index > 0 && (
+													<Button
+														htmlType="button"
+														loading={removing === data.id + 1}
+														disabled={removing === data.id + 1}
+														onClick={() => removeEntity(data.id, "education")}
+														className="bg-[#DBDBDB] !hover:bg-[#DBDBDB] text-[#3A3A3A] text-[14px] rounded-[8px]"
+													>
+														Remove
+													</Button>
+												)}
+												<Button
+													type="link"
+													onClick={() => addEntity("licenses_certifications")}
+													className="bg-[#3A3A3A] hover:!bg-[#3A3A3A] ml-[10px] text-[#fff] hover:!text-[#fff] text-[14px] rounded-[8px]"
+												>
+													Add More
+												</Button>
+											</div>
+										</div>
+									)
+								)}
+							</div>
+						</div>
+						<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
+							<div
+								className="w-full md-920:w-1/2"
+								style={{ visibility: "hidden" }}
+							></div>
+							<div className="w-full md-920:w-1/2">
+								<Button
+									htmlType="submit"
+									block
+									loading={isLoading}
+									disabled={isLoading}
+									className="my-[15px] p-[20px] text-white bg-[#581A57]"
+								>
+									Update
+								</Button>
+							</div>
+						</div>
+					</Form>
+				) : (
+					<Form
+						form={form}
+						layout="vertical"
+						initialValues={initialProfileValues}
+						onFinish={handleUpdateProfile}
+					>
+						{/* Personal Information */}
+						<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
+							<div className="w-full md-920:w-1/2">
+								<div>
+									<h3 className="mb-[10px] text-[24px] font-semibold">
+										Contact Details
+									</h3>
+									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+										Input your contact details
+									</p>
+								</div>
+							</div>
+							<div className="w-full md-920:w-1/2">
+								<Form.Item
+									label="Email Address"
+									className="inter-normal"
+									name="email_address"
+								>
+									<Input placeholder="johndoe@gmail.com" className="p-2" />
+								</Form.Item>
+								<Form.Item
+									label="Phone Number"
+									className="inter-normal"
+									name="bio"
+								>
+									<Input placeholder="+44123456" className="p-2" />
+								</Form.Item>
+							</div>
+						</div>
+
+						{/* Subject session */}
+						<div className="flex flex-col sm:flex-row gap-2 my-[28px]">
+							<div className="w-full sm:w-1/2">
+								<div>
+									<h3 className="mb-[10px] text-[24px] font-semibold">
+										Follow subjects
+									</h3>
+									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+										Let our recommendation suggest your preferred subject for
+										you.
+									</p>
+								</div>
+							</div>
+							<div className="w-full sm:w-1/2">
+								<Form.Item
+									name="mySelect"
+									label="Select Options"
+									// rules={[
+									// 	{ required: true, message: "Please select your options!" },
+									// ]}
+								>
+									<Select
+										mode="multiple"
+										placeholder="Search subjects"
+										value={checkedValues}
+										onChange={onChange}
+										className="p-2 bg-white rounded-md"
+										dropdownRender={(menu) => (
+											<>
+												{menu}
+												<div className="flex flex-col cursor-pointer p-[8px] gap-2">
+													{["chemistry", "french", "english"].map((option) => (
+														<Checkbox
+															key={option}
+															value={option}
+															checked={checkedValues.includes(option)}
+															onChange={() => {
+																if (checkedValues.includes(option)) {
+																	setCheckedValues(
+																		checkedValues.filter(
+																			(item) => item !== option
+																		)
+																	);
+																} else {
+																	setCheckedValues([...checkedValues, option]);
+																}
+															}}
+														>
+															{option.replace("option", "Option ")}
+														</Checkbox>
+													))}
+												</div>
+											</>
+										)}
+										optionLabelProp="label"
+									>
+										<Option value="chemistry" label="Chemistry">
+											Chemistry
+										</Option>
+										<Option value="french" label="French">
+											French
+										</Option>
+										<Option value="english" label="english">
+											English
+										</Option>
+									</Select>
+								</Form.Item>
+							</div>
+						</div>
+
+						{/* Password INfo */}
+						<div className="flex flex-col sm:flex-row gap-2 my-[28px]">
+							<div className="w-full sm:w-1/2">
+								<div>
+									<h3 className="mb-[10px] text-[24px] font-semibold">
+										Reset Password
+									</h3>
+									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+										Edit this section with caution
+									</p>
+								</div>
+							</div>
+							<div className="w-full sm:w-1/2">
+								<Form.Item
+									label="Current Password"
+									className="inter-normal"
+									name="current_password"
+								>
+									<Input
+										placeholder="*************"
+										type="password"
+										className="p-2"
+									/>
+								</Form.Item>
+
+								<Form.Item
+									label="New Password"
+									className="inter-normal"
+									name="new_password"
+								>
+									<Input type="password" className="p-2" />
+								</Form.Item>
+
+								<Form.Item
+									label="Confirm Password"
+									className="inter-normal"
+									name="confirm_password"
+								>
+									<Input type="password" className="p-2" />
+								</Form.Item>
+							</div>
+						</div>
+						<div className="flex flex-col md-920:flex-row gap-2 my-[28px]">
+							<div
+								className="w-full md-920:w-1/2"
+								style={{ visibility: "hidden" }}
+							></div>
+							<div className="w-full md-920:w-1/2">
+								<Button
+									htmlType="submit"
+									block
+									loading={isLoading}
+									disabled={isLoading}
+									className="my-[15px] p-[20px] text-white bg-[#581A57]"
+								>
+									Send email to reset password
+								</Button>
+							</div>
+						</div>
+					</Form>
+				)}
 			</div>
 		</Layout>
 	);

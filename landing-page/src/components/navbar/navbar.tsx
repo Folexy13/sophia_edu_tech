@@ -15,9 +15,9 @@ const Navbar: React.FC = () => {
 					<img src={logo} alt="Logo" className="max-w-screen-xl" />
 				</Col>
 			</Link>
-			<Link to={URL.LOGIN}>
+			<a href={"https://sophia-main-app.netlify.app/login"} target="_blank">
 				<Button>Login</Button>
-			</Link>
+			</a>
 		</Row>
 	);
 };
