@@ -13,6 +13,7 @@ export { default as woman } from "./images/woman.svg";
 export { default as student } from "./images/student.svg";
 export { default as googleIcon } from "./images/google_icon.svg";
 export { default as LearningImg } from "./images/learning.png";
+export { default as SocialImg } from "./images/social.png";
 export const SmileyIcon: React.FC<any> = () => {
 	return (
 		<svg
@@ -159,11 +160,12 @@ export const WalletIcon: React.FC<any> = () => {
 		</svg>
 	);
 };
-export const DiscIcon: React.FC<any> = ({ color }) => {
+export const DiscIcon: React.FC<any> = ({ color, className }) => {
 	return (
 		<svg
 			width="24"
 			height="24"
+			className={className}
 			viewBox="0 0 24 24"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"

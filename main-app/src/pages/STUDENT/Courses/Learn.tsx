@@ -85,7 +85,7 @@ const Learn: React.FC<any> = () => {
 						/>
 
 						{/* text */}
-						<div className="pb-[60px]  h-[450px] overflow-hidden overflow-y-scroll">
+						<div className="pb-[60px]  h-[350px] overflow-hidden overflow-y-scroll">
 							<p className="text-[14px] my-[10px]">
 								This course lorem ipsum dolor sit amet consectetur. Eu mi
 								pulvinar risus dapibus eget. Malesuada auctor a elementum mollis

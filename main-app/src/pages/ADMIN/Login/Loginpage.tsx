@@ -79,9 +79,13 @@ const Loginpage: React.FC<any> = () => {
 							/>
 						</Link>
 
-						<div className="main">
+						<div className="main w-full xl:w-[780px]">
 							<img src={student} alt="students studying" />
-							<img src={woman} alt="graduating woman" />
+							<img
+								src={woman}
+								alt="graduating woman"
+								className="right-[1rem] xl:right-[15rem] bottom-[2rem]"
+							/>
 						</div>
 						<h2 className="inter-bold">Welcome Back!!</h2>
 						<p className="inter-normal">Learn Anytime, Anywhere</p>

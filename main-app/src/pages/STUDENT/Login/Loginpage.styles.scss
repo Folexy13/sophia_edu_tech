@@ -74,7 +74,6 @@
 		.main {
 			height: 510px;
 			margin: 40px 0;
-			// padding: 20px;
 			position: relative;
 
 			img {
@@ -84,14 +83,14 @@
 					height: 253px;
 				}
 				&:nth-child(2) {
-					right: 220px;
-					bottom: 50px;
+					// right: 220px;
+					// bottom: 50px;
 					@media (max-width: 1600px) {
-						right: 123px;
+						// right: 123px;
 					}
 					@media (max-width: 1400px) {
-						right: 70px;
-						bottom: 100px;
+						// right: 70px;
+						// bottom: 100px;
 					}
 				}
 			}

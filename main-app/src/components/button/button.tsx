@@ -39,22 +39,22 @@ const Button: React.FC<IButtonProps> = ({
 	if (type === "tab") {
 		return (
 			<AntdButton
-				loading={loading}
-				disabled={disabled}
 				className={[
-					"border-[0] border-t-[2px] rounded-0 flex flex-col items-center justify-center",
+					"border-[0] h-[70px] border-t-[3px] bg-white rounded-none flex flex-col items-center justify-center",
 					active
 						? "text-[#581A57] border-[#581A57]"
 						: "text-[#B6B6B6] border-[#B6B6B6]",
 					className,
 				].join(" ")}
 				block={block}
-				htmlType={htmlType}
 				onClick={onclick}
 				onMouseEnter={onhover}
+				loading={loading}
+				disabled={disabled}
 			>
 				{icon ? icon : <DiscIcon color={iconColor} />}
-				<span>{label}</span>
+
+				<p>{label}</p>
 			</AntdButton>
 		);
 	} else {

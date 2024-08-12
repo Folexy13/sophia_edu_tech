@@ -10,7 +10,7 @@ export const URL = {
 	FORGOT_PASSWORD: "/forgot-password",
 	PRIVACY: "/privacy/terms-of-service",
 	COURSELISTING: "/course/all",
-	ABOUTCOURSE: "/course/1",
+	ABOUTCOURSE: "/course/",
 	LEARNING: "/course/1/learning",
 	BLOG: "/blog",
 	PROFILE: "/profile/me/settings",

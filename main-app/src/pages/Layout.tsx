@@ -38,7 +38,7 @@ const Layout: React.FC<any> = ({ children }) => {
 		fetchUser();
 	}, [setUser]);
 	const navigate = useNavigate();
-	const learningMenu = (
+	const learningMenu: any = (
 		<Menu>
 			<Menu.Item key="development" onClick={() => navigate(URL.COURSELISTING)}>
 				Learning Development courses
@@ -84,7 +84,7 @@ const Layout: React.FC<any> = ({ children }) => {
 						</div>
 					</Menu.Item>
 					<Dropdown
-						overlay={learningMenu}
+						menu={{ items: learningMenu }}
 						trigger={["click"]}
 						placement="bottomRight"
 					>

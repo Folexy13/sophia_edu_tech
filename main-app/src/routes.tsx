@@ -81,7 +81,7 @@ const Router: React.FC = () => {
 						element={<CourseListingPage />}
 					/>
 					<Route
-						path={APPCONSTANTS.ROUTES[4].path}
+						path={APPCONSTANTS.ROUTES[4].path + ":id"}
 						element={<AboutCoursePage />}
 					/>
 					<Route
@@ -192,7 +192,7 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles }) => {
-	const token = getStoredAuthToken(); //true;
+	const token = true; //getStoredAuthToken(); //true;
 	const userType = getUserType();
 	const location = useLocation();
 

@@ -4,7 +4,9 @@ import { Col, Input, Row } from "antd";
 import { Select } from "antd";
 import "./courses.scss";
 import { Card } from "../../../components";
-import { LearningImg } from "../../../assets";
+import { LearningImg, SocialImg } from "../../../assets";
+import { useLocation, useNavigate } from "react-router-dom";
+import { URL } from "../../../utils/constants";
 
 const { Option } = Select;
 
@@ -12,23 +14,20 @@ const ListingPage: React.FC<any> = () => {
 	function handleChange(value: any) {
 		console.log(`Selected: ${value}`);
 	}
+	const nav = useNavigate();
+	const { state } = useLocation();
 	return (
 		<Layout>
 			<div className="courses">
-				{/* <div className=" w-full relative bg-green-700 p-[100px] flex justify-between h-[350px]  ">
-					<p className="text-white text-[40px] leading-[64px] w-[500px]">
-						Learning Development Courses
-					</p>
-					<img
-						src={smilingWoman}
-						className="absolute bottom-0 right-[40px] z-50"
-						alt="smiling woman"
-					/>
-				</div> */}
-				<img src={LearningImg} className="w-full h-[332px]" />
-				<div className="px-[30px] py-10 w-[100%] sm:w-[95%] mx-auto">
+				<img
+					src={state == "social" ? SocialImg : LearningImg}
+					className="w-full sm:h-[332px]"
+				/>
+				<div className="px-[10px] sm:px-[30px] py-10 w-[100%] sm:w-[95%] mx-auto">
 					<div className="flex justify-between">
-						<h3 className="text-[20px] font-semibold">Enrolled Course</h3>
+						<h3 className="text-[20px] font-semibold font-inter">
+							Enrolled Course
+						</h3>
 
 						<div className="flex gap-3 items-center">
 							<Select
@@ -46,15 +45,21 @@ const ListingPage: React.FC<any> = () => {
 								placeholder="Search for anything"
 								size="large"
 								allowClear
-								className="text-black w-[200px] bg-transparent sm:w-[300px] rounded-2xl p-2 ml-[12px] md:ml-0 md:p-[7px]"
+								className="text-black w-[200px] bg-transparent sm:w-[300px] rounded-2xl p-2 ml-[12px] md:ml-0 md:p-[7px] hidden sm:block"
 							/>
 						</div>
 					</div>
-					<Row gutter={[16, 16]} className="my-4">
+					<Row gutter={[16, 16]} className="my-4 sm:flex-row flex-col ">
 						{Array(3)
 							.fill("*")
 							.map((_, index) => (
-								<Col key={index} className="gutter-row" span={8}>
+								<Col
+									key={index}
+									className="gutter-row"
+									xs={24} // Full width on extra small screens (1 column)
+									sm={12} // Half width on small screens (2 columns)
+									md={8} // One-third width on medium screens (3 columns)
+								>
 									<Card
 										image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTGhAJjvgxShaDTndohHFPFz8sFATlPDhNGA&s"
 										name="Aluko Folajimi"
@@ -79,7 +84,13 @@ const ListingPage: React.FC<any> = () => {
 						{Array(18)
 							.fill("*")
 							.map((_, index) => (
-								<Col key={index} className="gutter-row" span={8}>
+								<Col
+									key={index}
+									className="gutter-row"
+									xs={24} // Full width on extra small screens (1 column)
+									sm={12} // Half width on small screens (2 columns)
+									md={8} // One-third width on medium screens (3 columns)
+								>
 									<Card
 										image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTGhAJjvgxShaDTndohHFPFz8sFATlPDhNGA&s"
 										name="Aluko Folajimi"
@@ -90,6 +101,7 @@ const ListingPage: React.FC<any> = () => {
 										buttonColor="#581A57"
 										subject="History"
 										buttonLink="..."
+										onClick={() => nav(URL.ABOUTCOURSE + index + 1)}
 									/>
 								</Col>
 							))}
