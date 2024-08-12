@@ -67,12 +67,12 @@ const Generate: React.FC<any> = () => {
 					</Form.Item>
 
 					<Form.Item
-						label="Publication Name"
+						label="Publisher Name"
 						name="publication_name"
 						rules={[
 							{
 								required: true,
-								message: "Please enter your publication name",
+								message: "Please enter the publisher name",
 							},
 						]}
 					>

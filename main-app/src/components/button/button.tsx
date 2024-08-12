@@ -40,7 +40,7 @@ const Button: React.FC<IButtonProps> = ({
 		return (
 			<AntdButton
 				className={[
-					"border-[0] h-[70px] border-t-[3px] bg-white rounded-none flex flex-col items-center justify-center",
+					"border-[0] h-[70px] border-t-[5px] hover:!border-t-[5px] bg-white rounded-none flex flex-col items-center justify-center",
 					active
 						? "text-[#581A57] border-[#581A57]"
 						: "text-[#B6B6B6] border-[#B6B6B6]",
@@ -52,7 +52,16 @@ const Button: React.FC<IButtonProps> = ({
 				loading={loading}
 				disabled={disabled}
 			>
-				{icon ? icon : <DiscIcon color={iconColor} />}
+				<span
+					style={{
+						fontSize: "24px",
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+					}}
+				>
+					{icon ? icon : <DiscIcon color={iconColor} />}
+				</span>
 
 				<p>{label}</p>
 			</AntdButton>

@@ -192,9 +192,9 @@ const Learn: React.FC<any> = () => {
 		},
 	];
 	const CustomTabBar = () => (
-		<div className="flex gap-2 justify-end w-2/5 ml-auto">
+		<div className="flex gap-2 justify-end  sm:w-2/5 ml-auto">
 			<Button
-				className="p-4 flex-1 "
+				className="p-4 flex-1 sm:w-full w-[20%]"
 				label="Introduction"
 				onclick={() => onChange("1")}
 				// onhover={() => onChange("1")}
@@ -203,7 +203,7 @@ const Learn: React.FC<any> = () => {
 				active={activeKey == "1"}
 			/>
 			<Button
-				className="p-4 flex-1 "
+				className="p-4 flex-1 sm:w-full w-[20%]"
 				iconColor={activeKey == "2" ? "#581A57" : "#B6B6B6"}
 				type="tab"
 				label="Academia"
@@ -212,7 +212,7 @@ const Learn: React.FC<any> = () => {
 				active={activeKey == "2"}
 			/>
 			<Button
-				className="p-4 flex-1"
+				className="p-4 flex-1 sm:w-full w-[20%]"
 				iconColor={activeKey == "3" ? "#581A57" : "#B6B6B6"}
 				type="tab"
 				// onhover={() => setActiveKey("3")}
@@ -221,7 +221,7 @@ const Learn: React.FC<any> = () => {
 				active={activeKey == "3"}
 			/>
 			<Button
-				className="p-4 flex-1"
+				className="p-4 flex-1 sm:w-full w-[20%]"
 				iconColor={activeKey == "4" ? "#581A57" : "#B6B6B6"}
 				type="tab"
 				label="Video"
@@ -233,13 +233,13 @@ const Learn: React.FC<any> = () => {
 	);
 	return (
 		<Layout>
-			<div className="px-[30px] mx-auto learn_course full-page">
-				<div className="relative flex justify-between">
-					<h2 className="absolute top-[12px] font-semibold header">
+			<div className="px-[10px] sm:px-[30px] mx-auto learn_course full-page">
+				<div className="relative flex sm:flex-row flex-col justify-between">
+					<h2 className="sm:absolute sm:top-[12px] mb-[10px] sm:mb-0 font-semibold header">
 						Course Module (History)
 					</h2>
 					<Tabs
-						className="relative"
+						className="relative "
 						activeKey={activeKey}
 						items={items}
 						renderTabBar={CustomTabBar}

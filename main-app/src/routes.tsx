@@ -192,7 +192,7 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles }) => {
-	const token = true; //getStoredAuthToken(); //true;
+	const token = getStoredAuthToken(); //true;
 	const userType = getUserType();
 	const location = useLocation();
 

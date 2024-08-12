@@ -217,7 +217,7 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 							<p className="text-[#581A57] text-sm font-[inter]">Upload</p>
 						</div>
 					</div>
-					<Dropdown menu={{ items: dropdown }}>
+					<Dropdown menu={{ items: dropdown }} className="ml-[10px]">
 						<Button className="hover:!border-[#581A57] border-[#581A57] bg-[#F5F5F5] hover:!bg-[#F5F5F5] py-[20px] hover:!text-[#581A57]">
 							<Space>
 								<img
@@ -227,7 +227,7 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 									style={{ borderRadius: "50%" }}
 								/>
 
-								<span>{truncate(data?.full_name, { length: 20 })}</span>
+								<span>{truncate(data?.full_name, { length: 15 })}</span>
 
 								<DownOutlined />
 							</Space>
