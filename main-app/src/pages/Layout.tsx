@@ -84,7 +84,7 @@ const Layout: React.FC<any> = ({ children }) => {
 						</div>
 					</Menu.Item>
 					<Dropdown
-						menu={{ items: learningMenu }}
+						overlay={learningMenu}
 						trigger={["click"]}
 						placement="bottomRight"
 					>

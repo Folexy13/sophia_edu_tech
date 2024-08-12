@@ -227,7 +227,7 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 									style={{ borderRadius: "50%" }}
 								/>
 
-								<span>{truncate(data?.full_name, { length: 15 })}</span>
+								<span>{truncate(data?.full_name, { length: 20 })}</span>
 
 								<DownOutlined />
 							</Space>

@@ -43,8 +43,8 @@ const Learn: React.FC<any> = () => {
 			key: "1",
 			label: renderTabLabel("Tab 1"),
 			children: (
-				<div className="flex mt-[50px] gap-6 w-full">
-					<div className="w-[25%]">
+				<div className="flex sm:flex-row flex-col-reverse mt-[10px] sm:mt-[50px] gap-6 w-full">
+					<div className="sm:block hidden w-[25%]">
 						<Collapse
 							onChange={handleCollpaseChange}
 							items={collapseItem}
@@ -74,18 +74,19 @@ const Learn: React.FC<any> = () => {
 							expandIcon={expandIcon} // Add custom icon
 						/>
 					</div>
-					<div className="w-[75%] relative main">
+					<div className="sm:w-[75%] relative main">
 						{/* video container */}
 						<div className="bg-[#D9D9D9] rounded-lg h-[300px] w-full "></div>
 						<Progress
 							showInfo={false}
+							strokeWidth={5}
 							strokeColor="#808080"
-							className="py-[1px] my-[10px]"
-							percent={100}
+							className="sm:py-[1px] my-0 sm:my-[10px]"
+							percent={80}
 						/>
 
 						{/* text */}
-						<div className="pb-[60px]  h-[350px] overflow-hidden overflow-y-scroll">
+						<div className="sm:block hidden pb-[60px]  h-[350px] overflow-hidden overflow-y-scroll">
 							<p className="text-[14px] my-[10px]">
 								This course lorem ipsum dolor sit amet consectetur. Eu mi
 								pulvinar risus dapibus eget. Malesuada auctor a elementum mollis
@@ -143,13 +144,13 @@ const Learn: React.FC<any> = () => {
 							</p>
 						</div>
 						{/* Indicators */}
-						<div className="absolute bottom-2  left-0 cursor-pointer">
+						<div className="hidden sm:block absolute bottom-2  left-0 cursor-pointer">
 							<span className="bg-[#581A57] mr-2  p-2 rounded">
 								<ArrowLeftOutlined />
 							</span>
 							<span className="text-[#666666] text-[14px]">Introduction</span>
 						</div>
-						<div className="absolute bottom-2 right-0 cursor-pointer">
+						<div className="hidden sm:block absolute bottom-2 right-0 cursor-pointer">
 							<span className="text-[#666666] text-[14px]">Education</span>
 
 							<span className="bg-[#581A57]  ml-2  p-2 rounded">
