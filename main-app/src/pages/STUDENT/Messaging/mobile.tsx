@@ -91,7 +91,7 @@ const Messaging: React.FC<any> = () => {
 											{message?.other_user_name === user?.full_name && (
 												<img src={avatar} width={30} />
 											)}
-											<div className="w-2/5">
+											<div className="w-full">
 												<p
 													className={`${
 														message?.other_user_name === user?.full_name
