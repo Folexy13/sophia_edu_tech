@@ -38,7 +38,7 @@ const CreateCoursePage: React.FC = () => {
 								Upload Course
 							</h3>
 							<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-								Make sure your course is catchy and descriptive as possible
+								Input your course details here
 							</p>
 						</div>
 					</div>
