@@ -65,7 +65,7 @@ const Messaging: React.FC<any> = () => {
 						</header>
 
 						{/* Message body */}
-						<div className="msgbody_height relative  w-full">
+						<div className="h-full relative  w-full">
 							<div
 								className={`hidden-scrollbar relative h-full ${
 									messages.length < 1 && "flex items-center justify-center "
@@ -109,7 +109,7 @@ const Messaging: React.FC<any> = () => {
 									))}
 								</InfiniteScroll>
 							</div>
-							<Form className="absolute bottom-[30px]  w-full">
+							<Form className="absolute bottom-[62px]  w-full">
 								<Input
 									className="bg-[#F5F5F5] focus:bg-[#F5F5F5] hover:bg-[#F5F5F5] focus:border-0 hover:border-0  rounded-[50px] px-[19px] py-[15px]"
 									name="message"
