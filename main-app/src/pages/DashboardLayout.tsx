@@ -259,7 +259,7 @@ const DashboardLayout: React.FC<{
 					)}
 				</Menu>
 			</Sider>
-			<AntDLayout className="sm:ml-[300px]">
+			<AntDLayout className="sm:ml-[300px] px-[10px] sm:px-0">
 				<Header
 					className="px-[10px] sm:!px-[20px] z-20 fixed top-0 left-0 right-0 w-[calc(100% - 300px)] bg-white flex justify-between items-center"
 					style={{

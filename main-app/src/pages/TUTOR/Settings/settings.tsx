@@ -74,9 +74,6 @@ const Settings: React.FC = () => {
 							<h3 className="mb-[10px] text-[24px] font-semibold">
 								Reset Password
 							</h3>
-							<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-								Edit this section with caution
-							</p>
 						</div>
 					</div>
 					<div className="w-full sm:w-1/2">
@@ -118,7 +115,7 @@ const Settings: React.FC = () => {
 						<Button
 							htmlType="submit"
 							block
-							className="my-[15px] p-[10px] text-white bg-[#581A57]"
+							className="my-[15px] p-[20px] text-white bg-[#581A57]"
 						>
 							Click to reset password
 						</Button>

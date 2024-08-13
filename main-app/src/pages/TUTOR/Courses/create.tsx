@@ -180,9 +180,6 @@ const CreateCoursePage: React.FC = () => {
 									<Select.Option value={3}>3</Select.Option>
 									<Select.Option value={4}>4</Select.Option>
 									<Select.Option value={5}>5</Select.Option>
-									<Select.Option value={"5 + Apply & Conclusion"}>
-										5 + Apply & Conclusion
-									</Select.Option>
 								</Select>
 							</Form.Item>
 							{Array.from({ length: moduleNumber }, (_, i) => (
