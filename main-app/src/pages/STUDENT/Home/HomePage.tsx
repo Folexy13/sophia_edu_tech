@@ -152,23 +152,23 @@ const HomePage: React.FC = () => {
 							{/* Footer */}
 							<div className="flex justify-between items-center text-[xx-small] sm:text-[small]">
 								<div className="flex gap-1 sm:gap-2 items-center ">
-									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[8px] gap-1 sm:gap-2 items-center">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] lg:text-[12px] text-[8px] gap-1 sm:gap-2 items-center">
 										<LikeIcon className="w-[10px] sm:w-[12px]" />
 										<span>Upvote</span>
 									</p>
 
-									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[8px] gap-1 sm:gap-2 items-center">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] lg:text-[12px] text-[8px] gap-1 sm:gap-2 items-center">
 										<DislikeIcon className="w-[10px] sm:w-[12px]" />
 										<span>Downvote</span>
 									</p>
-									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[8px] gap-1 sm:gap-2 items-center">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] lg:text-[12px] text-[8px] gap-1 sm:gap-2 items-center">
 										<CommentIcon className="w-[10px] sm:w-[12px]" />
 										<span>Comment</span>
 									</p>
 								</div>
 
 								<div className="flex  gap-1 sm:gap-2 items-center">
-									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[8px] gap-1 sm:gap-2 items-center">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] lg:text-[12px] text-[8px] gap-1 sm:gap-2 items-center">
 										<span
 											style={{ visibility: "hidden" }}
 											className="sm:!hidden"
@@ -178,11 +178,11 @@ const HomePage: React.FC = () => {
 										<span> 10 Upvote</span>
 									</p>
 
-									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[8px] gap-1 sm:gap-2 items-center">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] lg:text-[12px] text-[8px] gap-1 sm:gap-2 items-center">
 										<IndicatorIcon color="#2D2D2D" />
 										<span>100 Downvote</span>
 									</p>
-									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] text-[8px] gap-1 sm:gap-2 items-center">
+									<p className="flex flex-col sm:flex-row font-inter font-[300] leading-[12.1px] lg:text-[12px] text-[8px] gap-1 sm:gap-2 items-center">
 										<IndicatorIcon color="#2D2D2D" />
 										<span>100 Comments</span>
 									</p>
@@ -193,7 +193,7 @@ const HomePage: React.FC = () => {
 				</div>
 
 				{/* Third Section */}
-				<div className="sm:overflow-y-auto order-2 lg:order-3 w-full lg:w-fit sm:flex-[0.25] sm:max-h-[500px] p-2 rounded-lg bg-white">
+				<div className="hidden md:block sm:overflow-y-auto order-2 lg:order-3 w-full lg:w-fit sm:flex-[0.25] sm:max-h-[500px] p-2 rounded-lg bg-white">
 					<h2 className="text-[14px] leading-[32px] sm:text-[20px] font-inter border-[#F2F2F2] border-b pb-2 mb-2">
 						Recently Read
 					</h2>

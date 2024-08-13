@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, Layout as AntdLayout, Dropdown } from "antd";
 import {
 	HomeOutlined,
@@ -27,6 +27,15 @@ const Layout: React.FC<any> = ({ children }) => {
 		onCancel();
 		toggleModal();
 	};
+	const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+	useEffect(() => {
+		const handleResize = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -57,7 +66,7 @@ const Layout: React.FC<any> = ({ children }) => {
 			<div className="p-[30px] px-[10px] sm:px-[20px] md-920:p-[40px]">
 				<Navbar data={user} />
 			</div>
-			<div className="sm:mb-0 mb-[58px]">
+			<div className={`sm:mb-0 mb-[58px] ${isMobile ? "mt-4" : ""}`}>
 				{children}
 				<Modal
 					isOpen={visible}

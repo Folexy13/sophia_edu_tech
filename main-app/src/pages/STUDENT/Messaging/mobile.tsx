@@ -55,8 +55,8 @@ const Messaging: React.FC<any> = () => {
 
 	return (
 		<Layout className="">
-			<div className="sm:w-[90%] mx-auto sm:px-[40px] messaging">
-				<div className="bg-white p-[15px]  h-screen  text-clip flex gap-2   w-full md:w-[95%] mx-auto">
+			<div className="sm:w-[90%] mt-[-1rem] mx-auto sm:px-[40px] messaging">
+				<div className="bg-white py-[15px] px-[5px] mobile  text-clip flex gap-2   w-full md:w-[95%] mx-auto">
 					<div className="w-full">
 						{/* Header */}
 						<header className="flex gap-3 items-center border-[#F5F5F5] border-b pb-[10px]">

@@ -38,6 +38,15 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 
 	type MenuItem = Required<MenuProps>["items"][number];
 	const { isTablet } = useScreenSize();
+	const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+	useEffect(() => {
+		const handleResize = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 	const items: MenuItem[] = [
 		{
 			key: "home",
@@ -91,8 +100,22 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 			),
 			// disabled: true,
 		},
+
+		...(isMobile
+			? [
+					{
+						key: "6",
+						label: (
+							<div onClick={() => navigate(URL.GENERATE_CERTIFICATE)}>
+								Recently read
+							</div>
+						),
+						// disabled: true,
+					},
+			  ]
+			: []),
 		{
-			key: "6",
+			key: "7",
 			label: (
 				<div className="text-[#f00]" onClick={showLogout}>
 					Logout
@@ -131,7 +154,11 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 	}, []);
 
 	return (
-		<div className={`navbar w-[95%] mx-auto ${isScrolled ? "fixed" : ""}`}>
+		<div
+			className={`navbar w-[95%] mx-auto ${
+				isScrolled || isMobile ? "fixed" : ""
+			}`}
+		>
 			<Title
 				level={3}
 				className="logo cursor-pointer"

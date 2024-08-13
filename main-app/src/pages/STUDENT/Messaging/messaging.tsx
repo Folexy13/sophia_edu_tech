@@ -60,8 +60,8 @@ const Messaging: React.FC<any> = () => {
 
 	return (
 		<Layout className="">
-			<div className="sm:w-[90%] mx-auto sm:px-[40px] messaging">
-				<div className="bg-transparent sm:bg-white p-[15px]  h-screen sm:h-[700px] text-clip flex gap-2 rounded-lg min-h-[500px] w-full md:w-[95%] mx-auto">
+			<div className="xl:w-[90%] mx-auto sm:px-[40px] messaging">
+				<div className="bg-transparent sm:bg-white p-[15px] cursor-pointer  sm:h-[700px] text-clip flex gap-2 rounded-lg min-h-[500px] w-full md:w-[95%] mx-auto">
 					{/* Chat List */}
 					<div className="md:w-[25%] lg:w-[30%] overflow-auto border-[#F5F5F5] md:border-r w-full md:pr-[10px]">
 						<div className="flex justify-between mb-[15px]">
