@@ -19,6 +19,7 @@ import {
 	GenerateCertPage,
 	Homepage,
 	LoginPage,
+	MessagingInner,
 	MessagingPage,
 	MyProfilePage,
 	NotificationsPage,
@@ -49,10 +50,12 @@ import {
 	AdminStudentsPage,
 	AdminTutorWalletPage,
 } from "./pages/ADMIN";
+import ScrollToTop from "./components/scrollTotTop";
 
 const Router: React.FC = () => {
 	return (
 		<BrowserRouter>
+			<ScrollToTop />
 			<Routes>
 				{/* Public Routes */}
 				<Route path={APPCONSTANTS.ROUTES[1].path} element={<LoginPage />} />
@@ -110,6 +113,10 @@ const Router: React.FC = () => {
 					<Route
 						path={APPCONSTANTS.ROUTES[12].path}
 						element={<MessagingPage />}
+					/>
+					<Route
+						path={APPCONSTANTS.ROUTES[12].path + "/:id"}
+						element={<MessagingInner />}
 					/>
 				</Route>
 

@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../Layout";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { avatar, IndicatorIcon, PenIcon, SendArrow } from "../../../assets";
+import { avatar, SendArrow } from "../../../assets";
 import "./messaging.styles.scss";
 import { Button, Form, Input, message } from "antd";
 import { useUser } from "../../../store";
 import clientRequests from "../../../requests/client.request";
-import { URL } from "../../../utils/constants";
-import { useNavigate } from "react-router-dom";
 
 const Messaging: React.FC<any> = () => {
 	const { user } = useUser();
-	const [messages, setMessages] = useState<any>([]);
+	const [messages, setMessages] = useState<any>([
+		// {
+		// 	id: 1,
+		// 	text: "Lorem ipsum dolor sit amet consectetur. Purus id etiam turpis nisl viverra ut.",
+		// 	time: "Friday at 5 : 24 PM",
+		// 	sender: "self",
+		// },
+	]);
 	const [loading, setLoading] = useState(false);
-	const nav = useNavigate();
 
-	const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-	useEffect(() => {
-		const handleResize = () => {
-			setIsMobile(window.innerWidth < 768);
-		};
-
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
 	const [hasMore, setHasMore] = useState(true);
 	const sendMessage = async (msg: any) => {
 		setLoading(true);
@@ -61,53 +56,8 @@ const Messaging: React.FC<any> = () => {
 	return (
 		<Layout className="">
 			<div className="sm:w-[90%] mx-auto sm:px-[40px] messaging">
-				<div className="bg-transparent sm:bg-white p-[15px]  h-screen sm:h-[700px] text-clip flex gap-2 rounded-lg min-h-[500px] w-full md:w-[95%] mx-auto">
-					{/* Chat List */}
-					<div className="md:w-[25%] lg:w-[30%] overflow-auto border-[#F5F5F5] md:border-r w-full md:pr-[10px]">
-						<div className="flex justify-between mb-[15px]">
-							<h2 className="font-semibold text-[20px] font-inter">
-								All Messages
-							</h2>
-							<PenIcon className="cursor-pointer" />
-						</div>
-						{Array(2)
-							.fill("1")
-							.map((_, key) => {
-								return (
-									<div
-										key={key}
-										className="flex gap-3 items-start mb-[15px]"
-										onClick={() =>
-											isMobile ? nav(URL.MESSAGING + "/" + key + 1) : null
-										}
-									>
-										<div className="relative mt-[10px]">
-											<img src={avatar} width={40} alt="" />
-											<IndicatorIcon
-												color={"#2E7D32"}
-												className="absolute right-[0px] bottom-[6px]"
-											/>
-										</div>
-										<div className="flex justify-between  w-full items-start">
-											<div>
-												<div className="flex justify-between items-center">
-													<h2 className="text-[16px] ">Temitope Fabiyi</h2>
-													<div className="flex flex-col text-[#808080] text-[12px] max-w-[250px]  text-right">
-														<p>12 Nov,2023</p>
-														<p>7:50pm</p>
-													</div>
-												</div>
-												<p className="text-[#808080] text-[14px]">
-													Lorem ipsum dolor sit amet consectetur. Purus id etiam
-													turpis nisl viverra ut.
-												</p>
-											</div>
-										</div>
-									</div>
-								);
-							})}
-					</div>
-					<div className="md:w-[75%] lg:w-[70%] p-3  hidden md:block">
+				<div className="bg-white p-[15px]  h-screen  text-clip flex gap-2   w-full md:w-[95%] mx-auto">
+					<div className="w-full">
 						{/* Header */}
 						<header className="flex gap-3 items-center border-[#F5F5F5] border-b pb-[10px]">
 							<img src={avatar} width={50} />
