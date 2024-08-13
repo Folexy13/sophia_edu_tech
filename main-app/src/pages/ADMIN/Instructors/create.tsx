@@ -4,6 +4,7 @@ import Layout from "../../DashboardLayout";
 import { Button, Form, FormProps, Input, Select } from "antd";
 import { AdminRequest } from "../../../requests";
 import { useAlert } from "../../../store";
+import { useLocation } from "react-router-dom";
 type FieldType = {
 	email?: string;
 	password?: string;
@@ -13,7 +14,9 @@ const CreateCoursePage: React.FC = () => {
 	const [form] = Form.useForm();
 	const [loading, setLoading] = useState(false);
 	const { onFailure: AlertFailure, onSuccess } = useAlert();
-
+	const { state } = useLocation();
+	// const { user } = state;
+	console.log(state);
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
 		try {
@@ -111,8 +114,8 @@ const CreateCoursePage: React.FC = () => {
 								<Select.Option value="Learning Development">
 									Learning Development
 								</Select.Option>
-								<Select.Option value="Learning Career">
-									Learning Career
+								<Select.Option value="Social Entrepreneurship and Innovation">
+									Social Entrepreneurship and Innovation
 								</Select.Option>
 							</Select>
 						</Form.Item>

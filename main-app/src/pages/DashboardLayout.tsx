@@ -71,6 +71,7 @@ const DashboardLayout: React.FC<{
 		setOpen(true);
 	};
 	useEffect(() => {
+		// alert(URL.ADMIN_STUDENTS);
 		if (pathname === URL.OVERVIEW || pathname === URL.ADMIN_OVERVIEW) {
 			setActiveKey("1");
 		} else if (
@@ -83,7 +84,7 @@ const DashboardLayout: React.FC<{
 			pathname === URL.STUDENTS_LIST ||
 			pathname === URL.TUTOR_LIST ||
 			pathname === URL.ADMIN_CREATE_INSTRUCTOR ||
-			pathname === URL.ADMIN_STUDENTS
+			pathname.includes("/admin/instructor")
 		) {
 			setActiveKey("3");
 		} else if (pathname === URL.TUTOR_WALLET || pathname === URL.ADMIN_WALLET) {
@@ -328,7 +329,7 @@ const DashboardLayout: React.FC<{
 									icon={<StudentsIcon />}
 									className={getMenuItemClass("3")}
 								>
-									Students
+									{isAdmin ? "Instructors" : "Students"}
 								</Menu.Item>
 								<Menu.Item
 									key="4"
@@ -337,13 +338,45 @@ const DashboardLayout: React.FC<{
 								>
 									Wallet
 								</Menu.Item>
-								<Menu.Item
-									key="5"
-									icon={<SettingOutlined />}
-									className={getMenuItemClass("5")}
-								>
-									Settings
-								</Menu.Item>
+								{isAdmin ? (
+									<>
+										<Menu.Item
+											key="5"
+											icon={
+												<BlogIcon
+													color={activeKey == "5" ? "#581A57" : "#808080"}
+												/>
+											}
+											className={getMenuItemClass("5")}
+										>
+											Blog
+										</Menu.Item>
+
+										<Menu.Item
+											key="6"
+											icon={
+												<SettingOutlined
+													color={activeKey == "6" ? "#581A57" : "#808080"}
+												/>
+											}
+											className={getMenuItemClass("6")}
+										>
+											Settings
+										</Menu.Item>
+									</>
+								) : (
+									<Menu.Item
+										key="5"
+										icon={
+											<SettingOutlined
+												color={activeKey == "5" ? "#581A57" : "#808080"}
+											/>
+										}
+										className={getMenuItemClass("5")}
+									>
+										Settings
+									</Menu.Item>
+								)}
 							</Menu>
 						</div>
 					</Drawer>

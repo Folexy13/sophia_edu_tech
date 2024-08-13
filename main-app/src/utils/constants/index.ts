@@ -38,7 +38,7 @@ export const URL = {
 	ADMIN_SETTINGS: "/admin/settings",
 	ADMIN_USERS: "/admin/user/:id",
 	ADMIN_STUDENTS: "/admin/instructor/:slug/students",
-	ADMIN_CREATE_INSTRUCTOR: "/admin/create-instructor",
+	ADMIN_CREATE_INSTRUCTOR: "/admin/instructor",
 	ADMIN_BLOGS: "/admin/blog",
 	ADMIN_CREATE_BLOGS: "/admin/create-blog",
 	ADMIN_LOGIN: "/admin/login",

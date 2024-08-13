@@ -4,7 +4,6 @@ import {
 	Button,
 	Form,
 	Input,
-	Select,
 	Upload as AntDUpload,
 	UploadProps,
 	message,
@@ -87,15 +86,7 @@ const CreateCoursePage: React.FC = () => {
 							className="inter-normal"
 							name={"sub_heading"}
 						>
-							<Select
-								placeholder="Select a Category"
-								className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
-							>
-								<Select.Option value="History">History</Select.Option>
-								<Select.Option value="Education">Education</Select.Option>
-								<Select.Option value="Agriculture">Agriculture</Select.Option>
-								<Select.Option value="Technology">Technology</Select.Option>
-							</Select>
+							<Input placeholder="Lorem ipsum..." className="p-2" />
 						</Form.Item>
 						<Form.Item label="Body" className="inter-normal" name={"body"}>
 							<Input.TextArea placeholder="message" className="p-2" />

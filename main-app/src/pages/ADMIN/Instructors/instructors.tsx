@@ -62,7 +62,14 @@ const StudentsPage: React.FC = () => {
 	const getDropdownItems = (id: number) => [
 		{
 			key: "1",
-			label: <div className="text-[14px] cursor-pointer">View Info</div>,
+			label: (
+				<div
+					className="text-[14px] cursor-pointer"
+					onClick={() => console.log(data[id])}
+				>
+					View Info
+				</div>
+			),
 		},
 		{
 			key: "2",
