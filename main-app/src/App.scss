@@ -186,8 +186,8 @@ button:disabled {
 		.ant-select-customize-input
 	)
 	.ant-select-selector {
-	border: 0;
-	outline: none;
+	border: 0 !important;
+	outline: none !important;
 	background: transparent !important;
 }
 
