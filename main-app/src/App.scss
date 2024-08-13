@@ -182,24 +182,11 @@ button:disabled {
 .hidden-scrollbar {
 	scrollbar-width: none; /* Hides the scrollbar */
 }
-:where(.css-dev-only-do-not-override-d2lrxs).ant-select-outlined:not(
-		.ant-select-customize-input
-	)
-	.ant-select-selector {
+.ant-select-selector {
 	border: 0 !important;
 	outline: none !important;
 	background: transparent !important;
-}
-@media (max-width: 768px) {
-	:where(.css-dev-only-do-not-override-d2lrxs).ant-select-outlined:not(
-			.ant-select-customize-input
-		)
-		.ant-select-selector {
-		border: 0 !important;
-		outline: none !important;
-		background: transparent !important;
-		box-shadow: none !important;
-	}
+	box-shadow: none !important;
 }
 .ant-select-focused:where(
 		.css-dev-only-do-not-override-d2lrxs
