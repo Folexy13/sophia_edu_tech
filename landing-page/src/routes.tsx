@@ -9,10 +9,12 @@ import {
 	Termspage,
 } from "./pages";
 import ComingSoon from "./pages/404";
+import ScrollToTop from "./components/scrollTop";
 
 const Router: React.FC = () => {
 	return (
 		<BrowserRouter>
+			<ScrollToTop />
 			<Routes>
 				<Route path={APPCONSTANTS.ROUTES[0].path} element={<Homepage />} />
 				<Route path={APPCONSTANTS.ROUTES[3].path} element={<Aboutpage />} />
