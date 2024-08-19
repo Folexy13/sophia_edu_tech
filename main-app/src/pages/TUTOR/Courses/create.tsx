@@ -72,7 +72,50 @@ const CreateCoursePage: React.FC = () => {
 								</Select>
 							</Form.Item>
 							<Form.Item
-								label="Course Type / Name"
+								label="Course Name"
+								className="inter-normal"
+								name={"course_type"}
+							>
+								<Select
+									placeholder="Select a Type"
+									className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
+									onChange={(value) => {
+										value == "Applied Science"
+											? setType("applied_science_data")
+											: value === "Formal Science"
+											? setType("formal_science_data")
+											: value === "Natural Science"
+											? setType("natural_science_data")
+											: value === "Social Science"
+											? setType("social_science_data")
+											: setType("humanities_data");
+									}}
+								>
+									{category === "learning" ? (
+										<>
+											<Select.Option value="Applied Science">
+												Applied Science
+											</Select.Option>
+											<Select.Option value="Formal Science">
+												Formal Science
+											</Select.Option>
+											<Select.Option value="Humanities">
+												Humanities
+											</Select.Option>
+											<Select.Option value="Natural Science">
+												Natural Science
+											</Select.Option>
+											<Select.Option value="Social Science">
+												Social Science
+											</Select.Option>
+										</>
+									) : (
+										<></>
+									)}
+								</Select>
+							</Form.Item>
+							<Form.Item
+								label="Course Type "
 								className="inter-normal"
 								name={"course_type"}
 							>
