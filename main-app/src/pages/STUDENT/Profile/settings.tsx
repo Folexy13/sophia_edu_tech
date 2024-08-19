@@ -4,29 +4,18 @@ import { avatar, profileBG } from "../../../assets";
 import { Avatar, Checkbox, Form, Input, Select } from "antd";
 import { HeatMapOutlined } from "@ant-design/icons";
 import "./profile.styles.scss";
-import clientRequests from "../../../requests/client.request";
-import { useAlert } from "../../../store";
+import { useUser } from "../../../store";
 
 const Profile: React.FC<any> = () => {
 	const { Option } = Select;
-	const [_, setIsLoading] = useState(true);
-	const { onFailure } = useAlert();
 	const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
+	const { user } = useUser();
+	const [form] = Form.useForm();
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const res: any = await clientRequests.getMe(); // Assuming AuthRequest returns a promise
-				console.log(res); // Log response if needed
-			} catch (error: any) {
-				console.error("Login error:", error);
-				onFailure(error.message); // Trigger failure alert
-			} finally {
-				setIsLoading(false);
-			}
-		};
-		fetchData();
-	}, []);
+		if (user) {
+			form.setFieldsValue(user);
+		}
+	}, [user]);
 
 	const handleChange = (value: string[]) => {
 		setSelectedItems(value);
@@ -86,8 +75,12 @@ const Profile: React.FC<any> = () => {
 						</div>
 					</div>
 					<div className="w-1/2">
-						<Form layout="vertical">
-							<Form.Item label="Email Address" className="inter-normal">
+						<Form layout="vertical" form={form}>
+							<Form.Item
+								label="Email Address"
+								className="inter-normal"
+								name="email"
+							>
 								<Input placeholder="folajimi....@gmail.com" className="p-2" />
 							</Form.Item>
 							<Form.Item label="Phone Number" className="inter-normal">
