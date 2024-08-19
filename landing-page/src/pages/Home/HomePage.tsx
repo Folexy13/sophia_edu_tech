@@ -39,7 +39,12 @@ const HomePage: React.FC = () => {
 							and connect with potential investors, collaborators, and
 							employers!
 						</p>
-						<Button>Sign Up</Button>
+						<a
+							href={"https://sophia-main-app.netlify.app/register"}
+							target="_blank"
+						>
+							<Button>Sign Up</Button>
+						</a>
 					</Col>
 					<Col
 						xs={{ span: 24 }}

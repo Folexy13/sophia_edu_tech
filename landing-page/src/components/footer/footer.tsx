@@ -27,7 +27,10 @@ const Footer: React.FC = () => {
 						<h2 className="playfair-display-bold title">
 							Get started and find your best courses
 						</h2>
-						<Link to={URL.LOGIN}>
+						<a
+							href={"https://sophia-main-app.netlify.app/register"}
+							target="_blank"
+						>
 							<Button
 								color={APPCONSTANTS.APP_DARK_PURPLE}
 								background="#fff"
@@ -35,7 +38,7 @@ const Footer: React.FC = () => {
 							>
 								Sign Up
 							</Button>
-						</Link>
+						</a>
 					</div>
 				</Col>
 			</Row>

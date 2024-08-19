@@ -30,7 +30,12 @@ const AboutPage: React.FC = () => {
 					potential investors and employers.
 				</p>
 				<div className="div">
-					<Button className="abtBtn inter-medium">Sign Up</Button>
+					<a
+						href={"https://sophia-main-app.netlify.app/register"}
+						target="_blank"
+					>
+						<Button className="abtBtn inter-medium">Sign Up</Button>
+					</a>
 				</div>
 			</div>
 			<section>
@@ -61,7 +66,9 @@ const AboutPage: React.FC = () => {
 							platform's logo suggests, Sophia is aimed at providing the
 							scaffolding with which learners could see what is lying out there
 							in terms of knowledge, wisdom and understanding in their chosen
-							fields of study
+							fields of study.Our logo was inspired by Wittgenstein's metaphor
+							of the ladder in his Tractatus Logico-Philosophicus, symbolizing
+							the journey of learning and understanding.
 						</p>
 						<p
 							className="inter-normal"
@@ -77,7 +84,8 @@ const AboutPage: React.FC = () => {
 						xs={{ span: 24 }}
 						lg={{ span: 12 }}
 						style={{
-							textAlign: "center",
+							display: "flex",
+							justifyContent: "end",
 						}}
 						className="xlx"
 					>
@@ -126,7 +134,7 @@ const AboutPage: React.FC = () => {
 							To provide inclusive and equitable access to quality higher
 							education for youths and adults by equipping them with appropriate
 							learning and research skills necessary to improve their learning
-							outcomes at their various institutions of study and research
+							outcomes at their various institutions of study and research.
 						</p>
 					</Col>
 				</Row>
@@ -145,7 +153,8 @@ const AboutPage: React.FC = () => {
 						xs={{ span: 24 }}
 						lg={{ span: 10 }}
 						style={{
-							textAlign: "center",
+							display: "flex",
+							justifyContent: "end",
 						}}
 					>
 						<img
