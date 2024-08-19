@@ -71,8 +71,9 @@ const CreateCoursePage: React.FC = () => {
 									</Select.Option>
 								</Select>
 							</Form.Item>
+							
 							<Form.Item
-								label="Course Name"
+								label="Course Type "
 								className="inter-normal"
 								name={"course_type"}
 							>
@@ -115,7 +116,7 @@ const CreateCoursePage: React.FC = () => {
 								</Select>
 							</Form.Item>
 							<Form.Item
-								label="Course Type "
+								label="Course Name"
 								className="inter-normal"
 								name={"course_type"}
 							>
