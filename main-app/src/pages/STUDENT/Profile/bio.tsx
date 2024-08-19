@@ -797,14 +797,14 @@ const Profile: React.FC<any> = () => {
 								<Form.Item
 									label="Email Address"
 									className="inter-normal"
-									name="email_address"
+									name="email"
 								>
 									<Input placeholder="johndoe@gmail.com" className="p-2" />
 								</Form.Item>
 								<Form.Item
 									label="Phone Number"
 									className="inter-normal"
-									name="bio"
+									name="phone_number"
 								>
 									<Input placeholder="+44123456" className="p-2" />
 								</Form.Item>
