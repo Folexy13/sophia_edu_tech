@@ -19,7 +19,7 @@ const AboutPage: React.FC = () => {
 					About us
 				</h2>
 				<p
-					className="inter-normal text-justify text-left sm:text-center"
+					className="inter-normal text-justify  sm:text-center"
 					style={{ marginBottom: 18, lineHeight: 2 }}
 				>
 					Sophia is an ambitious for-profit education technology and career
@@ -126,7 +126,9 @@ const AboutPage: React.FC = () => {
 						style={{ width: "100%", marginTop: 30 }}
 					>
 						<img src={badge} width={30} alt="" style={{ marginBottom: 10 }} />
-						<h2 style={{ marginBottom: 10 }}>Mission</h2>
+						<h2 className="font-bold text-[24px]" style={{ marginBottom: 10 }}>
+							Mission
+						</h2>
 						<p
 							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
@@ -175,7 +177,9 @@ const AboutPage: React.FC = () => {
 							alt=""
 							style={{ marginBottom: 10 }}
 						/>
-						<h2 style={{ marginBottom: 10 }}>Vision</h2>
+						<h2 className="font-bold text-[24px]" style={{ marginBottom: 10 }}>
+							Vision
+						</h2>
 						<p
 							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
