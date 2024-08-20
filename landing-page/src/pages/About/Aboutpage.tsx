@@ -19,15 +19,15 @@ const AboutPage: React.FC = () => {
 					About us
 				</h2>
 				<p
-					className="inter-normal text-left sm:text-center"
+					className="inter-normal text-justify text-left sm:text-center"
 					style={{ marginBottom: 18, lineHeight: 2 }}
 				>
 					Sophia is an ambitious for-profit education technology and career
 					development social enterprise offering tailored preparatory training
 					on relevant academic skills and practices for higher education
-					students and practitioners. Sophia provides the avenue for learners to
-					hone their entrepreneurial skills, while also connecting them to
-					potential investors and employers.
+					students and practitioners. Sophia also provides a professional
+					networking platform where learners can hone their entrepreneurial
+					skills, while connecting to potential investors and employers.
 				</p>
 				<div className="div">
 					<a
@@ -40,7 +40,7 @@ const AboutPage: React.FC = () => {
 			</div>
 			<section>
 				<Row
-					className="section"
+					className="section "
 					align="top"
 					justify="space-between"
 					align-items="center"
@@ -48,7 +48,7 @@ const AboutPage: React.FC = () => {
 				>
 					<Col xs={{ span: 24 }} lg={{ span: 12 }}>
 						<p
-							className="inter-normal"
+							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							Sophia came up as a solution to a felt need and challenges
@@ -57,7 +57,7 @@ const AboutPage: React.FC = () => {
 							adequately.
 						</p>
 						<p
-							className="inter-normal"
+							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							“Sophia” borrowed its name from the Greek word “Σοφία” or “Sophía”
@@ -71,7 +71,7 @@ const AboutPage: React.FC = () => {
 							the journey of learning and understanding.
 						</p>
 						<p
-							className="inter-normal"
+							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							Sophia leverages on the potentials offered by latest technologies,
@@ -128,7 +128,7 @@ const AboutPage: React.FC = () => {
 						<img src={badge} width={30} alt="" style={{ marginBottom: 10 }} />
 						<h2 style={{ marginBottom: 10 }}>Mission</h2>
 						<p
-							className="inter-normal"
+							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							To provide inclusive and equitable access to quality higher
@@ -177,7 +177,7 @@ const AboutPage: React.FC = () => {
 						/>
 						<h2 style={{ marginBottom: 10 }}>Vision</h2>
 						<p
-							className="inter-normal"
+							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							To substantially increase the number of youths and adults who have
