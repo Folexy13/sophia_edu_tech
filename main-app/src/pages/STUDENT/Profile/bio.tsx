@@ -214,7 +214,7 @@ const Profile: React.FC<any> = () => {
 			try {
 				// Upload the file to the server
 				console.log(file);
-				await ClientRequest.uploadImage(file);
+				await ClientRequest.uploadImage(file.name);
 				onSuccess("Profile Image Changed successfully!");
 			} catch (error: any) {
 				onFailure(error);

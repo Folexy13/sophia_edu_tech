@@ -7,7 +7,7 @@ import {
 	Row,
 	Button as AntDButton,
 	FormProps,
-	Checkbox,
+	// Checkbox,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Logo, student, woman } from "../../../assets";
@@ -145,42 +145,7 @@ const Loginpage: React.FC<any> = () => {
 									</Link>
 								</Form.Item>
 							</div>
-							<Form.Item
-								name="agree"
-								valuePropName="checked"
-								rules={[
-									{
-										validator: (_, value) =>
-											value
-												? Promise.resolve()
-												: Promise.reject(
-														new Error(
-															"You must agree to the terms of use and privacy"
-														)
-												  ),
-									},
-								]}
-							>
-								<Checkbox>
-									I agree to the{" "}
-									<a
-										target="_blank"
-										href="https://sophia-landing.netlify.app/terms-of-use/"
-										className="font-inter text-[#581a57] font-semibold"
-									>
-										terms of use{" "}
-									</a>
-									<span>and</span>
-									<a
-										target="_blank"
-										href="https://sophia-landing.netlify.app/privacy/"
-										className="font-inter text-[#581a57] font-semibold"
-									>
-										{" "}
-										privacy
-									</a>
-								</Checkbox>
-							</Form.Item>
+
 							<Form.Item className="inter-normal">
 								<AntDButton
 									loading={loading}
