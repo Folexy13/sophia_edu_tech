@@ -65,9 +65,14 @@ const Registerpage: React.FC<any> = () => {
 								style={{ maxWidth: "100%", maxHeight: "100%" }}
 							/>
 						</Link>
-						<div className="main">
+						<div className="main w-full xl:w-[780px]">
 							<img src={student} alt="students studying" />
-							<img src={woman} alt="graduating woman" />
+
+							<img
+								src={woman}
+								alt="graduating woman"
+								className="right-[1rem] xl:right-[15rem] bottom-[2rem]"
+							/>
 						</div>
 						<h2 className="inter-bold">Join Our Learning Community!!</h2>
 						<p className="inter-normal">
