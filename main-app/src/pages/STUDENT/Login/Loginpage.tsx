@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import "./Loginpage.styles.scss";
-import { Col, Form, Input, Row, Button as AntDButton, FormProps } from "antd";
+import {
+	Col,
+	Form,
+	Input,
+	Row,
+	Button as AntDButton,
+	FormProps,
+	Checkbox,
+} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Logo, student, woman } from "../../../assets";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
@@ -121,6 +129,33 @@ const Loginpage: React.FC<any> = () => {
 									</Link>
 								</Form.Item>
 							</div>
+							<Form.Item
+								name="agree"
+								valuePropName="checked"
+								rules={[
+									{
+										validator: (_, value) =>
+											value
+												? Promise.resolve()
+												: Promise.reject(
+														new Error(
+															"You must agree to the terms and conditions"
+														)
+												  ),
+									},
+								]}
+							>
+								<Checkbox>
+									I agree to the{" "}
+									<a
+										target="_blank"
+										href="https://sophia-landing.netlify.app/terms-of-use/"
+										className="font-inter text-[#581a57] font-semibold"
+									>
+										terms and conditions
+									</a>
+								</Checkbox>
+							</Form.Item>
 							<Form.Item className="inter-normal">
 								<AntDButton
 									loading={loading}

@@ -1,39 +1,34 @@
 import React, { useState } from "react";
 import "./Registerpage.styles.scss";
-import { Col, Form, Input, Row, Button as AntDButton, FormProps } from "antd";
+import {
+	Col,
+	Form,
+	Input,
+	Row,
+	Button as AntDButton,
+	FormProps,
+	Checkbox,
+} from "antd";
 import { Link, useNavigate } from "react-router-dom";
-
-// import {
-// 	GoogleLogin,
-// 	GoogleLoginResponse,
-// 	GoogleLoginResponseOffline,
-// } from "react-google-login";
 import { AuthRequest } from "../../../requests";
 import { useAlert } from "../../../store";
 import { URL } from "../../../utils/constants";
 import { Logo, student, woman } from "../../../assets";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+
 type FieldType = {
 	full_name?: string;
 	email?: string;
 	password?: string;
 	confirm_password?: string;
+	agree?: boolean;
 };
+
 const Registerpage: React.FC<any> = () => {
-	// const responseGoogle = (
-	// 	response: GoogleLoginResponse | GoogleLoginResponseOffline
-	// ) => {
-	// 	// Handle the response from Google login here
-	// 	console.log(response);
-	// };
 	const nav = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
 
-	// const onFailure = (error: any) => {
-	// 	// Handle errors here
-	// 	console.error("Google login failed:", error);
-	// };
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
 		try {
@@ -48,11 +43,13 @@ const Registerpage: React.FC<any> = () => {
 			setLoading(false);
 		}
 	};
+
 	const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
 		errorInfo: any
 	) => {
 		console.log("Failed:", errorInfo);
 	};
+
 	return (
 		<div className="register">
 			<Row style={{}}>
@@ -68,7 +65,6 @@ const Registerpage: React.FC<any> = () => {
 						</Link>
 						<div className="main w-full xl:w-[780px]">
 							<img src={student} alt="students studying" />
-
 							<img
 								src={woman}
 								alt="graduating woman"
@@ -98,12 +94,14 @@ const Registerpage: React.FC<any> = () => {
 							layout="vertical"
 							onFinish={onFinish}
 							onFinishFailed={onFinishFailed}
-							// autoComplete="off"
 						>
 							<Form.Item
 								label="Full name"
 								name="full_name"
 								className="inter-normal"
+								rules={[
+									{ required: true, message: "Please enter your full name" },
+								]}
 							>
 								<Input />
 							</Form.Item>
@@ -111,6 +109,16 @@ const Registerpage: React.FC<any> = () => {
 								label="Email address"
 								name="email"
 								className="inter-normal"
+								rules={[
+									{
+										required: true,
+										message: "Please enter your email address",
+									},
+									{
+										type: "email",
+										message: "Please enter a valid email address",
+									},
+								]}
 							>
 								<Input />
 							</Form.Item>
@@ -118,6 +126,13 @@ const Registerpage: React.FC<any> = () => {
 								label="Password"
 								name="password"
 								className="inter-normal"
+								rules={[
+									{ required: true, message: "Please enter your password" },
+									{
+										min: 6,
+										message: "Password must be at least 6 characters long",
+									},
+								]}
 							>
 								<Input.Password />
 							</Form.Item>
@@ -125,10 +140,51 @@ const Registerpage: React.FC<any> = () => {
 								label="Confirm password"
 								name="confirm_password"
 								className="inter-normal"
+								dependencies={["password"]}
+								hasFeedback
+								rules={[
+									{ required: true, message: "Please confirm your password" },
+									({ getFieldValue }) => ({
+										validator(_, value) {
+											if (!value || getFieldValue("password") === value) {
+												return Promise.resolve();
+											}
+											return Promise.reject(
+												new Error("Passwords do not match")
+											);
+										},
+									}),
+								]}
 							>
 								<Input.Password />
 							</Form.Item>
-
+							<Form.Item
+								name="agree"
+								valuePropName="checked"
+								rules={[
+									{
+										validator: (_, value) =>
+											value
+												? Promise.resolve()
+												: Promise.reject(
+														new Error(
+															"You must agree to the terms and conditions"
+														)
+												  ),
+									},
+								]}
+							>
+								<Checkbox>
+									I agree to the{" "}
+									<a
+										target="_blank"
+										href="https://sophia-landing.netlify.app/terms-of-use/"
+										className="font-inter text-[#581a57] font-semibold"
+									>
+										terms and conditions
+									</a>
+								</Checkbox>
+							</Form.Item>
 							<Form.Item className="inter-normal">
 								<AntDButton
 									className="h-[50px] w-full bg-[#581A57] text-white p-5 hover:"
