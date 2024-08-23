@@ -168,7 +168,7 @@ const Registerpage: React.FC<any> = () => {
 												? Promise.resolve()
 												: Promise.reject(
 														new Error(
-															"You must agree to the terms and conditions"
+															"You must agree to the terms of use and privacy"
 														)
 												  ),
 									},
@@ -181,7 +181,16 @@ const Registerpage: React.FC<any> = () => {
 										href="https://sophia-landing.netlify.app/terms-of-use/"
 										className="font-inter text-[#581a57] font-semibold"
 									>
-										terms and conditions
+										terms of use{" "}
+									</a>
+									<span>and</span>
+									<a
+										target="_blank"
+										href="https://sophia-landing.netlify.app/privacy/"
+										className="font-inter text-[#581a57] font-semibold"
+									>
+										{" "}
+										privacy
 									</a>
 								</Checkbox>
 							</Form.Item>
