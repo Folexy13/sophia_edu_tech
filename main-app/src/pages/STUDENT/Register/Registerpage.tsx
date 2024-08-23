@@ -12,6 +12,7 @@ import { AuthRequest } from "../../../requests";
 import { useAlert } from "../../../store";
 import { URL } from "../../../utils/constants";
 import { Logo, student, woman } from "../../../assets";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 type FieldType = {
 	full_name?: string;
 	email?: string;
@@ -157,28 +158,17 @@ const Registerpage: React.FC<any> = () => {
 									<span className="line"></span>
 								</div>
 							</Form.Item>
-							{/* <GoogleLogin
-								clientId="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" // Replace with your actual client ID
-								buttonText="Login with Google"
-								onSuccess={responseGoogle}
-								onFailure={onFailure}
-								cookiePolicy={"single_host_origin"}
-								render={(renderProps) => (
-									<AntDButton
-										onClick={renderProps.onClick}
-										block
-										icon={<img src={googleIcon} alt="..." width={20} />}
-										style={{
-											backgroundColor: "#fff",
-											color: "#000",
-											margin: "auto",
-											border: "1px solid #d9d9d9",
-										}}
-									>
-										Google
-									</AntDButton>
-								)}
-							/> */}
+							<GoogleOAuthProvider clientId="721301716315-o03cg1fbq3kj16730r309rq850n8v29h.apps.googleusercontent.com">
+								<GoogleLogin
+									useOneTap
+									onSuccess={(credentialResponse) => {
+										console.log(credentialResponse);
+									}}
+									onError={() => {
+										console.log("Sign up Failed");
+									}}
+								/>
+							</GoogleOAuthProvider>
 						</Form>
 					</div>
 				</Col>
