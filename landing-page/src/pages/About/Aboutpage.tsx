@@ -66,9 +66,15 @@ const AboutPage: React.FC = () => {
 							platform's logo suggests, Sophia is aimed at providing the
 							scaffolding with which learners could see what is lying out there
 							in terms of knowledge, wisdom and understanding in their chosen
-							fields of study.Our logo was inspired by Wittgenstein's metaphor
-							of the ladder in his Tractatus Logico-Philosophicus, symbolizing
-							the journey of learning and understanding.
+							fields of study.
+						</p>
+						<p
+							className="inter-normal text-justify"
+							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
+						>
+							Our logo was inspired by Wittgenstein's metaphor of the ladder in
+							his Tractatus Logico-Philosophicus, symbolizing the journey of
+							learning and understanding.
 						</p>
 						<p
 							className="inter-normal text-justify"
