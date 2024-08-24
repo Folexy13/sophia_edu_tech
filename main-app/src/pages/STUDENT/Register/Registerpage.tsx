@@ -190,7 +190,7 @@ const Registerpage: React.FC<any> = () => {
 										className="font-inter text-[#581a57] font-semibold"
 									>
 										{" "}
-										privacy
+										privacy policy
 									</a>
 								</Checkbox>
 							</Form.Item>
