@@ -57,11 +57,11 @@ const CertificateComponent: React.FC<any> = ({
 						<h3 className="text-lg md:text-xl mb-5 text-[#4F174E]">{course}</h3>
 						<p className="text-sm md:text-base mb-2">WITH A PUBLICATION IN</p>
 						<p className="text-lg md:text-xl mb-2 text-[#008FE4] font-medium">
-							{publicationName}
+							{publicationTitle}
 						</p>
 						<p className="text-sm md:text-base mb-2">IN THE</p>
 						<p className="text-lg md:text-xl mb-2 text-[#4F174E] font-medium">
-							{publicationTitle}
+							{publicationName}
 						</p>
 						<p className="text-xs md:text-sm mb-2 text-[#666666]">
 							(DOI: {doi})

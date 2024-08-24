@@ -5,7 +5,16 @@ import { useLocation } from "react-router-dom";
 
 const Generate: React.FC<any> = ({}) => {
 	const { state } = useLocation();
-	console.log(state);
+	// const nav = useNavigate();
+
+	// useEffect(() => {
+	// 	alert("hi");
+
+	// 	if (!state) {
+	// 		nav(-1);
+	// 	}
+	// }, []);
+
 	const { publication_name, publication_title, course, doi } = state;
 	return (
 		<Layout>

@@ -81,7 +81,7 @@ const Profile: React.FC<any> = () => {
 	};
 	const [activeTab, setActiveTab] = useState("1");
 
-	const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY";
+	const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
 	const getLocationFromCoords = async (
 		lat: number,
 		lon: number
@@ -623,7 +623,9 @@ const Profile: React.FC<any> = () => {
 													htmlType="button"
 													loading={removing === data.id + 1}
 													disabled={removing === data.id + 1}
-													onClick={() => removeEntity(data.id, "education")}
+													onClick={() =>
+														removeEntity(data.id, "work_experience")
+													}
 													className="bg-[#DBDBDB] !hover:bg-[#DBDBDB] text-[#3A3A3A] text-[14px] rounded-[8px]"
 												>
 													Remove
@@ -737,7 +739,9 @@ const Profile: React.FC<any> = () => {
 														htmlType="button"
 														loading={removing === data.id + 1}
 														disabled={removing === data.id + 1}
-														onClick={() => removeEntity(data.id, "education")}
+														onClick={() =>
+															removeEntity(data.id, "licenses_certifications")
+														}
 														className="bg-[#DBDBDB] !hover:bg-[#DBDBDB] text-[#3A3A3A] text-[14px] rounded-[8px]"
 													>
 														Remove
@@ -799,7 +803,11 @@ const Profile: React.FC<any> = () => {
 									className="inter-normal"
 									name="email"
 								>
-									<Input placeholder="johndoe@gmail.com" className="p-2" />
+									<Input
+										readOnly
+										placeholder="johndoe@gmail.com"
+										className="p-2"
+									/>
 								</Form.Item>
 								<Form.Item
 									label="Phone Number"
