@@ -152,7 +152,7 @@ const Loginpage: React.FC<any> = () => {
 									<span className="line"></span>
 								</div>
 							</Form.Item>
-							<GoogleOAuthProvider clientId="721301716315-o03cg1fbq3kj16730r309rq850n8v29h.apps.googleusercontent.com">
+							<GoogleOAuthProvider clientId="1099244600879-519hr40scavako9ousgbr0aqo1iaqupk.apps.googleusercontent.com">
 								<GoogleLogin
 									useOneTap
 									onSuccess={(credentialResponse) => {
