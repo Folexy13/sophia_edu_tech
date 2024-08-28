@@ -34,6 +34,7 @@ const Table: React.FC<{
 	type?: any;
 	pagination?: any;
 	className?: string;
+	onFilter?: any;
 }> = ({ data, columns, className, rowSelection, type, pagination }) => {
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 

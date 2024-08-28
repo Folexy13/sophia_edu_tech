@@ -10,6 +10,7 @@ import {
 	Input,
 	message,
 	Checkbox,
+	Switch,
 } from "antd";
 import "./profile.styles.scss";
 
@@ -335,7 +336,7 @@ const Profile: React.FC<any> = () => {
 						src={profileBG} // Changed to use image prop
 						className="h-[120px] sm:h-[200px] w-full object-cover rounded-md"
 					/>
-					<div className="flex justify-between">
+					<div className="flex justify-between sm:flex-row flex-col">
 						<div className="mb-3 relative flex gap-2 bottom-[15px]  left-[30px] md-920:left-[100px] ">
 							<Avatar
 								size={64}
@@ -364,9 +365,9 @@ const Profile: React.FC<any> = () => {
 							</div>
 						</div>
 
-						<div className="sm:flex gap-3 hidden">
+						<div className="flex gap-3">
 							<p
-								className={`text-[16px] font-medium cursor-pointer mt-[18px]  ${
+								className={`text-[16px] font-medium cursor-pointer sm:mt-[18px]  ${
 									activeTab === "1" ? "underline" : "text-[#808080]"
 								}`}
 								onClick={() => setActiveTab("1")}
@@ -374,7 +375,7 @@ const Profile: React.FC<any> = () => {
 								Bio - information
 							</p>
 							<p
-								className={`text-[16px] cursor-pointer font-medium mt-[18px] ${
+								className={`text-[16px] cursor-pointer font-medium sm:mt-[18px] ${
 									activeTab == "2" ? "underline" : "text-[#808080]"
 								}`}
 								onClick={() => setActiveTab("2")}
@@ -885,6 +886,28 @@ const Profile: React.FC<any> = () => {
 											English
 										</Option>
 									</Select>
+								</Form.Item>
+							</div>
+						</div>
+
+						{/* Deactivate account session */}
+						<div className="flex flex-col sm:flex-row gap-2 my-[28px]">
+							<div className="w-full sm:w-1/2">
+								<div>
+									<h3 className="mb-[10px] text-[24px] font-semibold">
+										Deactivate Account
+									</h3>
+									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
+										{`Toggle this switch to deactivate your account. You can reactivate it later if you change your mind.`}
+									</p>
+								</div>
+							</div>
+							<div className="w-full sm:w-1/2">
+								<Form.Item
+									name="deactivateAccount"
+									valuePropName="checked" // Maps the checked state to the form value
+								>
+									<Switch defaultChecked={false} className="custom-switch" />
 								</Form.Item>
 							</div>
 						</div>

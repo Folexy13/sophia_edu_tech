@@ -4,10 +4,12 @@ import Router from "./routes";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAlert } from "./store";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
 	const { status, message, onReset } = useAlert();
-
+	const stripePromise = loadStripe("your-publishable-key-here");
 	// Listen to changes in status and display toast accordingly
 	useEffect(() => {
 		if (status && message) {
@@ -23,10 +25,10 @@ function App() {
 		}
 	}, [status, message, onReset]);
 	return (
-		<>
+		<Elements stripe={stripePromise}>
 			<ToastContainer />
 			<Router />
-		</>
+		</Elements>
 	);
 }
 

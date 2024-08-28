@@ -50,9 +50,9 @@ const Upload: React.FC<any> = () => {
 				</h2>
 				<p className="text-[16px] sm:text-center mb-[20px]">
 					Upload your enterprise project here. This may include some or all of
-					the following: business plan that explains the business idea of your
-					project, DOI of research work supporting your project, website or
-					video link explaining your project
+					the following: business plan or pitch deck that explains the business
+					idea of your project, DOI of research work supporting your project,
+					website or video link explaining your project
 				</p>
 
 				<Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
@@ -60,14 +60,16 @@ const Upload: React.FC<any> = () => {
 						<Input
 							name="title"
 							className="p-2"
-							placeholder="Enter title(max word of 100)"
+							placeholder="Enter title(max word of 20)"
+							maxLength={20}
 						/>
 					</Form.Item>
 					<Form.Item label="Executive summary">
 						<Input
 							name="executive_summary"
 							className="p-2"
-							placeholder="Enter executive summary (max word of 500)"
+							maxLength={200}
+							placeholder="Enter executive summary (max word of 200)"
 						/>
 					</Form.Item>
 					<Form.Item label="Document">

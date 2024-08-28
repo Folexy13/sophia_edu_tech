@@ -13,7 +13,7 @@ const options = [
 	},
 	{ label: "Access to overview", value: "Access to overview" },
 	{ label: "Access to instructor", value: "Access to instructor" },
-	{ label: "Access to coures", value: "Access to coures" },
+	{ label: "Access to courses", value: "Access to courses" },
 ];
 
 const Settings: React.FC = () => {

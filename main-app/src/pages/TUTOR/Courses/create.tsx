@@ -71,7 +71,7 @@ const CreateCoursePage: React.FC = () => {
 									</Select.Option>
 								</Select>
 							</Form.Item>
-							
+
 							<Form.Item
 								label="Course Type "
 								className="inter-normal"
@@ -307,7 +307,50 @@ const CreateCoursePage: React.FC = () => {
 								</Select>
 							</Form.Item>
 							<Form.Item
-								label="Course Type / Name"
+								label="Course Type "
+								className="inter-normal"
+								name={"course_type"}
+							>
+								<Select
+									placeholder="Select a Type"
+									className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
+									onChange={(value) => {
+										value == "Applied Science"
+											? setType("applied_science_data")
+											: value === "Formal Science"
+											? setType("formal_science_data")
+											: value === "Natural Science"
+											? setType("natural_science_data")
+											: value === "Social Science"
+											? setType("social_science_data")
+											: setType("humanities_data");
+									}}
+								>
+									{category === "learning" ? (
+										<>
+											<Select.Option value="Applied Science">
+												Applied Science
+											</Select.Option>
+											<Select.Option value="Formal Science">
+												Formal Science
+											</Select.Option>
+											<Select.Option value="Humanities">
+												Humanities
+											</Select.Option>
+											<Select.Option value="Natural Science">
+												Natural Science
+											</Select.Option>
+											<Select.Option value="Social Science">
+												Social Science
+											</Select.Option>
+										</>
+									) : (
+										<></>
+									)}
+								</Select>
+							</Form.Item>
+							<Form.Item
+								label="Course Name"
 								className="inter-normal"
 								name={"course_type"}
 							>
@@ -415,9 +458,6 @@ const CreateCoursePage: React.FC = () => {
 									<Select.Option value={3}>3</Select.Option>
 									<Select.Option value={4}>4</Select.Option>
 									<Select.Option value={5}>5</Select.Option>
-									<Select.Option value={"5 + Apply & Conclusion"}>
-										5 + Apply & Conclusion
-									</Select.Option>
 								</Select>
 							</Form.Item>
 							{Array.from({ length: moduleNumber }, (_, i) => (
@@ -436,7 +476,7 @@ const CreateCoursePage: React.FC = () => {
 							<div className="flex gap-2 my-[26px] justify-end">
 								<Button
 									type="link"
-									className="bg-[#581A57] p-3 px-8 !hover:bg-[#581A57] ml-[10px] text-[#fff] text-[14px] rounded-[8px]"
+									className="bg-[#581A57] p-[20px] px-8 !hover:bg-[#581A57] ml-[10px] text-[#fff] text-[14px] rounded-[8px]"
 								>
 									Next
 								</Button>

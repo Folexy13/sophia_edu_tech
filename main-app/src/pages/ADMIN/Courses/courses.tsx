@@ -9,6 +9,18 @@ const columns: TableColumnsType<any> = [
 	{
 		title: "Course Category",
 		dataIndex: "course_category",
+		filters: [
+			{
+				text: "Learning Development Course",
+				value: "Learning Development Course",
+			},
+			{ text: "Socia", value: "Marketing" },
+			{ text: "Health & Fitness", value: "Health & Fitness" },
+			{ text: "Finance", value: "Finance" },
+		],
+		onFilter(value, record) {
+			return record.course_category.indexOf(value) === 0;
+		},
 	},
 	{
 		title: "Course Type",
@@ -35,7 +47,7 @@ const data: any[] = [];
 for (let i = 0; i < 50; i++) {
 	data.push({
 		key: i,
-		course_category: `Learning Development`,
+		course_category: `Learning Development Course`,
 		course_type: "Agriculture",
 		course_title: "Introduction to Bee Farming",
 		amount: `${i * 50}$`,
@@ -43,6 +55,8 @@ for (let i = 0; i < 50; i++) {
 		date: "2022-01-01 5:00pm",
 	});
 }
+
+// const onFilter = () => {};
 const Courses: React.FC = () => {
 	// const nav = useNavigate();
 	const { isMobile } = useScreenSize();

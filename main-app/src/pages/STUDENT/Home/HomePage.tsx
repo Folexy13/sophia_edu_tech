@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../Layout";
 import { truncate } from "lodash";
 import {
@@ -13,8 +13,8 @@ import {
 	ThreeDotsIcon,
 	WarningIcon,
 } from "../../../assets";
-import { Button } from "../../../components";
-import { Dropdown, MenuProps, Space } from "antd";
+import { Button, Checkout, Modal } from "../../../components";
+import { Dropdown, Form, Input, MenuProps, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../../utils/constants";
 import { useUser } from "../../../store";
@@ -23,6 +23,7 @@ import { getAvatar } from "../../../utils/helperFunction";
 const HomePage: React.FC = () => {
 	const nav = useNavigate();
 	const { user } = useUser();
+	const [course, setCourse] = useState("");
 
 	const items: MenuProps["items"] = [
 		{
@@ -34,10 +35,41 @@ const HomePage: React.FC = () => {
 			key: "2",
 		},
 	];
+	const [open, setOpen] = useState(false);
+	const [isCheckout, setIsCheckout] = useState(false);
+	const [buttonLoading, setButtonLoading] = useState({
+		firstBtn: false,
+		secondBtn: false,
+	});
 
+	const handleTopUpWallet = () => {
+		setButtonLoading({
+			firstBtn: !buttonLoading.firstBtn,
+			secondBtn: buttonLoading.secondBtn,
+		});
+		setTimeout(() => {
+			setButtonLoading({ firstBtn: false, secondBtn: buttonLoading.secondBtn });
+			setOpen(false);
+		}, 2000);
+	};
+	const handlePayWithWallet = () => {
+		setOpen(false);
+		setIsCheckout(true);
+		setButtonLoading({
+			firstBtn: buttonLoading.firstBtn,
+			secondBtn: !buttonLoading.secondBtn,
+		});
+		setTimeout(() => {
+			setButtonLoading({ firstBtn: buttonLoading.firstBtn, secondBtn: false });
+			setOpen(false);
+		}, 2000);
+	};
 	const hasEducation = user?.education?.[0];
 	const hasLicensesCertifications = user?.licenses_certifications?.[0];
-
+	const handleModalToggle = (course: string) => {
+		setCourse(course);
+		setOpen(!open);
+	};
 	return (
 		<Layout>
 			<div className="flex lg:flex-row flex-col px-[10px] lg:px-[80px] gap-4 items-start pb-[20px]">
@@ -134,9 +166,9 @@ const HomePage: React.FC = () => {
 									</p>
 
 									<div className="flex gap-2 sm:gap-4">
-										<p className="text-[10px] sm:text-[12px] items-center my-[10px] flex gap-1 text-[#581A57]">
+										<p className="text-[10px] cursor-not-allowed sm:text-[12px] items-center my-[10px] flex gap-1 text-[#581A57]">
 											<LinkIcon />
-											<span>link.com</span>
+											<span className="text-[#581a5775]">link.com</span>
 										</p>
 										<p className="text-[10px] sm:text-[12px] items-center my-[10px] flex gap-1 text-[#581A57]">
 											<WarningIcon />
@@ -145,7 +177,10 @@ const HomePage: React.FC = () => {
 									</div>
 								</div>
 								<div>
-									<PDFIcon className="w-[40px] sm:w-[61px]" />
+									<PDFIcon
+										onClick={() => handleModalToggle("Lorem Ipsum")}
+										className="w-[40px] sm:w-[61px] cursor-pointer"
+									/>
 								</div>
 							</div>
 
@@ -216,6 +251,48 @@ const HomePage: React.FC = () => {
 					))}
 				</div>
 			</div>
+
+			<Modal
+				isOpen={open}
+				onClose={() => setOpen(!open)}
+				className="card-modal"
+				title="Proceed to Payment"
+				cancelText="Top Up Wallet"
+				okText="Pay with wallet"
+			>
+				<Form layout="vertical">
+					<Form.Item label="Course Title">
+						<Input name="course" value={course} readOnly />
+					</Form.Item>
+					<Form.Item label="Amount">
+						<Input name="amount" placeholder="$25" value={"$25"} readOnly />
+					</Form.Item>
+				</Form>
+				<div style={{ marginTop: "20px", textAlign: "right" }}>
+					<Button
+						loading={buttonLoading.secondBtn === true}
+						onclick={handlePayWithWallet}
+						label="Pay with wallet"
+						className="mr-[10px] p-[8px] bg-[#581A57] text-white"
+					/>
+					<Button
+						onclick={handleTopUpWallet}
+						loading={buttonLoading.firstBtn === true}
+						label="Top up wallet"
+						className="text-[#581A57] p-[8px] bg-[#E6DDE6]"
+					/>
+				</div>
+			</Modal>
+			<Modal
+				isOpen={isCheckout}
+				onClose={() => setIsCheckout(!isCheckout)}
+				className="card-modal"
+				title="Make Payment"
+				cancelText=""
+				okText=""
+			>
+				<Checkout amount="25" />
+			</Modal>
 		</Layout>
 	);
 };

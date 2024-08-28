@@ -120,7 +120,7 @@ const CreateCoursePage: React.FC = () => {
 							block
 							loading={false}
 							disabled={false}
-							className="my-[15px] p-[10px] text-white bg-[#581A57]"
+							className="my-[15px] p-[20px] text-white bg-[#581A57]"
 						>
 							Publish
 						</Button>

@@ -133,6 +133,19 @@ const CreateCoursePage: React.FC = () => {
 							</Select>
 						</Form.Item>
 						<Form.Item
+							label="Course Name"
+							className="inter-normal"
+							name={"course_name"}
+						>
+							<Select
+								placeholder="Select a Name"
+								className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
+							>
+								<Select.Option value="Agriculture">Agriculture</Select.Option>
+								<Select.Option value="Engineering">Engineering</Select.Option>
+							</Select>
+						</Form.Item>
+						<Form.Item
 							label="Course Title"
 							className="inter-normal"
 							name={"course_title"}

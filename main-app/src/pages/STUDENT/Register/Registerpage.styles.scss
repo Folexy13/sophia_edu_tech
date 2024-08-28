@@ -1,6 +1,6 @@
 .register {
 	background: hsl(0, 0%, 96%);
-	height: 100vh;
+	min-height: 100vh;
 	.midlogo {
 		display: none;
 		@media (max-width: 890px) {

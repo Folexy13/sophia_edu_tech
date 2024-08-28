@@ -5,4 +5,14 @@
 		outline: none !important;
 		border: none !important;
 	}
+
+	.custom-switch.ant-switch {
+		background-color: #d9d9d9; /* Gray color for inactive state */
+		border-color: #d9d9d9;
+	}
+
+	.custom-switch.ant-switch-checked {
+		background-color: #581a57 !important; /* Red color for active state */
+		border-color: #581a57 !important;
+	}
 }

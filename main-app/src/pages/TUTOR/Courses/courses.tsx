@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../../DashboardLayout";
-import { Card, Form, Input, TableColumnsType } from "antd";
+import { Card, Dropdown, Form, Input, Space, TableColumnsType } from "antd";
 import { FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -31,9 +31,38 @@ const columns: TableColumnsType<any> = [
 		title: "Date",
 		dataIndex: "date",
 	},
+	{
+		title: "",
+		dataIndex: "more",
+	},
+];
+const getDropdownItems = (id: number) => [
+	{
+		key: "1",
+		label: (
+			<div
+				className="text-[14px] cursor-pointer"
+				onClick={() => console.log(data[id])}
+			>
+				Edit
+			</div>
+		),
+	},
+	{
+		key: "2",
+		label: (
+			<div
+				className="text-[14px] cursor-pointer"
+				onClick={() => console.log(data[id])}
+			>
+				Delete
+			</div>
+		),
+	},
 ];
 const data: any[] = [];
 for (let i = 0; i < 50; i++) {
+	const courseId = i;
 	data.push({
 		key: i,
 		course_category: `Learning Development`,
@@ -42,6 +71,11 @@ for (let i = 0; i < 50; i++) {
 		amount: `${i * 50}$`,
 		number_of_students: `${i * 10}`,
 		date: "2022-01-01 5:00pm",
+		more: (
+			<Dropdown menu={{ items: getDropdownItems(courseId) }}>
+				<Space className="cursor-pointer">...</Space>
+			</Dropdown>
+		),
 	});
 }
 const Courses: React.FC = () => {

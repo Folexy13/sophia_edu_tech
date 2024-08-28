@@ -22,6 +22,8 @@ const LogoutModal = () => {
 
 	return (
 		<div className="">
+			{/* Blurred background */}
+
 			<h2 className="font-medium my-4 text-2xl">Log out from sophia?</h2>
 			<div className="flex gap-3 w-full">
 				<Button

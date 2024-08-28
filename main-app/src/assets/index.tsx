@@ -379,13 +379,14 @@ export const ThreeDotsIcon: React.FC<any> = ({ className }) => {
 	);
 };
 
-export const PDFIcon: React.FC<any> = ({ className }) => {
+export const PDFIcon: React.FC<any> = ({ onClick, className }) => {
 	return (
 		<svg
 			width="61"
 			className={className}
 			height="72"
 			viewBox="0 0 61 72"
+			onClick={onClick}
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 			xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -472,7 +473,7 @@ export const LinkIcon: React.FC<any> = () => {
 		>
 			<path
 				d="M9.33333 4.66667H10.6667C12.5076 4.66667 14 6.15906 14 8.00001C14 9.84095 12.5076 11.3333 10.6667 11.3333H9.33333M6.66667 4.66667H5.33333C3.49238 4.66667 2 6.15906 2 8.00001C2 9.84095 3.49238 11.3333 5.33333 11.3333H6.66667M5.33333 8.00001H10.6667"
-				stroke="#581A57"
+				stroke="#581a5775"
 				stroke-width="1.5"
 				stroke-linecap="round"
 				stroke-linejoin="round"

@@ -50,7 +50,7 @@ const BlogsPage: React.FC = () => {
 			label: (
 				<div
 					className="text-[14px] cursor-pointer"
-					onClick={() => nav(`/admin/instructor/${id + 1}/students`)}
+					onClick={() => console.log(id)}
 				>
 					Delete
 				</div>
@@ -104,7 +104,7 @@ const BlogsPage: React.FC = () => {
 						<Button
 							label="Create a new post"
 							onclick={() => nav(URL.ADMIN_CREATE_BLOGS)}
-							className="text-[#fff] p-3 bg-[#581A57]  border rounded-[5px]"
+							className="text-[#fff] p-[20px] bg-[#581A57]  border rounded-[5px]"
 						/>
 					</div>
 				</header>
