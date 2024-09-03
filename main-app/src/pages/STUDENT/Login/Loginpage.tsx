@@ -166,28 +166,6 @@ const Loginpage: React.FC<any> = () => {
 									}}
 								/>
 							</GoogleOAuthProvider>
-							{/* <GoogleLogin
-								clientId="721301716315-o03cg1fbq3kj16730r309rq850n8v29h.apps.googleusercontent.com" // Replace with your actual client ID
-								buttonText="Login with Google"
-								onSuccess={responseGoogle}
-								onFailure={onFailure}
-								cookiePolicy={"single_host_origin"}
-								render={(renderProps) => (
-									<AntDButton
-										onClick={renderProps.onClick}
-										block
-										icon={<img src={googleIcon} alt="..." width={20} />}
-										style={{
-											backgroundColor: "#fff",
-											color: "#000",
-											margin: "auto",
-											border: "1px solid #d9d9d9",
-										}}
-									>
-										Google
-									</AntDButton>
-								)}
-							/> */}
 						</Form>
 					</div>
 				</Col>

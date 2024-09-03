@@ -11,10 +11,11 @@ import {
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthRequest } from "../../../requests";
-import { useAlert } from "../../../store";
+import { useAlert, useUser } from "../../../store";
 import { URL } from "../../../utils/constants";
 import { Logo, student, woman } from "../../../assets";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { getTokenData } from "../../../utils/helperFunction";
 
 type FieldType = {
 	full_name?: string;
@@ -28,6 +29,7 @@ const Registerpage: React.FC<any> = () => {
 	const nav = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
+	const { setGoogleDetails } = useUser();
 
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
@@ -49,7 +51,16 @@ const Registerpage: React.FC<any> = () => {
 	) => {
 		console.log("Failed:", errorInfo);
 	};
-
+	const handleGoogleLogin = (data: any) => {
+		const token: string = data.credential;
+		const tokenData: any = getTokenData(token);
+		const payload = {
+			full_name: tokenData.name,
+			email: tokenData.email,
+			provider: "google",
+		};
+		setGoogleDetails(payload);
+	};
 	return (
 		<div className="register">
 			<Row style={{}}>
@@ -226,9 +237,9 @@ const Registerpage: React.FC<any> = () => {
 							<GoogleOAuthProvider clientId="721301716315-o03cg1fbq3kj16730r309rq850n8v29h.apps.googleusercontent.com">
 								<GoogleLogin
 									useOneTap
-									onSuccess={(credentialResponse) => {
-										console.log(credentialResponse);
-									}}
+									onSuccess={(credentialResponse) =>
+										handleGoogleLogin(credentialResponse)
+									}
 									onError={() => {
 										console.log("Sign up Failed");
 									}}
