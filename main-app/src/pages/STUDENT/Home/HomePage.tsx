@@ -228,27 +228,29 @@ const HomePage: React.FC = () => {
 				</div>
 
 				{/* Third Section */}
-				<div className="hidden md:block sm:overflow-y-auto order-2 lg:order-3 w-full lg:w-fit sm:flex-[0.25] sm:max-h-[500px] p-2 rounded-lg bg-white">
-					<h2 className="text-[14px] leading-[32px] sm:text-[20px] font-inter border-[#F2F2F2] border-b pb-2 mb-2">
+				<div className="hidden md:block sm:overflow-y-auto order-2 lg:order-3 w-full lg:w-fit sm:flex-[0.25] sm:max-h-[500px] p-2 pt-0 rounded-lg bg-white relative">
+					<h2 className="text-[14px] leading-[32px] sm:text-[20px] font-inter border-[#F2F2F2] border-b pb-2 mb-2 sticky top-0 bg-white z-10">
 						Recently Read
 					</h2>
-					{Array.from({ length: 6 }).map((_, i) => (
-						<div
-							className="bg-[#F5F5F5] p-2 rounded-sm mb-2 cursor-pointer"
-							key={i}
-						>
-							<p className="playfair-display-normal text-[#121212] leading-[25.6px] text-[14px] sm:text-[16px]">
-								Lorem ipsum dolor sit amet consectetur. Pretium scelerisque
-								velit sollicitudin id.
-							</p>
-							<p className="text-[#808080] text-[14px] font-inter leading-[22.4px]">
-								Aluko Opeyemi
-							</p>
-							<p className="text-[#808080] text-[14px] font-inter leading-[22.4px]">
-								2014
-							</p>
-						</div>
-					))}
+					<div className="overflow-y-auto">
+						{Array.from({ length: 6 }).map((_, i) => (
+							<div
+								className="bg-[#F5F5F5] p-2 rounded-sm mb-2 cursor-pointer"
+								key={i}
+							>
+								<p className="playfair-display-normal text-[#121212] leading-[25.6px] text-[14px] sm:text-[16px]">
+									Lorem ipsum dolor sit amet consectetur. Pretium scelerisque
+									velit sollicitudin id.
+								</p>
+								<p className="text-[#808080] text-[14px] font-inter leading-[22.4px]">
+									Aluko Opeyemi
+								</p>
+								<p className="text-[#808080] text-[14px] font-inter leading-[22.4px]">
+									2014
+								</p>
+							</div>
+						))}
+					</div>
 				</div>
 			</div>
 
