@@ -7,6 +7,7 @@ import type { UploadProps } from "antd";
 import { message, Upload as AntDUpload } from "antd";
 import { UploadIcon } from "../../../assets";
 import "./upload.styles.scss";
+import { countWords } from "../../../utils/helperFunction";
 
 const { Dragger } = AntDUpload;
 
@@ -33,6 +34,8 @@ const props: UploadProps = {
 const { Option } = Select;
 const Upload: React.FC<any> = () => {
 	const [loading, setLoading] = useState(false);
+	const [summary, setSummary] = useState("");
+	const [title, setTitle] = useState("");
 	const handleSubmit = () => {
 		setLoading(true);
 		setTimeout(() => {
@@ -42,6 +45,26 @@ const Upload: React.FC<any> = () => {
 	function handleChange(value: any) {
 		console.log(`Selected: ${value}`);
 	}
+
+	const handleSummaryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const inputText = event.target.value;
+		const wordCount = countWords(inputText);
+
+		// Only update the text if the word count is within the limit
+		if (wordCount <= 200) {
+			setSummary(inputText);
+		}
+	};
+
+	const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const inputText = event.target.value;
+		const wordCount = countWords(inputText);
+
+		// Only update the text if the word count is within the limit
+		if (wordCount <= 20) {
+			setTitle(inputText);
+		}
+	};
 	return (
 		<Layout>
 			<div className="w-[90%] sm:w-3/5 mx-auto upload">
@@ -61,14 +84,16 @@ const Upload: React.FC<any> = () => {
 							name="title"
 							className="p-2"
 							placeholder="Enter title(max word of 20)"
-							maxLength={20}
+							value={title}
+							onChange={handleTitleChange}
 						/>
 					</Form.Item>
 					<Form.Item label="Executive summary">
 						<Input
 							name="executive_summary"
 							className="p-2"
-							maxLength={200}
+							value={summary}
+							onChange={handleSummaryChange}
 							placeholder="Enter executive summary (max word of 200)"
 						/>
 					</Form.Item>

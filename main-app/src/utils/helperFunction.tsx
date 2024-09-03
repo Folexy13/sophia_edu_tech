@@ -49,3 +49,8 @@ export const getTokenData = (token: string): JwtPayload | null => {
 		return null;
 	}
 };
+
+export const countWords = (text: string): number => {
+	// Trim the text and split it by spaces or other word delimiters
+	return text.trim().split(/\s+/).filter(Boolean).length;
+};
