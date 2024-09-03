@@ -8,6 +8,7 @@ import { AuthRequest } from "../../../requests";
 import { useAlert, useAuth } from "../../../store";
 import { setStoredAuthToken } from "../../../utils/storage";
 import { APPCONSTANTS, URL } from "../../../utils/constants";
+import { getTokenData } from "../../../utils/helperFunction";
 type FieldType = {
 	email?: string;
 	password?: string;
@@ -43,10 +44,23 @@ const Loginpage: React.FC<any> = () => {
 	) => {
 		console.log("Failed:", errorInfo);
 	};
-	// const onFailure = (error: any) => {
-	// 	// Handle errors here
-	// 	console.error("Google login failed:", error);
-	// };
+
+	const handleGoogleLogin = async (data: any) => {
+		try {
+			const token: string = data.credential;
+			const tokenData: any = getTokenData(token);
+			const payload = {
+				email: tokenData.email,
+				password: tokenData.sub,
+			};
+			await AuthRequest.login(payload); // Assuming AuthRequest returns a promise
+			onSuccess("Registration successful!"); // Trigger success alert
+			nav(URL.LOGIN);
+		} catch (error: any) {
+			console.error("Login error:", error);
+			AlertFailure(error.message); // Trigger failure alert
+		}
+	};
 	return (
 		<div className="student_login">
 			<Row style={{}}>
@@ -158,9 +172,9 @@ const Loginpage: React.FC<any> = () => {
 							<GoogleOAuthProvider clientId="1099244600879-519hr40scavako9ousgbr0aqo1iaqupk.apps.googleusercontent.com">
 								<GoogleLogin
 									useOneTap
-									onSuccess={(credentialResponse) => {
-										console.log(credentialResponse);
-									}}
+									onSuccess={(credentialResponse) =>
+										handleGoogleLogin(credentialResponse)
+									}
 									onError={() => {
 										console.log("Login Failed");
 									}}

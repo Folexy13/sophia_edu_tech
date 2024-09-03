@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthRequest } from "../../../requests";
-import { useAlert, useUser } from "../../../store";
+import { useAlert } from "../../../store";
 import { URL } from "../../../utils/constants";
 import { Logo, student, woman } from "../../../assets";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
@@ -29,7 +29,6 @@ const Registerpage: React.FC<any> = () => {
 	const nav = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
-	const { setGoogleDetails } = useUser();
 
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
@@ -51,15 +50,24 @@ const Registerpage: React.FC<any> = () => {
 	) => {
 		console.log("Failed:", errorInfo);
 	};
-	const handleGoogleLogin = (data: any) => {
-		const token: string = data.credential;
-		const tokenData: any = getTokenData(token);
-		const payload = {
-			full_name: tokenData.name,
-			email: tokenData.email,
-			provider: "google",
-		};
-		setGoogleDetails(payload);
+	const handleGoogleRegistration = async (data: any) => {
+		try {
+			const token: string = data.credential;
+			const tokenData: any = getTokenData(token);
+			const payload = {
+				full_name: tokenData.name,
+				email: tokenData.email,
+				provider: "google",
+				password: tokenData.sub,
+				confirm_password: tokenData.sub,
+			};
+			await AuthRequest.register(payload); // Assuming AuthRequest returns a promise
+			onSuccess("Registration successful!"); // Trigger success alert
+			nav(URL.LOGIN);
+		} catch (error: any) {
+			console.error("Login error:", error);
+			AlertFailure(error.message); // Trigger failure alert
+		}
 	};
 	return (
 		<div className="register">
@@ -238,7 +246,7 @@ const Registerpage: React.FC<any> = () => {
 								<GoogleLogin
 									useOneTap
 									onSuccess={(credentialResponse) =>
-										handleGoogleLogin(credentialResponse)
+										handleGoogleRegistration(credentialResponse)
 									}
 									onError={() => {
 										console.log("Sign up Failed");
