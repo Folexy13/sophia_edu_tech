@@ -244,7 +244,6 @@ const Registerpage: React.FC<any> = () => {
 							</Form.Item>
 							<GoogleOAuthProvider clientId="1099244600879-519hr40scavako9ousgbr0aqo1iaqupk.apps.googleusercontent.com">
 								<GoogleLogin
-									useOneTap
 									onSuccess={(credentialResponse) =>
 										handleGoogleRegistration(credentialResponse)
 									}
