@@ -53,8 +53,10 @@ const Loginpage: React.FC<any> = () => {
 				email: tokenData.email,
 				password: tokenData.sub,
 			};
-			await AuthRequest.login(payload); // Assuming AuthRequest returns a promise
+			const res: any = await AuthRequest.login(payload); // Assuming AuthRequest returns a promise
 			onSuccess("Login successful!"); // Trigger success alert
+			onLogin(res?.access_token);
+			setStoredAuthToken(res?.access_token, "student");
 			nav(URL.HOME);
 		} catch (error: any) {
 			console.error("Login error:", error);
