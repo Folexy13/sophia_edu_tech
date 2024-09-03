@@ -170,9 +170,9 @@ const HomePage: React.FC = () => {
 											<LinkIcon />
 											<span className="text-[#581a5775]">link.com</span>
 										</p>
-										<p className="text-[10px] sm:text-[12px] items-center my-[10px] flex gap-1 text-[#581A57]">
+										<p className="text-[10px] cursor-not-allowed  sm:text-[12px] items-center my-[10px] flex gap-1 text-[#581A57]">
 											<WarningIcon />
-											<span>DOI</span>
+											<span className="text-[#581a5775]">DOI</span>
 										</p>
 									</div>
 								</div>

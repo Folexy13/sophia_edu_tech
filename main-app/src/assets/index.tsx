@@ -493,7 +493,7 @@ export const WarningIcon: React.FC<any> = () => {
 		>
 			<path
 				d="M7 4.33333H7.00667M7 6.33333V9.66667M13 7C13 10.3137 10.3137 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7Z"
-				stroke="#581A57"
+				stroke="#581a5775"
 				stroke-width="1.5"
 				stroke-linecap="round"
 				stroke-linejoin="round"
