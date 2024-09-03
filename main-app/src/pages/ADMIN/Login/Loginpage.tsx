@@ -89,8 +89,8 @@ const Loginpage: React.FC<any> = () => {
 						</div>
 						<h2 className="inter-bold">Welcome Back!!</h2>
 						<p className="inter-normal">
-							Learn your best academic skills, showcase your project and connect
-							with investors and employers!
+							Learn your best academic skills, showcase your enterprise project
+							and connect with investors and employers!
 						</p>
 					</div>
 				</Col>
