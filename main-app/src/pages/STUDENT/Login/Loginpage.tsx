@@ -54,8 +54,8 @@ const Loginpage: React.FC<any> = () => {
 				password: tokenData.sub,
 			};
 			await AuthRequest.login(payload); // Assuming AuthRequest returns a promise
-			onSuccess("Registration successful!"); // Trigger success alert
-			nav(URL.LOGIN);
+			onSuccess("Login successful!"); // Trigger success alert
+			nav(URL.HOME);
 		} catch (error: any) {
 			console.error("Login error:", error);
 			AlertFailure(error.message); // Trigger failure alert
