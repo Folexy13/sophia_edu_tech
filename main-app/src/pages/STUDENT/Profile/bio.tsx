@@ -828,8 +828,8 @@ const Profile: React.FC<any> = () => {
 										Follow subjects
 									</h3>
 									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-										Let our recommendation suggest your preferred subject for
-										you.
+										Let our recommendation system suggest your preferred project
+										based on the subjects you follow
 									</p>
 								</div>
 							</div>
