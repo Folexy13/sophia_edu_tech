@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../DashboardLayout";
-import { Card, Dropdown, Form, Input, Space, TableColumnsType } from "antd";
-import { avatar, FilterIcon } from "../../../assets";
-import { Button, Table } from "../../../components";
-import { getRandomDate, getRandomItem } from "../../../utils/helperFunction";
+import {
+	Card,
+	Dropdown,
+	Form,
+	Input,
+	message,
+	Space,
+	TableColumnsType,
+} from "antd";
+import { FilterIcon } from "../../../assets";
+import { Button, Modal, Table } from "../../../components";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../../utils/constants";
-const instructorNames = [
-	"Aluko Folajimi",
-	"John Doe",
-	"Jane Smith",
-	"Chris Johnson",
-];
+import adminRequests from "../../../requests/admin.request";
+import { truncate } from "lodash";
+import moment from "moment";
 
 const columns: TableColumnsType<any> = [
 	{
@@ -25,7 +29,7 @@ const columns: TableColumnsType<any> = [
 	},
 	{
 		title: "Body",
-		dataIndex: "body",
+		dataIndex: "content",
 	},
 	{
 		title: "Date",
@@ -40,6 +44,49 @@ const columns: TableColumnsType<any> = [
 const BlogsPage: React.FC = () => {
 	const { isMobile } = useScreenSize();
 	const nav = useNavigate();
+	const [data, setData] = useState<any>([]);
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [blogId, setBlogId] = useState(0);
+	useEffect(() => {
+		const fetchData = async () => {
+			const res = await adminRequests.getBlogs();
+			setData(res);
+		};
+		fetchData();
+	}, []);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const res = await adminRequests.getBlogs();
+			setData(res);
+		};
+		fetchData();
+	}, [loading]);
+
+	const handleDelete = async (id: number) => {
+		setIsModalVisible(true);
+		setBlogId(id);
+	};
+	const handleOk = async () => {
+		const id = data[blogId]?.id;
+		setLoading(true);
+		try {
+			const res = await adminRequests.deleteBlog(id);
+			message.success("Blog deleted successfully.");
+			console.log(res);
+		} catch (error) {
+			message.error("Failed to delete the blog.");
+			console.error(error);
+		} finally {
+			setLoading(false);
+			setIsModalVisible(false); // Close the modal after deletion
+		}
+	};
+
+	const handleCancel = () => {
+		setIsModalVisible(false);
+	};
 	const getDropdownItems = (id: number) => [
 		{
 			key: "1",
@@ -50,7 +97,7 @@ const BlogsPage: React.FC = () => {
 			label: (
 				<div
 					className="text-[14px] cursor-pointer"
-					onClick={() => console.log(id)}
+					onClick={() => handleDelete(id)}
 				>
 					Delete
 				</div>
@@ -58,27 +105,37 @@ const BlogsPage: React.FC = () => {
 		},
 	];
 
-	const data: any = [];
-	for (let i = 0; i < 33; i++) {
+	const returnedData: any = [];
+	for (let i = 0; i < data?.length; i++) {
 		const instructorID = i;
-		data.push({
+		returnedData.push({
 			key: i,
 			author: (
 				<div className="flex gap-2 items-center">
-					<img src={avatar} alt="avatar" width={20} />
-					<p>{getRandomItem(instructorNames)}</p>
+					<img
+						src={data[i]?.featured_image}
+						alt="avatar"
+						style={{
+							borderRadius: "50%",
+							objectFit: "cover",
+							width: 23,
+							height: 23,
+						}}
+					/>
+					<p>{data[i]?.author}</p>
 				</div>
 			),
-			heading: "Lorem ipsum heading",
-			body: `Lorem ipsum dolor sit am subject to sed diam eu fugiat nulla pariatur. Lorem ipsum...`,
+			heading: data[i]?.title,
+			content: truncate(data[i]?.content),
 			more: (
 				<Dropdown menu={{ items: getDropdownItems(instructorID) }}>
 					<Space className="cursor-pointer">...</Space>
 				</Dropdown>
 			),
-			date: getRandomDate(),
+			date: moment(data[i]?.date_created).format("YYYY-M-D h:mma"),
 		});
 	}
+
 	return (
 		<Layout title="Blogs" hasMargin={!isMobile} isAdmin>
 			<Card className="my-4 p-3 course_card">
@@ -112,9 +169,30 @@ const BlogsPage: React.FC = () => {
 				<Table
 					className="mt-[20px]"
 					columns={columns}
-					data={data}
+					data={returnedData}
 					type={"selection"}
 				/>
+				<Modal
+					title="Confirm Deletion"
+					isOpen={isModalVisible}
+					onOk={handleOk}
+					confirmLoading={loading}
+					onClose={handleCancel}
+					okText="Yes"
+					footer={[
+						<Button label="No" key="back" onclick={handleCancel} />,
+						<Button
+							key="submit"
+							label="Yes"
+							type="primary"
+							loading={loading}
+							onclick={handleOk}
+						/>,
+					]}
+					cancelText="No"
+				>
+					<p>Are you sure you want to delete this blog?</p>
+				</Modal>
 			</Card>
 		</Layout>
 	);

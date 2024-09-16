@@ -1,4 +1,7 @@
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 // Define the interface for the JWT payload
 interface JwtPayload {
@@ -53,4 +56,37 @@ export const getTokenData = (token: string): JwtPayload | null => {
 export const countWords = (text: string): number => {
 	// Trim the text and split it by spaces or other word delimiters
 	return text.trim().split(/\s+/).filter(Boolean).length;
+};
+
+export const uploadImageToCloudinary = async (file: any) => {
+	const formData = new FormData();
+	formData.append("file", file);
+	formData.append("upload_preset", "cnu26mth"); // Cloudinary upload preset
+
+	try {
+		const response = await axios.post(
+			"https://api.cloudinary.com/v1_1/djl1v3zvi/image/upload", // Cloudinary URL
+			formData
+		);
+		return response.data.secure_url; // Return the uploaded image URL
+	} catch (error) {
+		throw new Error("Failed to upload image");
+	}
+};
+
+export const exportToExcel = (payload: any) => {
+	const worksheet = XLSX.utils.json_to_sheet(payload.data);
+	const workbook = XLSX.utils.book_new();
+	XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+	const excelBuffer = XLSX.write(workbook, {
+		bookType: "xlsx",
+		type: "array",
+	});
+	const dataBlob = new Blob([excelBuffer], {
+		type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+	});
+	saveAs(
+		dataBlob,
+		payload.fileName ? payload.fileName + ".xlsx" : "table-data.xlsx"
+	);
 };

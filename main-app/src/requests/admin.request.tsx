@@ -30,10 +30,151 @@ class AdminRequests {
 			throw new Error(errorMessage);
 		}
 	};
+	getBlogs = async () => {
+		try {
+			const response = await api.get(`/blogs`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
 
+	getBlog = async (id: Number) => {
+		try {
+			const response = await api.post(`/blogs/${id}`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+
+	editBlog = async (id: Number, data: any) => {
+		try {
+			const response = await api.put(`/blogs/${id}`, data);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	deleteBlog = async (id: Number) => {
+		try {
+			const response = await api.delete(`/blogs/${id}`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
 	getInstructors = async () => {
 		try {
 			const response = await api.get(`/admin/instructors`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	createRole = async (role: String) => {
+		try {
+			const response = await api.post(`/admin/roles`, { name: role });
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	deleteRole = async (id: Number) => {
+		try {
+			const response = await api.delete(`/admin/roles/${id}`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	assignRole = async (payload: any) => {
+		try {
+			const response = await api.post(`/admin/assign-role`, payload);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	removeAssignedRole = async (payload: any) => {
+		try {
+			const response = await api.post(`/admin/remove-role`, payload);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	adminFetchUserRole = async (userId: Number) => {
+		try {
+			const response = await api.get(`/admin/user-roles/${userId}`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	adminFetchUserWithRoles = async () => {
+		try {
+			const response = await api.get(`/admin/user-with-roles`);
 			return response;
 		} catch (error: any) {
 			// Extract the message or create a custom error message

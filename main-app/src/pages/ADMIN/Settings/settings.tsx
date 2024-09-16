@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../DashboardLayout";
-import { Card, Dropdown, Form, Input, Space, TableColumnsType } from "antd";
+import {
+	Card,
+	Dropdown,
+	Form,
+	Input,
+	message,
+	Space,
+	TableColumnsType,
+} from "antd";
 import { avatar, FilterIcon } from "../../../assets";
-import { Button, Table } from "../../../components";
-import { getRandomDate, getRandomItem } from "../../../utils/helperFunction";
+import { Button, Modal, Table } from "../../../components";
+import {
+	exportToExcel,
+	getRandomDate,
+	getRandomItem,
+} from "../../../utils/helperFunction";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 import { useNavigate } from "react-router-dom";
+import adminRequests from "../../../requests/admin.request";
 const instructorNames = [
 	"Aluko Folajimi",
 	"John Doe",
@@ -45,6 +58,8 @@ const columns: TableColumnsType<any> = [
 const SettingssPage: React.FC = () => {
 	const { isMobile } = useScreenSize();
 	const nav = useNavigate();
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [role, setRole] = useState("");
 	const getDropdownItems = (id: number) => [
 		{
 			key: "1",
@@ -68,6 +83,8 @@ const SettingssPage: React.FC = () => {
 			label: <div className="text-[14px] cursor-pointer">Delete</div>,
 		},
 	];
+	const [loading, setLoading] = useState(false);
+	const [expBtnLoading, setExpBtnLoading] = useState(false);
 
 	const data: any = [];
 	for (let i = 0; i < 106; i++) {
@@ -91,7 +108,41 @@ const SettingssPage: React.FC = () => {
 			date: getRandomDate(),
 		});
 	}
+	const handleOk = async () => {
+		setLoading(true);
+		try {
+			await adminRequests.createRole(role);
+			message.success("Role Created successfully.");
+			setRole("");
+		} catch (error) {
+			message.error("Failed to create role.");
+			console.error(error);
+		} finally {
+			setLoading(false);
+			setIsModalVisible(false); // Close the modal after deletion
+		}
+	};
 
+	const handleExport = () => {
+		setExpBtnLoading(true);
+		const payload = {
+			data,
+			fileName: "Users-table-data",
+		};
+		try {
+			exportToExcel(payload);
+			message.success("Exported successfully");
+		} catch (error) {
+			console.log(error);
+			message.error("Failed to export");
+		} finally {
+			setExpBtnLoading(false);
+		}
+	};
+
+	const handleCancel = () => {
+		setIsModalVisible(false);
+	};
 	return (
 		<Layout title="Settings" hasMargin={!isMobile} isAdmin>
 			<Card className="my-4 p-3 course_card">
@@ -117,10 +168,13 @@ const SettingssPage: React.FC = () => {
 						<Button
 							label="Export"
 							className="text-[#808080] p-3 bg-transparent border-[#808080] border rounded-[5px]"
+							onclick={handleExport}
+							loading={expBtnLoading}
+							disabled={expBtnLoading}
 						/>
 						<Button
 							label="Create a new role"
-							// onclick={() => nav(URL.ADMIN_C)}
+							onclick={() => setIsModalVisible(true)}
 							className="text-[#fff] p-3 bg-[#581A57]  border rounded-[5px]"
 						/>
 					</div>
@@ -132,6 +186,37 @@ const SettingssPage: React.FC = () => {
 					data={data}
 					type={"selection"}
 				/>
+				<Modal
+					title="New Admin Role"
+					isOpen={isModalVisible}
+					onOk={null}
+					confirmLoading={loading}
+					onClose={handleCancel}
+					okText="Yes"
+					cancelText="No"
+				>
+					<Form layout="vertical">
+						<Form.Item label="Role">
+							<Input
+								name="role"
+								placeholder="Create New Role"
+								value={role}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									setRole(e.target.value)
+								}
+							/>
+						</Form.Item>
+						<Button
+							loading={loading}
+							disabled={loading || role === ""}
+							htmlType="button"
+							onclick={handleOk}
+							block
+							label="Create"
+							className="mr-[10px] p-[8px] bg-[#581A57] text-white"
+						/>
+					</Form>
+				</Modal>
 			</Card>
 		</Layout>
 	);

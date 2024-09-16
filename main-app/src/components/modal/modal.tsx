@@ -6,6 +6,7 @@ const CustomModal: React.FC<any> = ({
 	onClose,
 	className,
 	title,
+	footer,
 	children,
 	confirmLoading,
 }) => {
@@ -22,7 +23,7 @@ const CustomModal: React.FC<any> = ({
 				confirmLoading={confirmLoading}
 				centered
 				className={className}
-				footer={null} // Removed default footer
+				footer={footer} // Removed default footer
 				onCancel={onClose}
 				zIndex={50} // Ensures the modal stays above the blur background
 			>
@@ -30,6 +31,10 @@ const CustomModal: React.FC<any> = ({
 			</AntModal>
 		</>
 	);
+};
+
+CustomModal.defaultProps = {
+	footer: null,
 };
 
 export default CustomModal;
