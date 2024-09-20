@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../DashboardLayout";
 import {
 	Card,
@@ -9,24 +9,13 @@ import {
 	Space,
 	TableColumnsType,
 } from "antd";
-import { avatar, FilterIcon } from "../../../assets";
+import { FilterIcon } from "../../../assets";
 import { Button, Modal, Table } from "../../../components";
-import {
-	exportToExcel,
-	getRandomDate,
-	getRandomItem,
-} from "../../../utils/helperFunction";
+import moment from "moment";
+import { exportToExcel, getAvatar } from "../../../utils/helperFunction";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 import { useNavigate } from "react-router-dom";
 import adminRequests from "../../../requests/admin.request";
-const instructorNames = [
-	"Aluko Folajimi",
-	"John Doe",
-	"Jane Smith",
-	"Chris Johnson",
-];
-
-const roles = ["Developer", "Customer Support", "Marketer"];
 
 const columns: TableColumnsType<any> = [
 	{
@@ -59,6 +48,8 @@ const SettingssPage: React.FC = () => {
 	const { isMobile } = useScreenSize();
 	const nav = useNavigate();
 	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [data, setData] = useState<any>([]);
+
 	const [role, setRole] = useState("");
 	const getDropdownItems = (id: number) => [
 		{
@@ -72,7 +63,9 @@ const SettingssPage: React.FC = () => {
 			label: (
 				<div
 					className="text-[14px] cursor-pointer"
-					onClick={() => nav(`/admin/user/${id + 1}`)}
+					onClick={() =>
+						nav(`/admin/user/${data[id]?.id}`, { state: data[id] })
+					}
 				>
 					View Personal information
 				</div>
@@ -86,26 +79,32 @@ const SettingssPage: React.FC = () => {
 	const [loading, setLoading] = useState(false);
 	const [expBtnLoading, setExpBtnLoading] = useState(false);
 
-	const data: any = [];
-	for (let i = 0; i < 106; i++) {
+	const returnedData: any = [];
+	for (let i = 0; i < data?.length; i++) {
 		const instructorID = i;
-		data.push({
+		returnedData.push({
 			key: i,
 			user: (
 				<div className="flex gap-2 items-center">
-					<img src={avatar} alt="avatar" width={20} />
-					<p>{getRandomItem(instructorNames)}</p>
+					<img
+						src={getAvatar(data[i]?.profile_image)}
+						alt="avatar"
+						width={20}
+					/>
+					<p>{data[i]?.fullname ? data[i]?.fullname : "---"}</p>
 				</div>
 			),
-			email: "folajimiopeyemisax13@gmail.com",
-			phone_number: "09030617605",
+			email: data[i]?.email ? data[i]?.email : "---",
+			phone_number: data[i]?.phone ? data[i]?.phone : "---",
 			more: (
 				<Dropdown menu={{ items: getDropdownItems(instructorID) }}>
 					<Space className="cursor-pointer">...</Space>
 				</Dropdown>
 			),
-			role: getRandomItem(roles),
-			date: getRandomDate(),
+			role: data[i]?.roles?.map((role: any) => role.name).join(", ")
+				? data[i]?.roles?.map((role: any) => role.name).join(", ")
+				: "---",
+			date: moment(data[i]?.created_at).format("YYYY-M-D h:mma"),
 		});
 	}
 	const handleOk = async () => {
@@ -143,12 +142,23 @@ const SettingssPage: React.FC = () => {
 	const handleCancel = () => {
 		setIsModalVisible(false);
 	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const res = await adminRequests.fetchAllAdmins();
+			setData(res);
+		};
+		fetchData();
+	}, [loading]);
+
 	return (
 		<Layout title="Settings" hasMargin={!isMobile} isAdmin>
 			<Card className="my-4 p-3 course_card">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
-						<h2 className="text-[16px] inter-bold">10 Roles and Permissions</h2>
+						<h2 className="text-[16px] inter-bold">
+							{data?.length} Roles and Permissions
+						</h2>
 
 						<Form>
 							<Form.Item>
@@ -183,7 +193,7 @@ const SettingssPage: React.FC = () => {
 				<Table
 					className="mt-[20px]"
 					columns={columns}
-					data={data}
+					data={returnedData}
 					type={"selection"}
 				/>
 				<Modal

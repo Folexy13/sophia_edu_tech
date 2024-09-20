@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
 							className="playfair-display-bold"
 							style={{ fontSize: 48, marginBottom: 18 }}
 						>
-							The integrated learning development platform.
+							The Learning and Career Development Platform
 						</h2>
 						<p
 							className="inter-normal text-[18px]"

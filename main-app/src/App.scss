@@ -107,7 +107,7 @@ button {
 
 button:disabled {
 	background: #ccc !important;
-	cursor: pointer !important;
+	cursor: not-allowed !important;
 	color: #fff !important;
 	&:hover {
 		background: #ccc !important;
@@ -196,4 +196,9 @@ button:disabled {
 	.ant-select-selector {
 	border-color: unset !important;
 	box-shadow: none;
+}
+
+:where(.css-dev-only-do-not-override-1gwfwyx).ant-form-item
+	.ant-form-item-control-input {
+	align-items: left !important;
 }

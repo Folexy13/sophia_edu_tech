@@ -15,11 +15,13 @@ import { UploadIcon } from "../../../assets";
 import adminRequests from "../../../requests/admin.request";
 import { uploadImageToCloudinary } from "../../../utils/helperFunction";
 import { RcFile } from "antd/es/upload";
+import { URL } from "../../../utils/constants";
 
 const CreateBlogPage: React.FC = () => {
 	const [form] = Form.useForm();
 	const [_, setModuleNumber] = useState<number>(1);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [imgLoading, setImgLoading] = useState<boolean>(true);
 	const nav = useNavigate();
 	const [uploadedImageUrl, setUploadedImageUrl] = useState<any>(null); // Track uploaded image
 	useEffect(() => {
@@ -32,54 +34,37 @@ const CreateBlogPage: React.FC = () => {
 		setModuleNumber(numberOfModules || 1);
 	};
 	const { Dragger } = AntDUpload;
-	// const props: UploadProps = {
-	// 	name: "file",
-	// 	multiple: true,
-	// 	action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-	// 	onChange(info) {
-	// 		const { status } = info.file;
-	// 		if (status !== "uploading") {
-	// 			console.log(info.file, info.fileList);
-	// 		}
-	// 		if (status === "done") {
-	// 			message.success(`${info.file.name} file uploaded successfully.`);
-	// 		} else if (status === "error") {
-	// 			message.error(`${info.file.name} file upload failed.`);
-	// 		}
-	// 	},
-	// 	onDrop(e) {
-	// 		console.log("Dropped files", e.dataTransfer.files);
-	// 	},
-	// };
-	// Uploader props
-	// const props: UploadProps = {
-	// 	name: "file",
-	// 	multiple: false, // Only upload one image at a time
-	// 	action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-	// 	onChange(info) {
-	// 		const { status } = info.file;
-	// 		if (status !== "uploading") {
-	// 			console.log(info.file, info.fileList);
-	// 		}
-	// 		if (status === "done") {
-	// 			message.success(`${info.file.name} file uploaded successfully.`);
-	// 			setUploadedImage(info.fileList); // Store the uploaded file object
-	// 		} else if (status === "error") {
-	// 			message.error(`${info.file.name} file upload failed.`);
-	// 			setUploadedImage(info.fileList); // Clear the file if upload failed
-	// 		}
-	// 	},
-	// 	onDrop(e) {
-	// 		console.log("Dropped files", e.dataTransfer.files);
-	// 	},
-	// };
+
 	const props: UploadProps = {
 		name: "file",
 		multiple: false, // Only upload one image at a time
+		maxCount: 1,
+		accept: "image/png, image/jpeg, image/jpg",
+		beforeUpload: (file: any) => {
+			const isImage = file.type === "image/jpeg" || file.type === "image/png";
+			if (!isImage) {
+				message.error("You can only upload PNG or JPEG files!");
+				return;
+			}
+			return isImage; // Return false to prevent upload if it's not an image
+		},
 		customRequest: async ({ file, onSuccess, onError }) => {
 			try {
 				// Cast the file to RcFile to access properties like name
 				const rcFile = file as RcFile;
+
+				// Check if file size exceeds 5MB (5 * 1024 * 1024 = 5242880 bytes)
+				const isFileSizeValid = rcFile.size / 1024 / 1024 <= 5;
+
+				if (!isFileSizeValid) {
+					// Show error message if file exceeds 5MB
+					message.error("File size exceeds 5MB. Please upload a smaller file.");
+
+					// Create an error object to pass to onError
+					const error = new Error("File size exceeds 5MB.");
+					onError?.(error as any); // Explicitly cast as UploadRequestError
+					return;
+				}
 
 				const imageUrl = await uploadImageToCloudinary(rcFile); // Upload to Cloudinary
 				setUploadedImageUrl(imageUrl); // Store the uploaded image URL
@@ -88,6 +73,8 @@ const CreateBlogPage: React.FC = () => {
 			} catch (error: any) {
 				onError?.(error);
 				message.error("Image upload failed");
+			} finally {
+				setImgLoading(false);
 			}
 		},
 		onDrop(e) {
@@ -105,6 +92,7 @@ const CreateBlogPage: React.FC = () => {
 			const res: any = await adminRequests.createBlog(payload);
 			message.success(res.message);
 			form.resetFields();
+			nav(URL.ADMIN_BLOGS);
 		} catch (error: any) {
 			message.error(error.message);
 		} finally {
@@ -141,12 +129,20 @@ const CreateBlogPage: React.FC = () => {
 						initialValues={{}}
 						onFinish={handleSubmit}
 					>
-						<Form.Item label="Heading" className="inter-normal" name={"title"}>
+						<Form.Item
+							label="Heading"
+							className="inter-normal"
+							name={"title"}
+							required
+							rules={[{ required: true, message: "Heading is required" }]}
+						>
 							<Input placeholder="Lorem ipsum..." className="p-2" />
 						</Form.Item>
 						<Form.Item
 							label="Subheading"
 							className="inter-normal"
+							required
+							rules={[{ required: true, message: "Subheading is required" }]}
 							name={"subheading"}
 						>
 							<Input placeholder="Lorem ipsum..." className="p-2" />
@@ -155,6 +151,8 @@ const CreateBlogPage: React.FC = () => {
 							label="Category"
 							className="inter-normal"
 							name={"category"}
+							rules={[{ required: true, message: "Category is required" }]}
+							required
 						>
 							<Select
 								placeholder="Select Catgeory"
@@ -174,16 +172,27 @@ const CreateBlogPage: React.FC = () => {
 								<Select.Option value="Arts">Arts</Select.Option>
 							</Select>
 						</Form.Item>
-						<Form.Item label="Body" className="inter-normal" name={"content"}>
+						<Form.Item
+							label="Body"
+							className="inter-normal"
+							name={"content"}
+							required
+							rules={[{ required: true, message: "Body content is required" }]}
+						>
 							<Input.TextArea placeholder="message" className="p-2" />
 						</Form.Item>
-						<Form.Item label="Upload Image" name={"featured_image"}>
+						<Form.Item
+							label="Upload Image"
+							name={"featured_image"}
+							required
+							rules={[{ required: true, message: "Image is required" }]}
+						>
 							<Dragger {...props}>
 								<p className="ant-upload-drag-icon flex justify-center">
 									<UploadIcon />
 								</p>
 								<p className="ant-upload-hint">
-									(max file size: 200mb - pdf,docx,ppt,xl)
+									(max file size: 5mb - *png,*jpeg)
 								</p>
 							</Dragger>
 						</Form.Item>
@@ -191,21 +200,25 @@ const CreateBlogPage: React.FC = () => {
 							label="Mins of read"
 							className="inter-normal"
 							name={"minutes_read"}
+							required
+							rules={[
+								{ required: true, message: "Minutes of read is required" },
+							]}
 						>
 							<Input placeholder="2" className="p-2" type="number" />
 						</Form.Item>
-						<Form.Item
+						{/* <Form.Item
 							label="Name of author"
 							className="inter-normal"
 							name={"name_of_author"}
 						>
 							<Input readOnly placeholder="Aluko Folajimi" className="p-2" />
-						</Form.Item>
+						</Form.Item> */}
 						<Button
 							htmlType="submit"
 							block
 							loading={loading}
-							disabled={loading}
+							disabled={loading || imgLoading}
 							className="my-[15px] p-[20px] text-white bg-[#581A57]"
 						>
 							Publish

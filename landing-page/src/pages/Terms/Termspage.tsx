@@ -460,7 +460,9 @@ const TermsPage: React.FC = () => {
 						moment, Sophia does not have adequate system to check against this
 						risk. Therefore, you must make sure that you have thought about the
 						risks involved before uploading your work/manuscript to our site for
-						peer review.
+						peer review. To be on a safer side, we advise that you patent your
+						idea/inventions where possible before you upload or
+						post them to Sophia.
 					</p>
 					<p className="inter-normal ">
 						By continuing to upload your work/manuscript for review and also by

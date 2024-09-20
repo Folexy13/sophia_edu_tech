@@ -1,6 +1,63 @@
 import api from "../Api";
 
 class AdminRequests {
+	createAdmin = async (data: any) => {
+		try {
+			const response = await api.post(`/create-admin`, data);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	fetchAllAdmins = async () => {
+		try {
+			const response = await api.get(`/admin/admins`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	deleteAdmin = async (id: number) => {
+		try {
+			const response = await api.delete(`/admin/admins/${id}`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+
+	editAdmin = async (id: number, data: any) => {
+		try {
+			const response = await api.put(`/admin/update/${id}`, data);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
 	createInstructor = async (data: any) => {
 		try {
 			const response = await api.post(`/admin/instructors`, data);

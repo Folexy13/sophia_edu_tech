@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import Layout from "../../DashboardLayout";
-import { Button, Checkbox, Form, Input, Select } from "antd";
-
-const CheckboxGroup = Checkbox.Group;
+import { Button, Checkbox, Form, Input, Upload, Avatar } from "antd";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AdminRequest } from "../../../requests";
+import { URL } from "../../../utils/constants";
+import { useAlert } from "../../../store";
+import { UploadOutlined } from "@ant-design/icons";
+import { uploadImageToCloudinary } from "../../../utils/helperFunction";
 
 const options = [
 	{ label: "All", value: "All" },
@@ -16,16 +20,94 @@ const options = [
 	{ label: "Access to courses", value: "Access to courses" },
 ];
 
-const Settings: React.FC = () => {
+const Edit: React.FC = () => {
 	const [checkedValues, setCheckedValues] = useState<any[]>([]);
+	const { state } = useLocation(); // Get state from the location object
+	const [loading, setLoading] = useState(false);
+	const [roles, setRoles] = useState(state?.roles);
+	const [profileImage, setProfileImage] = useState(
+		state?.profile_image || null
+	); // State for profile image
+	const nav = useNavigate();
+	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Alert handler
 
-	const onChange = (checkedValues: any[]) => {
-		console.log("checkedValues:", checkedValues);
-		setCheckedValues(checkedValues);
+	const [form] = Form.useForm(); // Form instance from Ant Design
+
+	const handleImageChange = async (info: any) => {
+		const imageUrl = await uploadImageToCloudinary(info.file);
+		setProfileImage(imageUrl); // Set profile image URL
 	};
+
+	// Checkbox change handler
+	const onCheckboxChange = (value: string) => {
+		let updatedCheckedValues = [...checkedValues];
+		if (value === "All") {
+			if (updatedCheckedValues.includes("All")) {
+				updatedCheckedValues = [];
+			} else {
+				updatedCheckedValues = options.map((option) => option.value);
+			}
+		} else {
+			if (updatedCheckedValues.includes(value)) {
+				updatedCheckedValues = updatedCheckedValues.filter(
+					(item) => item !== value
+				);
+			} else {
+				updatedCheckedValues.push(value);
+			}
+		}
+
+		// Remove "All" if not all options are selected
+		if (updatedCheckedValues.length !== options.length) {
+			updatedCheckedValues = updatedCheckedValues.filter(
+				(item) => item !== "All"
+			);
+		}
+
+		// Add "All" if all options are selected
+		if (updatedCheckedValues.length === options.length - 1) {
+			updatedCheckedValues.push("All");
+		}
+
+		setCheckedValues(updatedCheckedValues);
+	};
+
+	const onFinish = async (values: any) => {
+		setLoading(true);
+		try {
+			const data = {
+				...values,
+				username: state.username,
+				fullname: state.fullname,
+				roles,
+				profile_image: profileImage,
+			}; // Add profile_image to form values
+			await AdminRequest.editAdmin(state.id, data); // API call to edit user
+			onSuccess("User updated successfully!");
+			nav(URL.ADMIN_SETTINGS);
+		} catch (error: any) {
+			console.error("Error updating user:", error);
+			AlertFailure(error.message);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return (
-		<Layout title="Settings" isAdmin>
-			<Form layout="vertical" className="p-4 sm:p-0">
+		<Layout title="Edit" isAdmin>
+			<Form
+				form={form}
+				layout="vertical"
+				className="p-4 sm:p-0"
+				onFinish={onFinish}
+				initialValues={{
+					fullname: state?.fullname,
+					email: state?.email,
+					phone: state?.phone,
+					profile_image: profileImage,
+					roles: state.roles?.map((role: any) => role.name).join(", "),
+				}} // Set initial values from state
+			>
 				{/* User Information */}
 				<div className="flex flex-col sm:flex-row gap-2 my-[28px]">
 					<div className="w-full sm:w-1/2">
@@ -42,7 +124,7 @@ const Settings: React.FC = () => {
 						<Form.Item
 							label="Full Name"
 							className="inter-normal"
-							name="full_name"
+							name="fullname"
 						>
 							<Input placeholder="Aluko Folajimi" className="p-2" />
 						</Form.Item>
@@ -60,6 +142,21 @@ const Settings: React.FC = () => {
 						>
 							<Input placeholder="+23471734492474" className="p-2" />
 						</Form.Item>
+						{/* Profile Image Upload */}
+						<Form.Item label="Profile Image" className="inter-normal">
+							<Upload
+								name="profile_image"
+								listType="picture-card"
+								showUploadList={false}
+								customRequest={handleImageChange} // Custom request to handle image upload
+							>
+								{profileImage ? (
+									<Avatar src={profileImage} size={64} /> // Preview the uploaded image as an avatar
+								) : (
+									<Button icon={<UploadOutlined />}>Upload Image</Button>
+								)}
+							</Upload>
+						</Form.Item>
 					</div>
 				</div>
 
@@ -74,37 +171,27 @@ const Settings: React.FC = () => {
 						</div>
 					</div>
 					<div className="w-full sm:w-1/2">
-						<Form.Item
-							label="Role"
-							className="inter-normal"
-							name="current_password"
-						>
-							<Select
-								placeholder="Select Role"
-								className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
-							>
-								<Select.Option value="Customer Support">
-									Customer Support
-								</Select.Option>
-								<Select.Option value="Developer">Developer</Select.Option>
-								<Select.Option value="Marketer">Marketer</Select.Option>
-								<Select.Option value="Accountant">Accountant</Select.Option>
-							</Select>
+						<Form.Item label="Role" className="inter-normal" name="roles">
+							<Input placeholder="Customer Support" className="p-2" onChcn/>
 						</Form.Item>
-
 						<Form.Item
 							label="Role of Customer support"
 							className="inter-normal"
-							name="new_password"
 						>
-							<CheckboxGroup
-								options={options}
-								className="checkbox-group flex-1"
-								value={checkedValues}
-								onChange={onChange}
-							/>
+							<div
+								style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+							>
+								{options.map((option) => (
+									<Checkbox
+										key={option.value}
+										checked={checkedValues.includes(option.value)}
+										onChange={() => onCheckboxChange(option.value)}
+									>
+										{option.label}
+									</Checkbox>
+								))}
+							</div>
 						</Form.Item>
-
 						<Form.Item
 							label="Confirm Password"
 							className="inter-normal"
@@ -114,6 +201,7 @@ const Settings: React.FC = () => {
 						</Form.Item>
 					</div>
 				</div>
+
 				<div className="flex flex-col sm:flex-row gap-2 my-[28px]">
 					<div
 						className="w-full sm:w-1/2 hidden sm:block"
@@ -123,6 +211,8 @@ const Settings: React.FC = () => {
 						<Button
 							htmlType="submit"
 							block
+							loading={loading}
+							disabled={loading}
 							className="my-[15px] p-[10px] text-white bg-[#581A57]"
 						>
 							Update User
@@ -134,4 +224,4 @@ const Settings: React.FC = () => {
 	);
 };
 
-export default Settings;
+export default Edit;

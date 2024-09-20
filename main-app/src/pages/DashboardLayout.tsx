@@ -27,7 +27,8 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { URL } from "../utils/constants";
 import { LogOutModal, Modal } from "../components";
-import { useModal } from "../store";
+import { useModal, useUser } from "../store";
+import { ClientRequest } from "../requests";
 
 const { Header, Sider, Content } = AntDLayout;
 
@@ -39,6 +40,7 @@ const DashboardLayout: React.FC<{
 	onclick?: any;
 }> = ({ children, title, hasMargin, isAdmin, onclick }) => {
 	const [activeKey, setActiveKey] = useState<string>("1");
+	const { setUser, user } = useUser();
 
 	const {
 		visible,
@@ -161,7 +163,17 @@ const DashboardLayout: React.FC<{
 		activeKey === key
 			? "!text-[#581A57] !bg-[#F5F5F5] !border-r-[#581A57] !border-r-[5px] !border-[#F5F5F5] !font-bold !text-[16px] !my-[20px]"
 			: "!text-[#808080] !text-[16px] !inter-normal !my-[20px]";
-
+	useEffect(() => {
+		const fetchUser = async () => {
+			const res: any = await ClientRequest.getMe();
+			if (res) {
+				setUser(res);
+			}
+		};
+		if (!user) {
+			fetchUser();
+		}
+	}, [setUser]);
 	return (
 		<AntDLayout style={{ minHeight: "100vh" }}>
 			<Sider

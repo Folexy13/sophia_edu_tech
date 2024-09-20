@@ -17,6 +17,7 @@ import { URL } from "../../../utils/constants";
 import adminRequests from "../../../requests/admin.request";
 import { truncate } from "lodash";
 import moment from "moment";
+import { getAvatar } from "../../../utils/helperFunction";
 
 const columns: TableColumnsType<any> = [
 	{
@@ -72,9 +73,8 @@ const BlogsPage: React.FC = () => {
 		const id = data[blogId]?.id;
 		setLoading(true);
 		try {
-			const res = await adminRequests.deleteBlog(id);
+			await adminRequests.deleteBlog(id);
 			message.success("Blog deleted successfully.");
-			console.log(res);
 		} catch (error) {
 			message.error("Failed to delete the blog.");
 			console.error(error);
@@ -113,7 +113,7 @@ const BlogsPage: React.FC = () => {
 			author: (
 				<div className="flex gap-2 items-center">
 					<img
-						src={data[i]?.featured_image}
+						src={getAvatar(data[i]?.author_profile_image)}
 						alt="avatar"
 						style={{
 							borderRadius: "50%",

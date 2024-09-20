@@ -57,6 +57,7 @@ interface ModalState {
 // Define the UserState interface that includes UserProps and related actions
 interface UserState {
 	user: UserProps | null;
+	admin: UserProps | null;
 	setUser: (data: UserProps) => void;
 	resetUser: () => void;
 }
@@ -64,7 +65,9 @@ interface UserState {
 // Create the user store
 export const useUser = create<UserState>((set) => ({
 	user: null,
+	admin: null,
 	setUser: (data: UserProps) => set({ user: data }),
+	setAdmin: (data: UserProps) => set({ admin: data }),
 	resetUser: () => set({ user: null }),
 }));
 

@@ -26,7 +26,6 @@ const Loginpage: React.FC<any> = () => {
 		setLoading(true);
 		try {
 			const res: any = await AuthRequest.login(values); // Assuming AuthRequest returns a promise
-			console.log(res); // Log response if needed
 			onSuccess("Login successful!"); // Trigger success alert
 			onLogin(res?.access_token);
 			setStoredAuthToken(res?.access_token, "student");
@@ -87,7 +86,8 @@ const Loginpage: React.FC<any> = () => {
 						</div>
 						<h2 className="inter-bold">Welcome Back!!</h2>
 						<p className="inter-normal">
-							Learn your best academic skills, showcase your enterprise project and connect with investors and employers!
+							Learn your best academic skills, showcase your enterprise project
+							and connect with investors and employers!
 						</p>
 					</div>
 				</Col>

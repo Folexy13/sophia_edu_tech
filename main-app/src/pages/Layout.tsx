@@ -41,10 +41,12 @@ const Layout: React.FC<any> = ({ children }) => {
 		const fetchUser = async () => {
 			const res: any = await ClientRequest.getMe();
 			if (res) {
-				setUser(res); // Set user data in Zustand store
+				setUser(res);
 			}
 		};
-		fetchUser();
+		if (!user) {
+			fetchUser();
+		}
 	}, [setUser]);
 	const navigate = useNavigate();
 	const learningMenu: any = (

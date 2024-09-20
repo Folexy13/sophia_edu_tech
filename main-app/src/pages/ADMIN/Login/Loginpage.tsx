@@ -11,12 +11,6 @@ import {
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Logo, student, woman } from "../../../assets";
-// import {
-// 	GoogleLogin,
-// 	GoogleLoginResponse,
-// 	GoogleLoginResponseOffline,
-// } from "react-google-login";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { AuthRequest } from "../../../requests";
 import { useAlert, useAuth } from "../../../store";
 import { setStoredAuthToken } from "../../../utils/storage";
@@ -32,18 +26,11 @@ const Loginpage: React.FC<any> = () => {
 	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
 	const { onLogin } = useAuth();
 	const nav = useNavigate();
-	// const responseGoogle = (
-	// 	response: GoogleLoginResponse | GoogleLoginResponseOffline
-	// ) => {
-	// 	// Handle the response from Google login here
-	// 	console.log(response);
-	// };
 
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
 		try {
 			const res: any = await AuthRequest.adminLogin(values); // Assuming AuthRequest returns a promise
-			console.log(res); // Log response if needed
 			onSuccess("Login successful!"); // Trigger success alert
 			onLogin(res?.access_token);
 			setStoredAuthToken(res?.access_token, "admin");
@@ -61,10 +48,7 @@ const Loginpage: React.FC<any> = () => {
 	) => {
 		console.log("Failed:", errorInfo);
 	};
-	// const onFailure = (error: any) => {
-	// 	// Handle errors here
-	// 	console.error("Google login failed:", error);
-	// };
+
 	return (
 		<div className="login">
 			<Row style={{}}>
@@ -159,24 +143,6 @@ const Loginpage: React.FC<any> = () => {
 									Log in
 								</AntDButton>
 							</Form.Item>
-							<Form.Item>
-								<div className="option">
-									<span className="line"></span>
-									<p style={{ marginTop: 30 }}>or</p>
-									<span className="line"></span>
-								</div>
-							</Form.Item>
-							<GoogleOAuthProvider clientId="721301716315-o03cg1fbq3kj16730r309rq850n8v29h.apps.googleusercontent.com">
-								<GoogleLogin
-									useOneTap
-									onSuccess={(credentialResponse) => {
-										console.log(credentialResponse);
-									}}
-									onError={() => {
-										console.log("Login Failed");
-									}}
-								/>
-							</GoogleOAuthProvider>
 						</Form>
 					</div>
 				</Col>
