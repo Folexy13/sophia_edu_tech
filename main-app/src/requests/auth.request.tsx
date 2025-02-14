@@ -51,7 +51,7 @@ class AuthRequests {
 			return response;
 		} catch (error: any) {
 			// Extract the message or create a custom error message
-			console.log(error.response?.data);
+			console.log(error.response);
 			const errorMessage =
 				error.response?.data?.error ||
 				error.response?.data?.message ||

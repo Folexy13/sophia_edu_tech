@@ -102,7 +102,7 @@ class AdminRequests {
 		}
 	};
 
-	getBlog = async (id: Number) => {
+	getBlog = async (id: number) => {
 		try {
 			const response = await api.post(`/blogs/${id}`);
 			return response;
@@ -117,7 +117,7 @@ class AdminRequests {
 		}
 	};
 
-	editBlog = async (id: Number, data: any) => {
+	editBlog = async (id: number, data: any) => {
 		try {
 			const response = await api.put(`/blogs/${id}`, data);
 			return response;
@@ -131,7 +131,7 @@ class AdminRequests {
 			throw new Error(errorMessage);
 		}
 	};
-	deleteBlog = async (id: Number) => {
+	deleteBlog = async (id: number) => {
 		try {
 			const response = await api.delete(`/blogs/${id}`);
 			return response;
@@ -159,7 +159,7 @@ class AdminRequests {
 			throw new Error(errorMessage);
 		}
 	};
-	createRole = async (role: String) => {
+	createRole = async (role: string) => {
 		try {
 			const response = await api.post(`/admin/roles`, { name: role });
 			return response;
@@ -173,7 +173,7 @@ class AdminRequests {
 			throw new Error(errorMessage);
 		}
 	};
-	deleteRole = async (id: Number) => {
+	deleteRole = async (id: number) => {
 		try {
 			const response = await api.delete(`/admin/roles/${id}`);
 			return response;
@@ -215,7 +215,7 @@ class AdminRequests {
 			throw new Error(errorMessage);
 		}
 	};
-	adminFetchUserRole = async (userId: Number) => {
+	adminFetchUserRole = async (userId: number) => {
 		try {
 			const response = await api.get(`/admin/user-roles/${userId}`);
 			return response;
@@ -243,6 +243,20 @@ class AdminRequests {
 			throw new Error(errorMessage);
 		}
 	};
+	fetchAllCourse = async () => {
+		try {
+			const response = await api.get(`/courses`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	}
 }
 
 const adminRequests = new AdminRequests();

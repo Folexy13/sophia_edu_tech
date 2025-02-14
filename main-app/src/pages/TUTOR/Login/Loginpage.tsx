@@ -35,6 +35,7 @@ const Loginpage: React.FC<any> = () => {
 		setLoading(true);
 		try {
 			const res: any = await AuthRequest.instructorLogin(values);
+			console.log(res)
 			onSuccess("Login successful!"); // Trigger success alert
 			onLogin(res?.access_token);
 			setStoredAuthToken(res?.access_token, "instructor");

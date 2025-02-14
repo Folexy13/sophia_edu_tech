@@ -48,7 +48,10 @@ const Messaging: React.FC<any> = () => {
 
 		const msg: any = await clientRequests.getMyMessages();
 
+		if(msg.length < 1){
+
 		setMessages(msg);
+		}
 		// Example condition to stop fetching more data
 		setHasMore(false);
 	};
