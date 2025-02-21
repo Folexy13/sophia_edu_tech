@@ -13,8 +13,11 @@ import {
 	SmileyIcon,
 } from "../../../assets";
 import { Button, Modal } from "../../../components";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AboutPage: React.FC<any> = () => {
+	const nav = useNavigate()
+	const {id} = useParams()
 	const text = `
   A dog is a type of domesticated animal.
   Known for its loyalty and faithfulness,
@@ -55,6 +58,7 @@ const AboutPage: React.FC<any> = () => {
 		setTimeout(() => {
 			setButtonLoading({ firstBtn: buttonLoading.firstBtn, secondBtn: false });
 			setOpen(false);
+			nav(`/course/${id}/learning`)
 		}, 2000);
 	};
 	const expandIcon = (panelProps: any) =>

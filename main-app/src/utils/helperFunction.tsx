@@ -90,3 +90,11 @@ export const exportToExcel = (payload: any) => {
 		payload.fileName ? payload.fileName + ".xlsx" : "table-data.xlsx"
 	);
 };
+
+export const removeDuplicates = (obj: Record<string, any>): Record<string, any> => {
+	return Object.keys(obj).reduce((acc, key) => {
+		acc[key] = obj[key]; // Always assign the latest value
+		return acc;
+	}, {} as Record<string, any>);
+};
+

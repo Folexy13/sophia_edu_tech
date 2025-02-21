@@ -24,7 +24,7 @@ const Edit: React.FC = () => {
 	const [checkedValues, setCheckedValues] = useState<any[]>([]);
 	const { state } = useLocation(); // Get state from the location object
 	const [loading, setLoading] = useState(false);
-	const [roles, setRoles] = useState(state?.roles);
+	const [roles, _] = useState(state?.roles);
 	const [profileImage, setProfileImage] = useState(
 		state?.profile_image || null
 	); // State for profile image
@@ -172,7 +172,7 @@ const Edit: React.FC = () => {
 					</div>
 					<div className="w-full sm:w-1/2">
 						<Form.Item label="Role" className="inter-normal" name="roles">
-							<Input placeholder="Customer Support" className="p-2" onChcn/>
+							<Input placeholder="Customer Support" className="p-2" />
 						</Form.Item>
 						<Form.Item
 							label="Role of Customer support"

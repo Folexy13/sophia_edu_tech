@@ -11,7 +11,7 @@ export const URL = {
 	PRIVACY: "/privacy/terms-of-service",
 	COURSELISTING: "/course/all",
 	ABOUTCOURSE: "/course/",
-	LEARNING: "/course/1/learning",
+	LEARNING: "/course/:id/learning",
 	BLOG: "/blog",
 	PROFILE: "/profile/me/settings",
 	BIO: "/profile/me/bio",

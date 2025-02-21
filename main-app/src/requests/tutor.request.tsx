@@ -1,6 +1,6 @@
 import api from "../Api";
 
-class ClientRequests {
+class TutorRequests {
 	createCourse = async (data: any) => {
 		try {
 			const response = await api.post(`/courses`, data);
@@ -64,5 +64,5 @@ class ClientRequests {
 	};
 }
 
-const clientRequests = new ClientRequests();
-export default clientRequests;
+const tutorRequests = new TutorRequests();
+export default tutorRequests;

@@ -1,141 +1,167 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Layout from "../../Layout";
-import { Form, Input, Select } from "antd";
-import { Button } from "../../../components";
+import {Form, Input, Select} from "antd";
+import {Button} from "../../../components";
 
-import type { UploadProps } from "antd";
-import { message, Upload as AntDUpload } from "antd";
-import { UploadIcon } from "../../../assets";
+import type {UploadProps} from "antd";
+import {message, Upload as AntDUpload} from "antd";
+import {UploadIcon} from "../../../assets";
 import "./upload.styles.scss";
-import { countWords } from "../../../utils/helperFunction";
+import {countWords} from "../../../utils/helperFunction";
+import {ClientRequest} from "../../../requests";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+import {URL} from "../../../utils/constants";
 
-const { Dragger } = AntDUpload;
+const {Dragger} = AntDUpload;
 
 const props: UploadProps = {
-	name: "file",
-	multiple: true,
-	action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-	onChange(info) {
-		const { status } = info.file;
-		if (status !== "uploading") {
-			console.log(info.file, info.fileList);
-		}
-		if (status === "done") {
-			message.success(`${info.file.name} file uploaded successfully.`);
-		} else if (status === "error") {
-			message.error(`${info.file.name} file upload failed.`);
-		}
-	},
-	onDrop(e) {
-		console.log("Dropped files", e.dataTransfer.files);
-	},
+    name: "file",
+    multiple: true,
+    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+    onChange(info) {
+        const {status} = info.file;
+        if (status !== "uploading") {
+            console.log(info.file, info.fileList);
+        }
+        if (status === "done") {
+            message.success(`${info.file.name} file uploaded successfully.`);
+        } else if (status === "error") {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    },
+    onDrop(e) {
+        console.log("Dropped files", e.dataTransfer.files);
+    },
 };
 
-const { Option } = Select;
+const {Option} = Select;
 const Upload: React.FC<any> = () => {
-	const [loading, setLoading] = useState(false);
-	const [summary, setSummary] = useState("");
-	const [title, setTitle] = useState("");
-	const handleSubmit = () => {
-		setLoading(true);
-		setTimeout(() => {
-			setLoading(false);
-		}, 2000);
-	};
-	function handleChange(value: any) {
-		console.log(`Selected: ${value}`);
-	}
+    const [loading, setLoading] = useState(false);
+    const [summary, setSummary] = useState("");
+    const [title, setTitle] = useState("");
+    const nav = useNavigate()
+    const handleSubmit = async (values: any) => {
+        setLoading(true);
+        try {
+            const formData = new FormData();
+            formData.append("title", values.title);
+            formData.append("executive_summary", values.executive_summary);
+            formData.append("subject", values.subject);
+            formData.append("doi_link", values.doi_link);
+            formData.append("video_link", values.video_link);
+            formData.append("document", values.document_path);
 
-	const handleSummaryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const inputText = event.target.value;
-		const wordCount = countWords(inputText);
+            await ClientRequest.uploadPost(formData);
+            toast.success("Uploaded successfully.");
+            nav(URL.HOME)
+        } catch (e: any) {
+            console.log(e);
+            toast.error(e.message);
+        } finally {
+            setLoading(false)
+        }
+    };
 
-		// Only update the text if the word count is within the limit
-		if (wordCount <= 200) {
-			setSummary(inputText);
-		}
-	};
+    function handleChange(value: any) {
+        console.log(`Selected: ${value}`);
+    }
 
-	const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const inputText = event.target.value;
-		const wordCount = countWords(inputText);
+    const handleSummaryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const inputText = event.target.value;
+        const wordCount = countWords(inputText);
 
-		// Only update the text if the word count is within the limit
-		if (wordCount <= 20) {
-			setTitle(inputText);
-		}
-	};
-	return (
-		<Layout>
-			<div className="w-[90%] sm:w-3/5 mx-auto upload">
-				<h2 className="text-[24px] sm:text-center my-[20px] font-semibold">
-					Enterprise Project
-				</h2>
-				<p className="text-[16px] sm:text-center mb-[20px]">
-					Upload your enterprise project here. This may include some or all of
-					the following: business plan or pitch deck that explains the business
-					idea of your project, DOI of research work supporting your project,
-					website or video link explaining your project
-				</p>
+        // Only update the text if the word count is within the limit
+        if (wordCount <= 200) {
+            setSummary(inputText);
+        }
+    };
 
-				<Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-					<Form.Item label="Title">
-						<Input
-							name="title"
-							className="p-2"
-							placeholder="Enter title(max word of 20)"
-							value={title}
-							onChange={handleTitleChange}
-						/>
-					</Form.Item>
-					<Form.Item label="Executive summary">
-						<Input
-							name="executive_summary"
-							className="p-2"
-							value={summary}
-							onChange={handleSummaryChange}
-							placeholder="Enter executive summary (max word of 200)"
-						/>
-					</Form.Item>
-					<Form.Item label="Document">
-						<Dragger {...props}>
-							<p className="ant-upload-drag-icon flex justify-center">
-								<UploadIcon />
-							</p>
-							<p className="ant-upload-hint">
-								(max file size: 200mb - pdf,docx,ppt,xl)
-							</p>
-						</Dragger>
-					</Form.Item>
-					<Form.Item label="Add Links">
-						<Input name="doi" className="p-2 mb-[20px]" placeholder="DOI" />
-						<Input name="video_link" className="p-2" placeholder="Video link" />
-					</Form.Item>
-					<Form.Item label="Subject(s) your project belongs">
-						<Select
-							placeholder="Search Subject"
-							className="w-full bg-white h-[38px] rounded-sm"
-							onChange={handleChange}
-						>
-							<Option value="enrolled">Enrolled</Option>
-							<Option value="agriculture">Agriculture</Option>
-							<Option value="applied_science" disabled>
-								Applied Science
-							</Option>
-						</Select>
-					</Form.Item>
-					<div style={{ marginTop: "20px", textAlign: "right" }}>
-						<Button
-							label={"Submit"}
-							loading={loading}
-							onclick={handleSubmit}
-							className="p-[20px] w-full sm:w-[200px] bg-[#581A57] text-white mb-[90px]"
-						/>
-					</div>
-				</Form>
-			</div>
-		</Layout>
-	);
+    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const inputText = event.target.value;
+        const wordCount = countWords(inputText);
+
+        // Only update the text if the word count is within the limit
+        if (wordCount <= 20) {
+            setTitle(inputText);
+        }
+    };
+    return (
+        <Layout>
+            <div className="w-[90%] sm:w-3/5 mx-auto upload">
+                <h2 className="text-[24px] sm:text-center my-[20px] font-semibold">
+                    Enterprise Project
+                </h2>
+                <p className="text-[16px] sm:text-center mb-[20px]">
+                    Upload your enterprise project here. This may include some or all of
+                    the following: business plan or pitch deck that explains the business
+                    idea of your project, DOI of research work supporting your project,
+                    website or video link explaining your project
+                </p>
+
+                <Form labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={handleSubmit}>
+                    <Form.Item label="Title" name={"title"}>
+                        <Input
+                            name="title"
+                            className="p-2"
+                            placeholder="Enter title(max word of 20)"
+                            value={title}
+                            onChange={handleTitleChange}
+                        />
+                    </Form.Item>
+                    <Form.Item label="Executive summary" name={"executive_summary"}>
+                        <Input
+                            name="executive_summary"
+                            className="p-2"
+                            value={summary}
+                            onChange={handleSummaryChange}
+                            placeholder="Enter executive summary (max word of 200)"
+                        />
+                    </Form.Item>
+                    <Form.Item label="Document" name={"document_path"}>
+                        <Dragger {...props}>
+                            <p className="ant-upload-drag-icon flex justify-center">
+                                <UploadIcon/>
+                            </p>
+                            <p className="ant-upload-hint">
+                                (max file size: 200mb - pdf,docx,ppt,xl)
+                            </p>
+                        </Dragger>
+                    </Form.Item>
+                    <Form.Item label="Add Links" name="doi_link">
+                        <Input className="p-2 " placeholder="DOI Link"/>
+                    </Form.Item>
+                    <Form.Item label=" " name="video_link">
+                        <Input className="p-2 mt-[-10px] mb-[20px]" placeholder="Video Link"/>
+                    </Form.Item>
+
+                    <Form.Item label="Subject(s) your project belongs" name={"subject"}>
+                        <Select
+                            placeholder="Search Subject"
+                            className="w-full bg-white h-[38px] rounded-sm"
+                            onChange={handleChange}
+                        >
+                            <Option value="enrolled">Enrolled</Option>
+                            <Option value="Social Entrepreneurship and Innovation courses">Social Entrepreneurship and
+                                Innovation courses</Option>
+                            <Option value="Learning Development courses">Learning Development courses</Option>
+                            <Option value="applied_science" disabled>
+                                Others
+                            </Option>
+                        </Select>
+                    </Form.Item>
+                    <div style={{marginTop: "20px", textAlign: "right"}}>
+                        <Button
+                            label={"Submit"}
+                            htmlType="submit"
+                            loading={loading}
+                            className="p-[20px] w-full sm:w-[200px] bg-[#581A57] text-white mb-[90px]"
+                        />
+                    </div>
+                </Form>
+            </div>
+        </Layout>
+    );
 };
 
 export default Upload;

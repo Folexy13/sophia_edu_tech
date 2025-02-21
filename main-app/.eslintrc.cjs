@@ -10,9 +10,13 @@ module.exports = {
 	parser: "@typescript-eslint/parser",
 	plugins: ["react-refresh"],
 	rules: {
+		"@typescript-eslint/no-explicit-any": "off",
+		"no-mixed-spaces-and-tabs": "no-error",
+		"indent": ["error", 2], // Enforce 2 spaces
 		"react-refresh/only-export-components": [
 			"warn",
 			{ allowConstantExport: true },
+
 		],
 		// Add or modify rules as needed
 		"no-console": "off", // Disable warnings for console.log statements
