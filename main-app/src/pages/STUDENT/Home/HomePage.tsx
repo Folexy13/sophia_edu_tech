@@ -158,7 +158,7 @@ const HomePage: React.FC = () => {
                       className="w-[30px] sm:w-[40px]"
                     />
                     <p className="text-[#581A57] font-inter leading-[25.89px] font-medium text-[12px] sm:text-[16px]">
-                      {post.user?.full_name}
+                      {post.author?.full_name}
                     </p>
                     <p className="text-[#808080] text-[10px] sm:text-[14px] leading-[22.4px]">
                       Uploaded a paper
