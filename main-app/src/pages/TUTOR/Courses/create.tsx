@@ -33,20 +33,24 @@ const CreateCoursePage: React.FC = () => {
         setModuleNumber(numberOfModules || 1);
     }, [form]);
 
+    useEffect(() => {
+        const numberOfModules = form.getFieldValue("number_of_modules");
+        setModuleNumber(numberOfModules || 1);
+    }, [form]);
+
     const handleValuesChange = () => {
-        const numberOfModules = form.getFieldValue("number_of_module");
+        const numberOfModules = form.getFieldValue("number_of_modules");
         setModuleNumber(numberOfModules || 1);
     };
-    const handleNext = () => {
-        setCourse((prevCourse: CourseProps | null): CourseProps => {
-            return ({
-                ...(prevCourse ?? {}), // Ensure previous data exists
-                ...(form.getFieldsValue() as CourseProps), // Store the current step’s data
-            });
-        });
 
+    const handleNext = () => {
+        setCourse((prevCourse: CourseProps | null): CourseProps => ({
+            ...(prevCourse ?? {}), // Ensure previous data exists
+            ...(form.getFieldsValue() as CourseProps), // Store the current step’s data
+        }));
         setStep(step + 1); // Move to the next step
     };
+
     const onFinish = async (values: any) => {
         try {
             setLoading(true);
@@ -55,7 +59,7 @@ const CreateCoursePage: React.FC = () => {
             const formData = new FormData();
 
             // Dynamically append form fields to FormData
-            Object.entries({...course, ...values}).forEach(([key, value]: any) => {
+            Object.entries({ ...course, ...values }).forEach(([key, value]: any) => {
                 formData.append(key, value);
             });
 
@@ -64,7 +68,7 @@ const CreateCoursePage: React.FC = () => {
 
             // Navigate & Notify
             nav(URL.COURSES);
-            toast.success("Course Created successfully.");
+            toast.success("Course created successfully.");
         } catch (error) {
             console.error("Submission error:", error);
             toast.error("An error occurred while submitting the form.");
@@ -72,19 +76,14 @@ const CreateCoursePage: React.FC = () => {
             setLoading(false);
         }
     };
-    const handleNextModule = () => {
-        if (currentModule === Array(moduleNumber).fill((null)).length - 1) {
-            console.log("currentModule", form.getFieldsValue());
-        }
-        if (currentModule < Array(moduleNumber).fill(null).length - 1) {
 
+    const handleNextModule = () => {
+        if (currentModule < moduleNumber - 1) {
             setCurrentModule(currentModule + 1);
-            setCourse((prevCourse: CourseProps | null): CourseProps => {
-                return ({
-                    ...(prevCourse ?? {}), // Ensure previous data exists
-                    ...(form.getFieldsValue() as CourseProps), // Store the current step’s data
-                })
-            });
+            setCourse((prevCourse: CourseProps | null): CourseProps => ({
+                ...(prevCourse ?? {}), // Ensure previous data exists
+                ...(form.getFieldsValue() as CourseProps), // Store the current step’s data
+            }));
         } else {
             // Submit logic
             form.submit();
