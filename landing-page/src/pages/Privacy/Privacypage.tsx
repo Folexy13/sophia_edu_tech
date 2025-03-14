@@ -671,7 +671,8 @@ const PrivacyPage: React.FC = () => {
 						You have the right to request access to the personal information we
 						collect from you, change that information, or delete it. You can use
 						the profile tab on your account to review your personal information.
-						To delete your account, you can use the options on the settings.
+						To deactivate your account, you can use the options on the settings. 
+						You can email us to permanently delete your account.
 					</p>
 				</Card>
 			</div>
