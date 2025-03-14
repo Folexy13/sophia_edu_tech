@@ -898,7 +898,7 @@ const Profile: React.FC<any> = () => {
 										Deactivate Account
 									</h3>
 									<p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-										{`Toggle this switch to deactivate your account. You can reactivate it later if you change your mind.`}
+										{`Toggle this switch to deactivate your account. Please email support to permanently delete your account.`}
 									</p>
 								</div>
 							</div>
