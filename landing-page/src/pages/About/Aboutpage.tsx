@@ -26,7 +26,7 @@ const AboutPage: React.FC = () => {
 					development social enterprise offering tailored preparatory training
 					on relevant academic skills and practices for higher education
 					students and practitioners. Sophia also provides a professional
-					networking platform where learners can hone their entrepreneurial
+					networking platform where learners and professionals can hone their entrepreneurial
 					skills, while connecting to potential investors and employers.
 				</p>
 				<div className="div">

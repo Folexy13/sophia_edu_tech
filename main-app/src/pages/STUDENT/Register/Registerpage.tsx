@@ -90,9 +90,10 @@ const Registerpage: React.FC<any> = () => {
 								className="right-[1rem] xl:right-[15rem] bottom-[2rem]"
 							/>
 						</div>
-						<h2 className="inter-bold">Join Our Learning Community!!</h2>
+						<h2 className="inter-bold">Join Our Community!!</h2>
 						<p className="inter-normal">
-							Unlock Unlimited Learning Opportunities
+							Learn your best academic skills, showcase your enterprise project 
+							and connect with investors and employers!
 						</p>
 					</div>
 				</Col>

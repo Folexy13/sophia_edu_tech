@@ -127,7 +127,7 @@ const HomePage: React.FC = () => {
 								className="playfair-display-medium"
 								style={{ marginBottom: 18, lineHeight: 2 }}
 							>
-								Social Entrepreneurship and Innovation courses
+								Entrepreneurship and Innovation courses
 							</h3>
 						</Col>
 						<Col
@@ -168,7 +168,7 @@ const HomePage: React.FC = () => {
 							<div className="flex">
 								<img src={badge} alt="..." width={20} />
 								<p className="inter-normal">
-									Enroll and take your social entrepreneurship and innovation
+									Enroll and take your entrepreneurship and innovation
 									courses
 								</p>
 							</div>

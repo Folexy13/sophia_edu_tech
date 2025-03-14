@@ -24,7 +24,8 @@ const Forgotpage: React.FC<any> = () => {
 						</div>
 						<h2 className="inter-bold">Welcome Back!!</h2>
 						<p className="inter-normal">
-							Lorem ipsum dolor sit amet consectetur. At morbi in amet et sed.
+							Learn your best academic skills, showcase your enterprise project 
+							and connect with investors and employers!
 						</p>
 					</div>
 				</Col>
