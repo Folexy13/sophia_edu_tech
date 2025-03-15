@@ -103,10 +103,7 @@ const Upload: React.FC<any> = () => {
           Upload your enterprise project here. This may include some or all of the
           following: business plan or pitch deck that explains the business idea of
           your project, DOI of research work supporting your project, website or
-          video link explaining your project. We strongly advise that you patent your 
-          idea/inventions where possible before you upload or post them to Sophia. 
-          By continuing to upload your work/manuscript for review and also by using this site, 
-          you agree that Sophia does not have any liability for your work or intellectual property in the case of theft.
+          video link explaining your project. We strongly advise that you patent your idea/inventions where possible before you upload or post them to Sophia. By continuing to upload your work/manuscript for review and also by using this site, you agree that Sophia does not have any liability for your work or intellectual property in the case of theft.
         </p>
 
         <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={handleSubmit}>
