@@ -52,14 +52,14 @@ const Layout: React.FC<any> = ({ children }) => {
 	const learningMenu: any = (
 		<Menu>
 			<Menu.Item key="development" onClick={() => navigate(URL.COURSELISTING)}>
-				Learning Development courses
+				Learning Development Courses
 			</Menu.Item>
 			<Menu.Item
 				key="social"
-				title="Social Entrepreneurship and Innovation courses"
+				title="Entrepreneurship and Innovation courses"
 				onClick={() => navigate(URL.COURSELISTING, { state: "social" })}
 			>
-				Social Entrepreneurship and ...
+				Entrepreneurship and Innovation Courses
 			</Menu.Item>
 		</Menu>
 	);
