@@ -137,7 +137,7 @@ const CreateCoursePage: React.FC = () => {
                                         Learning Development
                                     </Select.Option>
                                     <Select.Option value="Learning Career">
-                                        Social Entrepreneurship and Innovation courses
+                                        Entrepreneurship and Innovation courses
                                     </Select.Option>
                                 </Select>
                             </Form.Item>
