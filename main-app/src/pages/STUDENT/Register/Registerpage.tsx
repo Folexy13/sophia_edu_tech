@@ -92,8 +92,7 @@ const Registerpage: React.FC<any> = () => {
 						</div>
 						<h2 className="inter-bold">Join Our Community!!</h2>
 						<p className="inter-normal">
-							Learn your best academic skills, showcase your enterprise project 
-							and connect with investors and employers!
+							Learn your best academic skills, showcase your enterprise project and connect with investors and employers!
 						</p>
 					</div>
 				</Col>
