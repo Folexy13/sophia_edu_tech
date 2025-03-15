@@ -66,7 +66,7 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 				},
 				{
 					key: "/learnings/social",
-					label: "Social Entrepreneurship and Innovation courses",
+					label: "Entrepreneurship and Innovation courses",
 				},
 			],
 		},
