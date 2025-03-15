@@ -127,7 +127,7 @@ const HomePage: React.FC = () => {
 								className="playfair-display-medium"
 								style={{ marginBottom: 18, lineHeight: 2 }}
 							>
-							Entrepreneurship and Innovation courses
+								Entrepreneurship and Innovation courses
 							</h3>
 						</Col>
 						<Col
