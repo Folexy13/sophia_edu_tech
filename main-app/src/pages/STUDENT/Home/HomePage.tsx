@@ -269,7 +269,7 @@ const HomePage: React.FC = () => {
                 className="w-[100px] h-[100px] mb-4"
               />
               <p className="text-[#808080] text-[14px] sm:text-[16px] font-inter">
-                No posts available. Start sharing your first post!
+                Start sharing your first post!
               </p>
             </div>
           )}
