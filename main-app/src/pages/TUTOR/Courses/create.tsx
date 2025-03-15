@@ -346,7 +346,7 @@ const CreateCoursePage: React.FC = () => {
                                 </p>
                             </div>
                             <p className="text-[#666666] text-[16px] w-full lg:w-[72%]">
-                                Make sure your course is catchy and descriptive as possible
+                                Input your course contents here.
                             </p>
                         </div>
                     </div>
