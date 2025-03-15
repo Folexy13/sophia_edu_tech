@@ -62,11 +62,11 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 			children: [
 				{
 					key: "/learnings/development",
-					label: "Learning Development courses",
+					label: "Learning Development",
 				},
 				{
 					key: "/learnings/social",
-					label: "Entrepreneurship and Innovation courses",
+					label: "Entrepreneurship and Innovation",
 				},
 			],
 		},
