@@ -1,18 +1,21 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Layout from "../../DashboardLayout";
+
 import {Button, Form, Input, Select, Upload} from "antd";
 import {
     applied_science_data,
     formal_science_data,
     humanities_data,
     natural_science_data,
-    social_science_data, URL,
+    social_science_data,
+    URL,
 } from "../../../utils/constants";
 import {ArrowLeftOutlined, UploadOutlined} from "@ant-design/icons";
 import {CourseProps, useCourse} from "../../../store.tsx";
 import {toast} from "react-toastify";
 import {TutorRequest} from "../../../requests";
 import {useNavigate} from "react-router-dom";
+import {RichTextEditor} from "../../../components/editor.tsx";
 
 const handleBeforeUpload = (file: File) => {
     console.log("📂 File selected:", file);
@@ -23,11 +26,13 @@ const CreateCoursePage: React.FC = () => {
     const [moduleNumber, setModuleNumber] = useState<number>(1);
     const [category, setCategory] = useState<string>("");
     const {course, setCourse} = useCourse()
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
     const [type, setType] = useState<string>("");
     const [currentModule, setCurrentModule] = useState(0); // Track current module
     const [step, setStep] = useState<number>(1);
     const nav = useNavigate();
+
+
     useEffect(() => {
         const numberOfModules = form.getFieldValue("number_of_module");
         setModuleNumber(numberOfModules || 1);
@@ -38,17 +43,50 @@ const CreateCoursePage: React.FC = () => {
         setModuleNumber(numberOfModules || 1);
     }, [form]);
 
+    // Initialize form with persisted values
+    useEffect(() => {
+        if (course) {
+            form.setFieldsValue(course);
+            if (course.number_of_module) {
+                setModuleNumber(course.number_of_module);
+            }
+        }
+    }, [course, form]);
+
     const handleValuesChange = () => {
         const numberOfModules = form.getFieldValue("number_of_modules");
         setModuleNumber(numberOfModules || 1);
     };
 
-    const handleNext = () => {
-        setCourse((prevCourse: CourseProps | null): CourseProps => ({
-            ...(prevCourse ?? {}), // Ensure previous data exists
-            ...(form.getFieldsValue() as CourseProps), // Store the current step’s data
-        }));
-        setStep(step + 1); // Move to the next step
+    const handleNext = async () => {
+        setLoading(true);
+        try {
+            const formValues = form.getFieldsValue();
+            const addedCourse: any = course?.id ? {course_id: course.id} : await TutorRequest.createCourse(formValues);
+
+            setCourse((prevCourse: CourseProps | null): CourseProps => {
+                // If we already have a course with this ID, update it
+                if (prevCourse?.id === addedCourse.course_id) {
+                    return {
+                        ...prevCourse,
+                        ...formValues, // Merge existing course with new form values
+                    };
+                }
+
+                // Otherwise create a new course entry with the ID
+                return {
+                    ...formValues,
+                    id: addedCourse.course_id, // Store the ID from the API response
+                };
+            });
+
+            setStep(step + 1);
+        } catch (error) {
+            console.error("Error creating course:", error);
+            // Consider adding error handling/notification here
+        } finally {
+            setLoading(false);
+        }
     };
 
     const onFinish = async (values: any) => {
@@ -59,7 +97,7 @@ const CreateCoursePage: React.FC = () => {
             const formData = new FormData();
 
             // Dynamically append form fields to FormData
-            Object.entries({ ...course, ...values }).forEach(([key, value]: any) => {
+            Object.entries({...course, ...values}).forEach(([key, value]: any) => {
                 formData.append(key, value);
             });
 
@@ -77,7 +115,9 @@ const CreateCoursePage: React.FC = () => {
         }
     };
 
-    const handleNextModule = () => {
+    const handleNextModule = async() => {
+        // const addedCourse: any = course?.id ? {course_id: course.id} : await TutorRequest.createCourse(formValues);
+
         if (currentModule < moduleNumber - 1) {
             setCurrentModule(currentModule + 1);
             setCourse((prevCourse: CourseProps | null): CourseProps => ({
@@ -97,6 +137,8 @@ const CreateCoursePage: React.FC = () => {
             setStep(1); // Go back to the previous step
         }
     };
+
+    console.log(course)
 
     if (step === 1) {
         return (
@@ -312,6 +354,7 @@ const CreateCoursePage: React.FC = () => {
                             <div className="flex gap-2 my-[26px] justify-end">
                                 <Button
                                     type="link"
+                                    loading={loading}
                                     className="bg-[#581A57] p-3 px-8 !hover:bg-[#581A57] ml-[10px] text-[#fff] text-[14px] rounded-[8px]"
                                     onClick={handleNext}
                                 >
@@ -385,9 +428,13 @@ const CreateCoursePage: React.FC = () => {
 
 
                             {/* Body */}
-                            <Form.Item label="Body" name={`module_${currentModule + 1}_body`}>
-                                <Input.TextArea placeholder="Enter content here"/>
-                            </Form.Item>
+                            {/*<Form.Item label="Body" name={`module_${currentModule + 1}_body`}>*/}
+                                <RichTextEditor
+                                    name={`module_${currentModule + 1}_body`}
+                                    label="Body"
+                                    rules={[{required: true, message: 'Please enter content'}]}
+                                />
+                            {/*</Form.Item>*/}
 
                             {/* Navigation Buttons */}
                             <div className="flex gap-2 my-[26px] justify-between">

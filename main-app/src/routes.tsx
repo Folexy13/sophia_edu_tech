@@ -199,24 +199,21 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles }) => {
-	const token = getStoredAuthToken(); //true;
+	const token = getStoredAuthToken();
 	const userType = getUserType();
 	const location = useLocation();
 
-	// alert(userType);
-
 	if (!token) {
-		// Determine where the user is coming from and redirect accordingly
-		const fromPath = location.pathname;
+		// Store the current path as redirect URL before navigating to login
+		const fromPath = location.pathname + location.search;
+		localStorage.setItem('redirectUrl', fromPath);
 
 		if (fromPath.startsWith("/admin")) {
-			return <Navigate to={APPCONSTANTS.ROUTES[31].path} />;
+			return <Navigate to={`${APPCONSTANTS.ROUTES[31].path}?redirect=${encodeURIComponent(fromPath)}`} />;
 		} else if (fromPath.startsWith("/instructor")) {
-			return <Navigate to={APPCONSTANTS.ROUTES[30].path} />;
-		} else if (fromPath.startsWith("/student")) {
-			return <Navigate to="/login" />; // Assuming "/login" is the student login page
+			return <Navigate to={`${APPCONSTANTS.ROUTES[30].path}?redirect=${encodeURIComponent(fromPath)}`} />;
 		} else {
-			return <Navigate to="/login" />; // Default to student login
+			return <Navigate to={`/login?redirect=${encodeURIComponent(fromPath)}`} />;
 		}
 	}
 

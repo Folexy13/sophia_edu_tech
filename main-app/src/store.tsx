@@ -1,5 +1,6 @@
 import {ReactNode} from "react";
 import {create} from "zustand";
+import {persist} from "zustand/middleware";
 
 export interface UserProps {
     full_name: string;
@@ -64,7 +65,18 @@ interface UserState {
     resetUser: () => void;
 }
 
+export interface CourseModuleProps {
+    name: string;
+    course_id: number;
+    description?: string;
+    title?: string,
+    content?: string,
+    additional_resources?: any;
+    media_file?: any
+}
+
 export interface CourseProps {
+    id?: number,
     course_briefing: string,
     course_category: string,
     course_title: string,
@@ -73,6 +85,7 @@ export interface CourseProps {
     module_2_title: string,
     module_3_title: string
     number_of_module: number
+    modules?: CourseModuleProps[]
 }
 
 interface CourseState {
@@ -84,30 +97,54 @@ interface CourseState {
 }
 
 // Create the user store
-export const useUser = create<UserState>((set) => ({
-    user: null,
-    admin: null,
-    setUser: (data: UserProps) => set({user: data}),
-    setAdmin: (data: UserProps) => set({admin: data}),
-    resetUser: () => set({user: null}),
-}));
+export const useUser = create<UserState>()(
+    persist(
+        (set) => ({
+            user: null,
+            admin: null,
+            setUser: (data: UserProps) => set({user: data}),
+            setAdmin: (data: UserProps) => set({admin: data}),
+            resetUser: () => set({user: null}),
+        }),
+        {
+            name: "user-storage",
+        }
+    )
+);
 
-export const useCourse = create<CourseState>((set) => ({
-    courses: [],
-    course: null,
-    setCourse: (data: CourseProps | ((prev: CourseProps | null) => CourseProps)) =>
-        set((state:CourseState):{course : CourseProps} => ({
-            course: typeof data === "function" ? data(state.course) : data,
-        })),
-    resetCourse: () => set({course: null}),
-}));
+export const useCourse = create<CourseState>()(
+    persist(
+        (set) => ({
+            courses: [],
+            course: null,
+            setCourse: (data: CourseProps | ((prev: CourseProps | null) => CourseProps)) =>
+                set((state: CourseState): { course: CourseProps } => ({
+                    course: typeof data === "function" ? data(state.course) : data,
+                })),
+            resetCourse: () => set({course: null}),
+        }),
+        {
+            name: "course-storage", //
+            // Optional: You can whitelist/blacklist specific properties
+            // partialize: (state) => ({ course: state.course }), // only persist course
+        }
+    )
+);
 
-export const useAuth = create<AuthState>((set) => ({
-    authenticated: false,
-    token: "",
-    onLogin: (token: string) => set({authenticated: true, token}),
-    onLogout: () => set({authenticated: false, token: ""}),
-}));
+export const useAuth = create<AuthState>()(
+    persist(
+        (set) => ({
+            authenticated: false,
+            token: "",
+            onLogin: (token: string) => set({authenticated: true, token}),
+            onLogout: () => set({authenticated: false, token: ""}),
+        }),
+        {
+            name: "auth-storage", // unique name for the storage
+            getStorage: () => sessionStorage,
+        }
+    )
+);
 
 export const useAlert = create<AlertState>((set) => ({
     status: null,

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import "./Loginpage.styles.scss";
 import { Col, Form, Input, Row, Button as AntDButton, FormProps } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Logo, student, woman } from "../../../assets";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthRequest } from "../../../requests";
 import { useAlert, useAuth } from "../../../store";
 import { setStoredAuthToken } from "../../../utils/storage";
-import { APPCONSTANTS, URL } from "../../../utils/constants";
+import { APPCONSTANTS, URL as Urlconstant } from "../../../utils/constants";
 import { getTokenData } from "../../../utils/helperFunction";
+
 type FieldType = {
 	email?: string;
 	password?: string;
@@ -17,22 +18,48 @@ type FieldType = {
 
 const Loginpage: React.FC<any> = () => {
 	const [loading, setLoading] = useState(false);
-	const { onFailure: AlertFailure, onSuccess } = useAlert(); // Assuming useAlert handles success and failure alerts
+	const { onFailure: AlertFailure, onSuccess } = useAlert();
 	const { onLogin } = useAuth();
 	const nav = useNavigate();
-	// const responseGoogle = (
+	const location = useLocation();
+
+	// Security check for redirect URLs
+	const isValidRedirect = (url: string) => {
+		try {
+			const { hostname, pathname } = new URL(url, window.location.origin);
+			return hostname === window.location.hostname &&
+				pathname.startsWith('/student'); // Only allow student routes
+		} catch {
+			return false;
+		}
+	};
+
+	const getSafeRedirectUrl = () => {
+		const queryParams = new URLSearchParams(location.search);
+		const redirectParam = queryParams.get('redirect');
+		const storedRedirect = localStorage.getItem('redirectUrl');
+
+		// Check URL validity
+		const redirectUrl = [redirectParam, storedRedirect]
+			.find(url => url && isValidRedirect(url));
+
+		localStorage.removeItem('redirectUrl');
+		return redirectUrl || Urlconstant.HOME; // Default to home if no valid redirect
+	};
 
 	const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
 		setLoading(true);
 		try {
-			const res: any = await AuthRequest.login(values); // Assuming AuthRequest returns a promise
-			onSuccess("Login successful!"); // Trigger success alert
+			const res: any = await AuthRequest.login(values);
+			onSuccess("Login successful!");
 			onLogin(res?.access_token);
 			setStoredAuthToken(res?.access_token, "student");
-			nav(URL.HOME);
+
+			// Redirect to safe URL after login
+			nav(getSafeRedirectUrl());
 		} catch (error: any) {
 			console.error("Login error:", error);
-			AlertFailure(error.message); // Trigger failure alert
+			AlertFailure(error.message);
 		} finally {
 			setLoading(false);
 		}
@@ -52,23 +79,26 @@ const Loginpage: React.FC<any> = () => {
 				email: tokenData.email,
 				password: tokenData.sub,
 			};
-			const res: any = await AuthRequest.login(payload); // Assuming AuthRequest returns a promise
-			onSuccess("Login successful!"); // Trigger success alert
+			const res: any = await AuthRequest.login(payload);
+			onSuccess("Login successful!");
 			onLogin(res?.access_token);
 			setStoredAuthToken(res?.access_token, "student");
-			nav(URL.HOME);
+
+			// Redirect to safe URL after Google login
+			nav(getSafeRedirectUrl());
 		} catch (error: any) {
 			console.error("Login error:", error);
-			AlertFailure(error.message); // Trigger failure alert
+			AlertFailure(error.message);
 		}
 	};
+
 	return (
 		<div className="student_login">
 			<Row style={{}}>
 				{/* Desktop View */}
 				<Col xs={{ span: 0 }} lg={{ span: 12 }}>
 					<div className="first-container">
-						<Link to={URL.HOME}>
+						<Link to={Urlconstant.HOME}>
 							<img
 								src={Logo}
 								alt="logo"
@@ -87,13 +117,13 @@ const Loginpage: React.FC<any> = () => {
 						<h2 className="inter-bold">Welcome Back!!</h2>
 						<p className="inter-normal">
 							Learn your best academic skills, showcase your enterprise project
-							and connect with investors and employers!
+							and connect with investors and employers!
 						</p>
 					</div>
 				</Col>
 				<Col xs={{ span: 24 }} lg={{ span: 12 }}>
 					<div className="login-container" style={{}}>
-						<Link to={URL.HOME} className="midlogo">
+						<Link to={Urlconstant.HOME} className="midlogo">
 							<img
 								src={Logo}
 								alt="Login"
@@ -109,12 +139,12 @@ const Loginpage: React.FC<any> = () => {
 							initialValues={{ remember: true }}
 							onFinish={onFinish}
 							onFinishFailed={onFinishFailed}
-							// autoComplete="off"
 						>
 							<Form.Item
 								label="Email address"
 								className="inter-normal"
 								name={"email"}
+								rules={[{ required: true, message: 'Please input your email!', type: 'email' }]}
 							>
 								<Input />
 							</Form.Item>
@@ -122,13 +152,14 @@ const Loginpage: React.FC<any> = () => {
 								label="Password"
 								className="inter-normal"
 								name={"password"}
+								rules={[{ required: true, message: 'Please input your password!' }]}
 							>
 								<Input.Password />
 							</Form.Item>
 							<div className="flex justify-end">
 								<Form.Item className="inter-bold">
 									<Link
-										to={URL.FORGOT_PASSWORD}
+										to={Urlconstant.FORGOT_PASSWORD}
 										style={{
 											color: APPCONSTANTS.APP_DARK_PURPLE,
 											float: "right",
@@ -145,7 +176,7 @@ const Loginpage: React.FC<any> = () => {
 									loading={loading}
 									htmlType="submit"
 									disabled={loading}
-									className="h-[50px] w-full !bg-[#581A57]  !text-white p-5 hover:"
+									className="h-[50px] w-full !bg-[#581A57] !text-white p-5 hover:"
 								>
 									Log in
 								</AntDButton>
@@ -156,7 +187,7 @@ const Loginpage: React.FC<any> = () => {
 							>
 								Don't have an account?{" "}
 								<Link
-									to={URL.REGISTER}
+									to={Urlconstant.REGISTER}
 									className="font-inter font-medium"
 									style={{ color: "#581A57" }}
 								>
