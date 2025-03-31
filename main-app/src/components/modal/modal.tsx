@@ -6,7 +6,7 @@ const CustomModal: React.FC<any> = ({
 	onClose,
 	className,
 	title,
-	footer,
+	footer = null,
 	children,
 	confirmLoading,
 }) => {
@@ -31,10 +31,6 @@ const CustomModal: React.FC<any> = ({
 			</AntModal>
 		</>
 	);
-};
-
-CustomModal.defaultProps = {
-	footer: null,
 };
 
 export default CustomModal;

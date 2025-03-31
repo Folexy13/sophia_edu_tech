@@ -24,17 +24,17 @@ const LogoutModal = () => {
 		<div className="">
 			{/* Blurred background */}
 
-			<h2 className="font-medium my-4 text-2xl">Log out from sophia?</h2>
+			<h2 className="font-medium my-4 text-2xl">Log out from Sophia?</h2>
 			<div className="flex gap-3 w-full">
 				<Button
-					label="Yes,Log out"
+					label="Yes, Log out"
 					className="bg-[#f00] text-[#fff]"
 					onclick={handleLogout}
 					loading={loading}
 					disabled={loading}
 				/>
 				<Button
-					label="No,Cancel"
+					label="No, Cancel"
 					className="!border-0 text-[#0d4385] !outline-none"
 					onclick={toggleModal}
 				/>

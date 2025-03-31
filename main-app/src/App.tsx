@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import "./App.scss";
-import Router from "./routes";
+import Router from "./routes/routes";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAlert } from "./store";

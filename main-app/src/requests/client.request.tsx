@@ -2,9 +2,9 @@ import api from "../Api";
 import {UserProps} from "../store";
 
 class ClientRequests {
-    getMe = async () => {
+    getMe = async (isAdmin?: boolean) => {
         try {
-            const response = await api.get(`/profile`);
+            const response = await api.get(`${isAdmin ? '/admin' : ''}/profile`);
             return response;
         } catch (error: any) {
             // Extract the message or create a custom error message

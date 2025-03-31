@@ -3,39 +3,16 @@ import React, { useState } from "react";
 
 type TableRowSelection<T> = TableProps<T>["rowSelection"];
 
-const columns: TableColumnsType<any> = [
-	{
-		title: "Name",
-		dataIndex: "name",
-	},
-	{
-		title: "Age",
-		dataIndex: "age",
-	},
-	{
-		title: "Address",
-		dataIndex: "address",
-	},
-];
-
-const data: any[] = [];
-for (let i = 0; i < 46; i++) {
-	data.push({
-		key: i,
-		name: `Edward King ${i}`,
-		age: 32,
-		address: `London, Park Lane no. ${i}`,
-	});
-}
 const Table: React.FC<{
-	data?: any;
-	columns?: any;
+	data?: any[];
+	columns?: TableColumnsType<any>;
 	rowSelection?: any;
-	type?: any;
+	type?: string;
 	pagination?: any;
 	className?: string;
 	onFilter?: any;
-}> = ({ data, columns, className, rowSelection, type, pagination }) => {
+	loading?: boolean;
+}> = ({ data = [], columns = [], className = "", rowSelection = {}, type = "default", pagination = {}, loading = false }) => {
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
 	const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
@@ -82,8 +59,9 @@ const Table: React.FC<{
 	if (type === "selection")
 		return (
 			<AntTable
-				dataSource={data}
+				dataSource={data.map((item) => ({ ...item, key: item.id }))}
 				columns={columns}
+				loading={loading}
 				className={`customtable ${className}`}
 				rowSelection={rowSelection ? rowSelection : section}
 				pagination={pagination}
@@ -92,6 +70,7 @@ const Table: React.FC<{
 	return (
 		<AntTable
 			dataSource={data}
+			loading={loading}
 			columns={columns}
 			className={`customtable ${className}`}
 			pagination={pagination}
@@ -99,10 +78,4 @@ const Table: React.FC<{
 	);
 };
 
-Table.defaultProps = {
-	data,
-	columns,
-	rowSelection: {},
-	type: "default",
-};
 export default Table;

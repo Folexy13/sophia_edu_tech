@@ -172,10 +172,10 @@ const Edit: React.FC = () => {
 					</div>
 					<div className="w-full sm:w-1/2">
 						<Form.Item label="Role" className="inter-normal" name="roles">
-							<Input placeholder="Customer Support" className="p-2" />
+							<Input placeholder="Enter Role name" className="p-2" />
 						</Form.Item>
 						<Form.Item
-							label="Role of Customer support"
+							label={`Role Permissions`}
 							className="inter-normal"
 						>
 							<div
