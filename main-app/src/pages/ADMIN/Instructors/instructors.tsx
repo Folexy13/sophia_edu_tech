@@ -1,132 +1,134 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import Layout from "../../DashboardLayout";
 import { Card, Dropdown, Form, Input, Space, TableColumnsType } from "antd";
 import { avatar, FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
-import { getRandomDate, getRandomItem } from "../../../utils/helperFunction";
+// import { getRandomDate, getRandomItem } from "../../../utils/helperFunction";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../../utils/constants";
 import { AdminRequest } from "../../../requests";
-const instructorNames = [
-	"Aluko Folajimi",
-	"John Doe",
-	"Jane Smith",
-	"Chris Johnson",
-];
-const courses = ["Agriculture", "Engineering", "Mathematics", "Physics"];
-const reviews = [
-	"i enjoyed every bit",
-	"Could be better",
-	"Excellent course",
-	"Very informative",
-];
-const feedbacks = ["Non Satisfactory", "Satisfactory"];
+import { useAlert } from "../../../store";
 
-const columns: TableColumnsType<any> = [
-	{
-		title: "instructor Name",
-		dataIndex: "instructor_name",
-	},
-	{
-		title: "Course",
-		dataIndex: "course",
-	},
-	{
-		title: "Earnings",
-		dataIndex: "earnings",
-	},
-	{
-		title: "Date",
-		dataIndex: "date",
-	},
-	{
-		title: "",
-		dataIndex: "more",
-	},
-];
+const renderColumns = (nav: Function) => {
+    return [
+        {
+            title: "Instructor Name",
+            dataIndex: "full_name",
+			render: (full_name: string, record: any) => (
+				<div className="flex gap-2 items-center">
+					{
+						record.profile_image ? (
+							<img src={record.profile_image} alt="avatar" width={20} />
+						) : (
+							<img src={avatar} alt="avatar" width={20} />
+						)
+					}
+					<p>{ full_name }</p>
+				</div>
+			)
+        },
+        {
+            title: "Courses",
+            dataIndex: "courses",
+            render: (courses: any) => (
+                <Fragment>
+                    { courses.map((course: any) => (
+						<span className="block" key={course.id}>{ course.title }</span>
+					)) }
+                </Fragment>
+            )
+        },
+        {
+            title: "Earnings",
+            dataIndex: "earnings",
+        },
+        {
+            title: "Date Created",
+            dataIndex: "created_at",
+        },
+        {
+            title: "",
+            key: "more",
+            render: (property: any, record: any) => (
+                <Dropdown menu={{ items: [
+					{
+						key: "1",
+						label: (
+							<div
+								className="text-[14px] cursor-pointer"
+								onClick={() => console.log(record)}
+							>
+								View Info
+							</div>
+						),
+					},
+					{
+						key: "2",
+						label: (
+							<div
+								className="text-[14px] cursor-pointer"
+								onClick={() => nav(`/admin/instructor/${record.id}/students`)}
+							>
+								View Students
+							</div>
+						),
+					},
+				] }}>
+                    <Space className="cursor-pointer">...</Space>
+                </Dropdown>
+            )
+        },
+    ];
+};
 
 const StudentsPage: React.FC = () => {
 	const { isMobile } = useScreenSize();
+	const [instructors, setInstructors] = useState([])
+	const [tableData, setTableData] = useState<{ total?: number, per_page?: number, current_page?: number }>({});
+	const [loading, setLoading] = useState(false)
+	const { onFailure } = useAlert();
 	const nav = useNavigate();
-	// const [instructor, setInstructors] = useState([])
+
+	const columns: TableColumnsType<any> = renderColumns(nav)
+
+	const pagination = useMemo(() => ({
+		total: tableData?.total ?? 0,
+		pageSize: tableData?.per_page ?? 10,
+		current: tableData?.current_page ?? 1,
+	}), [tableData])
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const resp = await AdminRequest.getInstructors();
-			console.log(resp);
+			setLoading(true)
+			try {
+				const resp: any = await AdminRequest.getInstructors();
+				if (resp && resp?.items && Array.isArray(resp.items)) {
+					setInstructors(resp.items)
+					setTableData(resp)
+				}
+			} catch (error: any) {
+				onFailure(error.message);
+			} finally {
+				setLoading(false)
+			}
 		};
 		fetchData();
+
+		return () => {
+			setInstructors([])
+			setTableData({})
+			setLoading(false)
+		}
 	}, []);
 
-	const getDropdownItems = (id: number) => [
-		{
-			key: "1",
-			label: (
-				<div
-					className="text-[14px] cursor-pointer"
-					onClick={() => console.log(data[id])}
-				>
-					View Info
-				</div>
-			),
-		},
-		{
-			key: "2",
-			label: (
-				<div
-					className="text-[14px] cursor-pointer"
-					onClick={() => nav(`/admin/instructor/${id + 1}/students`)}
-				>
-					View Students
-				</div>
-			),
-		},
-	];
-
-	const data: any = [];
-	for (let i = 0; i < 106; i++) {
-		const instructorID = i;
-		data.push({
-			key: i,
-			instructor_name: (
-				<div className="flex gap-2 items-center">
-					<img src={avatar} alt="avatar" width={20} />
-					<p>{getRandomItem(instructorNames)}</p>
-				</div>
-			),
-			course: getRandomItem(courses),
-			earnings: `$${Math.floor(Math.random() * 10) + 10}`,
-			more: (
-				<Dropdown menu={{ items: getDropdownItems(instructorID) }}>
-					<Space className="cursor-pointer">...</Space>
-				</Dropdown>
-			),
-			review: (
-				<div className="flex gap-2">
-					<span className="inter-normal text-[14px]">
-						{getRandomItem(reviews)}
-					</span>
-					<span className="text-[#800080] inter-normal text-[14px]">
-						see more
-					</span>
-				</div>
-			),
-			feedback: (
-				<div className="text-[14px] inter-normal text-[#008FE4]">
-					{getRandomItem(feedbacks)}
-				</div>
-			),
-			date: getRandomDate(),
-		});
-	}
 	return (
 		<Layout title="Instructors" hasMargin={!isMobile} isAdmin>
 			<Card className="my-4 p-3 course_card">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
 						<h2 className="text-[16px] inter-bold">
-							{data?.length} Instructors
+							{tableData?.total ?? 0} Instructors
 						</h2>
 
 						<Form>
@@ -159,8 +161,10 @@ const StudentsPage: React.FC = () => {
 				<Table
 					className="mt-[20px]"
 					columns={columns}
-					data={data}
+					data={instructors}
 					type={"selection"}
+					loading={loading}
+					pagination={pagination}
 				/>
 			</Card>
 		</Layout>

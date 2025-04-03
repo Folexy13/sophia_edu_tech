@@ -1,71 +1,94 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Layout from "../../DashboardLayout";
 import { Card, Form, Input, TableColumnsType } from "antd";
 import { FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
 // import { useNavigate } from "react-router-dom";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
-const columns: TableColumnsType<any> = [
-	{
-		title: "Course Category",
-		dataIndex: "course_category",
-		filters: [
-			{
-				text: "Learning Development Course",
-				value: "Learning Development Course",
-			},
-			{ text: "Socia", value: "Marketing" },
-			{ text: "Health & Fitness", value: "Health & Fitness" },
-			{ text: "Finance", value: "Finance" },
-		],
-		onFilter(value, record) {
-			return record.course_category.indexOf(value) === 0;
-		},
-	},
-	{
-		title: "Course Type",
-		dataIndex: "course_type",
-	},
-	{
-		title: "Course Title",
-		dataIndex: "course_title",
-	},
-	{
-		title: "Amount",
-		dataIndex: "amount",
-	},
-	{
-		title: "Number of Students",
-		dataIndex: "number_of_students",
-	},
-	{
-		title: "Date",
-		dataIndex: "date",
-	},
-];
-const data: any[] = [];
-for (let i = 0; i < 50; i++) {
-	data.push({
-		key: i,
-		course_category: `Learning Development Course`,
-		course_type: "Agriculture",
-		course_title: "Introduction to Bee Farming",
-		amount: `${i * 50}$`,
-		number_of_students: `${i * 10}`,
-		date: "2022-01-01 5:00pm",
-	});
-}
+import adminRequests from "../../../requests/admin.request";
+import { useAlert } from "../../../store";
+
+const renderColumns = () => {
+    return [
+        {
+            title: "Course Category",
+            dataIndex: "categories",
+            render: (categories: string[]) => (
+                <span>{categories.join(', ')}</span>
+            ),
+        },
+        {
+            title: "Course Type",
+            dataIndex: "course_type",
+        },
+        {
+            title: "Course Title",
+            dataIndex: "title",
+        },
+        {
+            title: "Amount",
+            dataIndex: "price",
+            render: (price: number) => `$${price.toFixed(2)}`,
+        },
+        {
+            title: "No of Students",
+            dataIndex: "student_count",
+        },
+        {
+            title: "Date Upload",
+            dataIndex: "date_created",
+            render: (date: string) => new Date(date).toDateString(),
+        },
+    ];
+};
 
 // const onFilter = () => {};
 const Courses: React.FC = () => {
 	// const nav = useNavigate();
 	const { isMobile } = useScreenSize();
+	const [courses, setCourses] = useState<any[]>([]);
+	const { onFailure } = useAlert();
+	const [loading, setLoading] = useState(false);
+	const [tableData, setTableData] = useState<{ total_items?: number, items_per_page?: number, current_page?: number }>({});
+
+	const columns: TableColumnsType<any> = renderColumns()
+
+	const pagination = useMemo(() => ({
+		total: tableData?.total_items ?? 0,
+		pageSize: tableData?.items_per_page ?? 10,
+		current: tableData?.current_page ?? 1,
+	}), [tableData])
+
+	useEffect(() => {
+		
+		const fetchCourses = async () => {
+			setLoading(true);
+			try {
+				const response: any = await adminRequests.fetchAllCourse();
+				setTableData(response ?? {});
+				setCourses(response?.items ?? []);
+			} catch (error: any) {
+				onFailure(error.message);
+			} finally {
+				setLoading(false);
+			}
+		}
+
+		fetchCourses();
+
+		return () => {
+			setCourses([]);
+			setTableData({});
+			setLoading(false);
+		}
+	}, [])
+
 	return (
 		<Layout title="Courses" hasMargin={!isMobile} isAdmin>
 			<Card className="my-4 p-3 course_card">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
-						<h2 className="text-[16px] inter-bold">{data?.length} Courses</h2>
+						<h2 className="text-[16px] inter-bold">{tableData?.total_items ?? 0} Courses</h2>
 
 						<Form>
 							<Form.Item>
@@ -92,8 +115,10 @@ const Courses: React.FC = () => {
 				<Table
 					className="mt-[20px]"
 					columns={columns}
-					data={data}
+					data={courses}
 					type={"selection"}
+					loading={loading}
+					pagination={pagination}
 				/>
 			</Card>
 		</Layout>

@@ -165,9 +165,14 @@ const DashboardLayout: React.FC<{
 			: "!text-[#808080] !text-[16px] !inter-normal !my-[20px]";
 	useEffect(() => {
 		const fetchUser = async () => {
-			const res: any = await ClientRequest.getMe();
+			const res: any = await ClientRequest.getMe(isAdmin);
 			if (res) {
-				setUser(res);
+				if (isAdmin) {
+					const { admins: [admin] } = res;
+					setUser(admin);
+				} else {
+					setUser(res);
+				}
 			}
 		};
 		if (!user) {
