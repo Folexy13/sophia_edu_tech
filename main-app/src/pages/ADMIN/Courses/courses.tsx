@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "../../DashboardLayout";
 import { Card, Form, Input, TableColumnsType } from "antd";
 import { FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
-// import { useNavigate } from "react-router-dom";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 import adminRequests from "../../../requests/admin.request";
 import { useAlert } from "../../../store";
@@ -42,44 +41,65 @@ const renderColumns = () => {
     ];
 };
 
-// const onFilter = () => {};
 const Courses: React.FC = () => {
-	// const nav = useNavigate();
 	const { isMobile } = useScreenSize();
-	const [courses, setCourses] = useState<any[]>([]);
 	const { onFailure } = useAlert();
 	const [loading, setLoading] = useState(false);
-	const [tableData, setTableData] = useState<{ total_items?: number, items_per_page?: number, current_page?: number }>({});
+	const [courses, setCourses] = useState<any[]>([]);
+	const [pagination, setPagination] = useState<{ total?: number, pageSize?: number, current?: number }>({});
+	let mounted = useRef(true)
+	let dataFetched = useRef(false)
 
 	const columns: TableColumnsType<any> = renderColumns()
 
-	const pagination = useMemo(() => ({
-		total: tableData?.total_items ?? 0,
-		pageSize: tableData?.items_per_page ?? 10,
-		current: tableData?.current_page ?? 1,
-	}), [tableData])
+	const fetchCourses = async (params: any = {}) => {
+		let queryParams = {
+			search: "",
+			page: params?.current ?? 1,
+			per_page: params?.pageSize ?? 10,
+		}
+		setLoading(true);
+		try {
+			const response: any = await adminRequests.fetchAllCourse(queryParams);
+			if (response && response?.items && Array.isArray(response.items) && mounted.current) {
+				setCourses(response?.items ?? []);
+				setPagination({
+					...pagination,
+					total: response.total_items,
+					pageSize: response.items_per_page,
+					current: response.current_page,
+				})
+			}
+		} catch (error: any) {
+			onFailure(error.message);
+		} finally {
+			setLoading(false);
+			dataFetched.current = false
+		}
+	}
+
+	const tableOnChange = async (pagination: any) => {
+		let newPagination = {
+			...pagination,
+			current: pagination.current,
+			pageSize: pagination.pageSize,
+			total: pagination.total,
+		}
+		await fetchCourses(newPagination);
+	}
 
 	useEffect(() => {
-		
-		const fetchCourses = async () => {
-			setLoading(true);
-			try {
-				const response: any = await adminRequests.fetchAllCourse();
-				setTableData(response ?? {});
-				setCourses(response?.items ?? []);
-			} catch (error: any) {
-				onFailure(error.message);
-			} finally {
-				setLoading(false);
-			}
-		}
+		mounted.current = true
+		if (dataFetched.current) return;
 
-		fetchCourses();
+		fetchCourses(pagination);
+		dataFetched.current = true
 
 		return () => {
 			setCourses([]);
-			setTableData({});
+			setPagination({});
 			setLoading(false);
+			mounted.current = false
 		}
 	}, [])
 
@@ -88,7 +108,7 @@ const Courses: React.FC = () => {
 			<Card className="my-4 p-3 course_card">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
-						<h2 className="text-[16px] inter-bold">{tableData?.total_items ?? 0} Courses</h2>
+						<h2 className="text-[16px] inter-bold">{pagination?.total ?? 0} Courses</h2>
 
 						<Form>
 							<Form.Item>
@@ -118,7 +138,8 @@ const Courses: React.FC = () => {
 					data={courses}
 					type={"selection"}
 					loading={loading}
-					pagination={pagination}
+					pagination={{ ...pagination, showSizeChanger: true, showTotal: (total: number, range: number[]) => `${range[0]} - ${range[1]} of ${total} Courses` }}
+					onChange={tableOnChange}
 				/>
 			</Card>
 		</Layout>

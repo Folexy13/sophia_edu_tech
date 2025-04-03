@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import Layout from "../../DashboardLayout";
 import { Card, Dropdown, Form, Input, Space, TableColumnsType } from "antd";
 import { avatar, FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
-// import { getRandomDate, getRandomItem } from "../../../utils/helperFunction";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../../utils/constants";
@@ -84,41 +83,64 @@ const renderColumns = (nav: Function) => {
 
 const StudentsPage: React.FC = () => {
 	const { isMobile } = useScreenSize();
-	const [instructors, setInstructors] = useState([])
-	const [tableData, setTableData] = useState<{ total?: number, per_page?: number, current_page?: number }>({});
+	const [instructors, setInstructors] = useState<any[]>([])
+	const [pagination, setPagination] = useState<{ total?: number, pageSize?: number, current?: number }>({});
 	const [loading, setLoading] = useState(false)
 	const { onFailure } = useAlert();
 	const nav = useNavigate();
+	let mounted = useRef(true)
+	let dataFetched = useRef(false)
 
 	const columns: TableColumnsType<any> = renderColumns(nav)
 
-	const pagination = useMemo(() => ({
-		total: tableData?.total ?? 0,
-		pageSize: tableData?.per_page ?? 10,
-		current: tableData?.current_page ?? 1,
-	}), [tableData])
+	const tableOnChange = async (pagination: any) => {
+		let newPagination = {
+			...pagination,
+			current: pagination.current,
+			pageSize: pagination.pageSize,
+			total: pagination.total,
+		}
+		await fetchData(newPagination);
+	};
+
+	const fetchData = async (params: any = {}) => {
+		let queryParams = {
+			search: "",
+			page: params?.current ?? 1,
+			per_page: params?.pageSize ?? 10,
+		}
+		setLoading(true)
+		try {
+			const resp: any = await AdminRequest.getInstructors(queryParams);
+			if (resp && resp?.items && Array.isArray(resp.items) && mounted.current) {
+				setInstructors(resp.items)
+				setPagination({
+					...pagination,
+					total: resp.total_items,
+					pageSize: resp.per_page,
+					current: resp.current_page,
+				})
+			}
+		} catch (error: any) {
+			onFailure(error.message);
+		} finally {
+			setLoading(false)
+			dataFetched.current = false
+		}
+	};
 
 	useEffect(() => {
-		const fetchData = async () => {
-			setLoading(true)
-			try {
-				const resp: any = await AdminRequest.getInstructors();
-				if (resp && resp?.items && Array.isArray(resp.items)) {
-					setInstructors(resp.items)
-					setTableData(resp)
-				}
-			} catch (error: any) {
-				onFailure(error.message);
-			} finally {
-				setLoading(false)
-			}
-		};
-		fetchData();
+		mounted.current = true
+		if (dataFetched.current) return;
+
+		fetchData(pagination);
+		dataFetched.current = true
 
 		return () => {
 			setInstructors([])
-			setTableData({})
+			setPagination({})
 			setLoading(false)
+			mounted.current = false
 		}
 	}, []);
 
@@ -128,7 +150,7 @@ const StudentsPage: React.FC = () => {
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
 						<h2 className="text-[16px] inter-bold">
-							{tableData?.total ?? 0} Instructors
+							{pagination?.total ?? 0} Instructors
 						</h2>
 
 						<Form>
@@ -164,7 +186,8 @@ const StudentsPage: React.FC = () => {
 					data={instructors}
 					type={"selection"}
 					loading={loading}
-					pagination={pagination}
+					pagination={{ ...pagination, showSizeChanger: true, showTotal: (total: number, range: number[]) => `${range[0]} - ${range[1]} of ${total} Instructors` }}
+					onChange={tableOnChange}
 				/>
 			</Card>
 		</Layout>
