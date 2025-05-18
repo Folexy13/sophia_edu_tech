@@ -77,13 +77,10 @@ export interface CourseModuleProps {
 
 export interface CourseProps {
     id?: number,
-    course_briefing: string,
+    brief: string,
     course_category: string,
     course_title: string,
     course_type: string,
-    module_1_title: string,
-    module_2_title: string,
-    module_3_title: string
     number_of_module: number
     modules?: CourseModuleProps[]
 }

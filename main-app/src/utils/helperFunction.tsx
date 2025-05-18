@@ -98,3 +98,75 @@ export const removeDuplicates = (obj: Record<string, any>): Record<string, any> 
 	}, {} as Record<string, any>);
 };
 
+
+ /**
+ * Converts frontend module data to API payload format
+ * @param {Object} moduleData - Frontend module data (e.g., module_1_title, module_1_description)
+ * @param {string} courseId - The ID of the course this module belongs to
+ * @returns {Object} - Formatted payload for API request
+ */
+ export function formatModulePayload(moduleData:any, courseId:any) {
+	// Extract the base property names (remove the module_1_ prefix)
+	const properties :any= {};
+	for (const key in moduleData) {
+		if (key.startsWith('module_1_')) {
+			const newKey = key.replace('module_1_', '');
+			properties[newKey] = moduleData[key];
+		}
+	}
+
+	// Map to the API payload structure
+	const payload :any= {
+		name: properties.title || '', // Using title as name if not provided separately
+		course_id: courseId,
+		description: properties.description || undefined,
+		title: properties.title || undefined,
+		content: properties.body || undefined,
+		additional_resources: properties.additional_resources !== undefined ?
+			properties.additional_resources :
+			undefined,
+		media_file: properties.media?.file || undefined
+	};
+
+	// Remove undefined values to clean up the payload
+	Object.keys(payload).forEach(key => {
+		if (payload[key] === undefined) {
+			delete payload[key];
+		}
+	});
+
+	return payload;
+}
+
+
+/**
+ * export function formatModulePayload(moduleData: any, courseId: string): FormData {
+ *     // Extract the base property names (remove the module_1_ prefix)
+ *     const properties: any = {};
+ *     for (const key in moduleData) {
+ *         if (key.startsWith('module_1_')) {
+ *             const newKey = key.replace('module_1_', '');
+ *             properties[newKey] = moduleData[key];
+ *         }
+ *     }
+ *
+ *     // Create a new FormData object
+ *     const formData = new FormData();
+ *
+ *     // Append simple data to FormData
+ *     formData.append('name', properties.title || ''); // Using title as name if not provided separately
+ *     formData.append('course_id', courseId);
+ *     formData.append('description', properties.description || '');
+ *     formData.append('title', properties.title || '');
+ *     formData.append('content', properties.body || '');
+ *     formData.append('additional_resources', properties.additional_resources || '');
+ *
+ *     // Append the media file, if it exists
+ *     if (properties.media && properties.media.file) {
+ *         formData.append('media_file', properties.media.file);
+ *     }
+ *
+ *     return formData;
+ * }
+ */
+
