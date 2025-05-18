@@ -1,9 +1,13 @@
-import type {TabsProps} from "antd";
-import {Collapse, type CollapseProps, Progress} from "antd";
-import {ArrowLeftOutlined, ArrowRightOutlined} from "@ant-design/icons";
-import {DiscIcon} from "../assets";
+import React, { useState } from 'react';
+import type { TabsProps } from "antd";
+import { Collapse, type CollapseProps, Progress } from "antd";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import { DiscIcon } from "../assets";
+import ReactPlayer from 'react-player';
+import {BsFillPauseCircleFill, BsFillPlayCircleFill} from "react-icons/bs";
 
-const renderTabLabel = (label: string) => (
+// Tab Label Component
+const TabLabel = ({ label }: { label: string }) => (
     <div className="custom-tab-label">
         <span>{label}</span>
     </div>
@@ -33,57 +37,29 @@ const tabMedia = {
     }
 };
 
-const renderMediaContent = (tabKey: number) => {
-    const media = tabMedia[tabKey as keyof typeof tabMedia];
-
-    return (
-        <div className="relative rounded-lg h-[400px] w-full overflow-hidden bg-[#D9D9D9]">
-            {media.type === "image" ? (
-                <img
-                    src={media.src}
-                    alt={media.alt}
-                    className="w-full h-full object-cover"
-                />
-            ) : (
-                <video
-                    controls
-                    className="w-full h-full object-contain"
-                    poster={media.poster}
-                    playsInline // Important for mobile browsers
-                    preload="metadata" // Load metadata for better UX
-                    controlsList="nodownload" // Optional: hide download button
-                >
-                    <source src={media.src} type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-            )}
-        </div>
-    );
-};
-
 // Define modules for each tab
 const tabModules = {
     1: [
-        {title: "Module 1: Introduction to Web Development", content: "Fundamentals of HTML, CSS, and JavaScript..."},
-        {title: "Module 2: React Basics", content: "Components, props, state, and hooks..."},
-        {title: "Module 3: State Management", content: "Redux, Context API, and Zustand..."},
-        {title: "Module 4: Advanced Patterns", content: "Render props, HOCs, and custom hooks..."}
+        { title: "Module 1: Introduction to Web Development", content: "Fundamentals of HTML, CSS, and JavaScript..." },
+        { title: "Module 2: React Basics", content: "Components, props, state, and hooks..." },
+        { title: "Module 3: State Management", content: "Redux, Context API, and Zustand..." },
+        { title: "Module 4: Advanced Patterns", content: "Render props, HOCs, and custom hooks..." }
     ],
     2: [
-        {title: "Module 1: Performance Fundamentals", content: "Understanding React's rendering behavior..."},
-        {title: "Module 2: Optimization Techniques", content: "Memoization, code splitting, and lazy loading..."},
-        {title: "Module 3: Profiling Tools", content: "Using React DevTools and Chrome Profiler..."}
+        { title: "Module 1: Performance Fundamentals", content: "Understanding React's rendering behavior..." },
+        { title: "Module 2: Optimization Techniques", content: "Memoization, code splitting, and lazy loading..." },
+        { title: "Module 3: Profiling Tools", content: "Using React DevTools and Chrome Profiler..." }
     ],
     3: [
-        {title: "Module 1: Project Setup", content: "Initializing the task management app..."},
-        {title: "Module 2: Backend Development", content: "Building the API and database layer..."},
-        {title: "Module 3: Frontend Implementation", content: "Creating UI components and state..."},
-        {title: "Module 4: Advanced Features", content: "Implementing drag-and-drop and real-time..."}
+        { title: "Module 1: Project Setup", content: "Initializing the task management app..." },
+        { title: "Module 2: Backend Development", content: "Building the API and database layer..." },
+        { title: "Module 3: Frontend Implementation", content: "Creating UI components and state..." },
+        { title: "Module 4: Advanced Features", content: "Implementing drag-and-drop and real-time..." }
     ],
     4: [
-        {title: "Module 1: Course Recap", content: "Review of key concepts and techniques..."},
-        {title: "Module 2: Next Steps", content: "Resources for continued learning..."},
-        {title: "Module 3: Career Advice", content: "Building your portfolio and job search..."}
+        { title: "Module 1: Course Recap", content: "Review of key concepts and techniques..." },
+        { title: "Module 2: Next Steps", content: "Resources for continued learning..." },
+        { title: "Module 3: Career Advice", content: "Building your portfolio and job search..." }
     ]
 };
 
@@ -92,7 +68,7 @@ const handleCollapseChange = (key: string | string[]) => {
 };
 
 const expandIcon = (panelProps: any) =>
-    panelProps.isActive ? <DiscIcon color="#fff"/> : <DiscIcon color="#fff"/>;
+    panelProps.isActive ? <DiscIcon color="#fff" /> : <DiscIcon color="#fff" />;
 
 const renderCollapseItems = (tabKey: number): CollapseProps["items"] => {
     return tabModules[tabKey as keyof typeof tabModules].map((module, index) => ({
@@ -102,7 +78,74 @@ const renderCollapseItems = (tabKey: number): CollapseProps["items"] => {
     }));
 };
 
+// Media Content Component with state management
+const MediaContent = ({ tabKey }: { tabKey: number }) => {
+    const [playing, setPlaying] = useState(false);
+    const [progress, setProgress] = useState(0);
+    const media = tabMedia[tabKey as keyof typeof tabMedia];
 
+    const handlePlay = () => {
+        setPlaying(true);
+    };
+
+    const handlePause = () => {
+        setPlaying(false);
+    };
+
+    const handleProgress = (state: { played: number }) => {
+        setProgress(state.played * 100);
+    };
+
+    return (
+        <div className="relative rounded-lg h-[400px] w-full overflow-hidden bg-[#000]">
+            {media.type === "image" ? (
+                <img
+                    src={media.src}
+                    alt={media.alt}
+                    className="w-full h-full object-cover"
+                />
+            ) : (
+                <>
+                    <ReactPlayer
+                        url={media.src}
+                        width="100%"
+                        height="100%"
+                        controls
+                        playing={playing}
+                        onPlay={handlePlay}
+                        onPause={handlePause}
+                        onProgress={handleProgress}
+                        light={true}
+                        playIcon={
+                           !playing ?  <BsFillPlayCircleFill
+                               size={60}
+                               color="#581A57"
+                               stopColor={"#fff"}
+                               onClick={handlePlay}
+                           />: <BsFillPauseCircleFill
+                               size={60}
+                               color="#581A57"
+                               stopColor={"#fff"}
+                               className={""}
+                               onClick={handlePlay}
+                           />
+                        }
+                        style={{ position: 'absolute', top: 0, left: 0 }}
+                    />
+                    <Progress
+                        percent={progress}
+                        showInfo={false}
+                        strokeColor="#581A57"
+                        strokeWidth={3}
+                        className="absolute bottom-0 left-0 right-0 m-0"
+                    />
+                </>
+            )}
+        </div>
+    );
+};
+
+// Rich text content (same as before)
 const richTextContent = {
     1: `<div class="rich-text-content">
         <h1 style="color: #581A57;">Introduction to Advanced Web Development</h1>
@@ -425,76 +468,70 @@ npm install react-beautiful-dnd @material-ui/core @material-ui/icons</code></pre
         </div>
       </div>`
 };
-const renderTabContent = (tabNumber: number) => (
-    <div className="flex sm:flex-row flex-col-reverse mt-[10px] gap-6 w-full">
-        <div className="sm:block hidden w-[25%]">
-            {tabNumber && renderCollapseItems(tabNumber).map((item, _) => (
-                <Collapse
-                    key={item.key}
-                    onChange={handleCollapseChange}
-                    items={[item]}
-                    accordion
-                    className="custom-collapse w-full"
-                    expandIcon={expandIcon}
+
+// Tab Content Component
+const TabContent = ({ tabNumber }: { tabNumber: number }) => {
+    return (
+        <div className="flex sm:flex-row flex-col-reverse mt-[10px] gap-6 w-full">
+            <div className="sm:block hidden w-[25%]">
+                {tabNumber && renderCollapseItems(tabNumber).map((item, index) => (
+                    <Collapse
+                        key={`${item.key}-${index}`}
+                        onChange={handleCollapseChange}
+                        items={[item]}
+                        accordion
+                        className="custom-collapse w-full"
+                        expandIcon={expandIcon}
+                    />
+                ))}
+            </div>
+
+            <div className="sm:w-[75%] relative main">
+                <MediaContent tabKey={tabNumber} />
+
+                <div
+                    className="sm:block hidden pb-[60px] h-[350px] overflow-hidden overflow-y-scroll rich-text-container"
+                    dangerouslySetInnerHTML={{ __html: richTextContent[tabNumber as keyof typeof richTextContent] }}
                 />
-            ))}
-        </div>
 
-        <div className="sm:w-[75%] relative main">
-            {/* Dynamic media container */}
-            {renderMediaContent(tabNumber)}
-            <Progress
-                showInfo={false}
-                strokeWidth={5}
-                strokeColor="#808080"
-                className="sm:py-[0px] my-0 sm:my-[10px]"
-                percent={100}
-            />
-
-            {/* Rich text content */}
-            <div
-                className="sm:block hidden pb-[60px] h-[350px] overflow-hidden overflow-y-scroll rich-text-container"
-                dangerouslySetInnerHTML={{__html: richTextContent[tabNumber as keyof typeof richTextContent]}}
-            />
-
-            {/* Indicators */}
-            <div className="hidden sm:block absolute bottom-2 left-0 cursor-pointer">
-        <span className="bg-[#581A57] mr-2 p-2 rounded">
-          <ArrowLeftOutlined/>
-        </span>
-                <span className="text-[#666666] text-[14px]">Introduction</span>
-            </div>
-            <div className="hidden sm:block absolute bottom-2 right-0 cursor-pointer">
-                <span className="text-[#666666] text-[14px]">Education</span>
-                <span className="bg-[#581A57] ml-2 p-2 rounded">
-          <ArrowRightOutlined/>
-        </span>
+                <div className="hidden sm:block absolute bottom-2 left-0 cursor-pointer">
+          <span className="bg-[#581A57] mr-2 p-2 rounded">
+            <ArrowLeftOutlined />
+          </span>
+                    <span className="text-[#666666] text-[14px]">Introduction</span>
+                </div>
+                <div className="hidden sm:block absolute bottom-2 right-0 cursor-pointer">
+                    <span className="text-[#666666] text-[14px]">Education</span>
+                    <span className="bg-[#581A57] ml-2 p-2 rounded">
+            <ArrowRightOutlined />
+          </span>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
-
+// Main TabPanel Component
 const TabPanel: TabsProps["items"] = [
     {
         key: "1",
-        label: renderTabLabel("Tab 1"),
-        children: renderTabContent(1),
+        label: <TabLabel label="Course Introduction" />,
+        children: <TabContent tabNumber={1} />,
     },
     {
         key: "2",
-        label: renderTabLabel("Tab 2"),
-        children: renderTabContent(2),
+        label: <TabLabel label="Video Lectures" />,
+        children: <TabContent tabNumber={2} />,
     },
     {
         key: "3",
-        label: renderTabLabel("Tab 3"),
-        children: renderTabContent(3),
+        label: <TabLabel label="Hands-On Project" />,
+        children: <TabContent tabNumber={3} />,
     },
     {
         key: "4",
-        label: renderTabLabel("Tab 4"),
-        children: renderTabContent(4),
+        label: <TabLabel label="Conclusion" />,
+        children: <TabContent tabNumber={4} />,
     },
 ];
 
