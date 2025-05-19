@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { TabsProps } from "antd";
 import { Collapse, type CollapseProps, Progress } from "antd";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
@@ -35,7 +35,7 @@ const tabMedia = {
         src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
         poster: "https://example.com/conclusion-poster.jpg"
     }
-};
+} as const;
 
 // Define modules for each tab
 const tabModules = {
@@ -71,7 +71,8 @@ const expandIcon = (panelProps: any) =>
     panelProps.isActive ? <DiscIcon color="#fff" /> : <DiscIcon color="#fff" />;
 
 const renderCollapseItems = (tabKey: number): CollapseProps["items"] => {
-    return tabModules[tabKey as keyof typeof tabModules].map((module, index) => ({
+    const modules = tabModules[tabKey as keyof typeof tabModules] || [];
+    return modules.map((module, index) => ({
         key: `${tabKey}-${index + 1}`,
         label: module.title,
         children: <p>{module.content}</p>
@@ -474,7 +475,7 @@ const TabContent = ({ tabNumber }: { tabNumber: number }) => {
     return (
         <div className="flex sm:flex-row flex-col-reverse mt-[10px] gap-6 w-full">
             <div className="sm:block hidden w-[25%]">
-                {tabNumber && renderCollapseItems(tabNumber).map((item, index) => (
+                {(renderCollapseItems(tabNumber) || []).map((item, index) => (
                     <Collapse
                         key={`${item.key}-${index}`}
                         onChange={handleCollapseChange}
