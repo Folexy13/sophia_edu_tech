@@ -91,7 +91,7 @@ const CreateCoursePage: React.FC = () => {
 
 		setLoading(true);
 		try {
-			const res: any = await AdminRequest.createInstructor(instructorData); // Assuming AuthRequest returns a promise
+			await AdminRequest.createInstructor(instructorData); // Assuming AuthRequest returns a promise
 			onSuccess("Instructor created successfully!");
 			form.resetFields();
 			setCourseSelections([{ ...defaultCourseSelections }]);

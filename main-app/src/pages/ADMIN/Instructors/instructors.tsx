@@ -50,7 +50,7 @@ const renderColumns = (nav: Function) => {
         {
             title: "",
             key: "more",
-            render: (property: any, record: any) => (
+            render: (_: any, record: any) => (
                 <Dropdown menu={{ items: [
 					{
 						key: "1",
