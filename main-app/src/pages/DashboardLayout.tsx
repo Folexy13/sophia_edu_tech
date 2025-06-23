@@ -79,7 +79,7 @@ const DashboardLayout: React.FC<{
 		} else if (
 			pathname === URL.COURSES ||
 			pathname === URL.ADMIN_COURSES ||
-			pathname === URL.CREATE_COURSE
+			pathname === URL.CREATE_COURSE|| pathname === URL.ADMIN_CREATE_COURSE 
 		) {
 			setActiveKey("2");
 		} else if (
