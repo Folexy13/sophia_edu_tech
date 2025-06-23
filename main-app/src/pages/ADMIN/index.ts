@@ -1,5 +1,6 @@
 export { default as AdminOverviewPage } from "./Overview/overview";
 export { default as AdminCoursePage } from "./Courses/courses";
+export { default as AdminCreateCoursePage } from "./Courses/create";
 export { default as AdminInstructorsPage } from "./Instructors/instructors";
 export { default as AdminTutorWalletPage } from "./Wallet/wallet";
 export { default as AdminSettingsPage } from "./Settings/settings";

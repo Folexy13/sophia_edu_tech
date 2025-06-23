@@ -46,11 +46,12 @@ const CreateCoursePage: React.FC = () => {
         const [form] = Form.useForm();
         const [moduleNumber, setModuleNumber] = useState<number>(1);
         const [category, setCategory] = useState<string>("");
-        const {course, setCourse} = useCourse()
-        const [loading, setLoading] = useState<boolean>(false);
+        const {course, setCourse} = useCourse();
+        const [loading, setLoading] = useState<boolean>(false);        
         const [type, setType] = useState<string>("");
         const [currentModule, setCurrentModule] = useState(0); // Track current module
         const [step, setStep] = useState<number>(1);
+        const [courseTitles, setCourseTitles] = useState<string[]>(['']); // Array to store multiple course titles
         const nav = useNavigate();
 
 
@@ -77,13 +78,20 @@ const CreateCoursePage: React.FC = () => {
         const handleValuesChange = () => {
             const numberOfModules = form.getFieldValue("number_of_modules");
             setModuleNumber(numberOfModules || 1);
-        };
-
-        const handleNext = async () => {
+        };        const handleNext = async () => {
             setLoading(true);
             try {
                 const formValues = form.getFieldsValue();
-                const addedCourse: any = course?.id ? {course_id: course.id} : await TutorRequest.createCourse(formValues);
+                
+                // Create a new object with all form values and the course titles
+                const updatedFormValues = {
+                    ...formValues,
+                    course_title: courseTitles.filter(title => title.trim()).join(', ')
+                };
+                
+                const addedCourse: any = course?.id 
+                    ? {course_id: course.id} 
+                    : await TutorRequest.createCourse(updatedFormValues);
 
                 setCourse((prevCourse: CourseProps | null): CourseProps => {
 
@@ -91,13 +99,13 @@ const CreateCoursePage: React.FC = () => {
                     if (prevCourse?.id === addedCourse.course_id) {
                         return {
                             ...prevCourse,
-                            ...formValues, // Merge existing course with new form values
+                            ...updatedFormValues, // Merge existing course with new form values
                         };
                     }
 
                     // Otherwise create a new course entry with the ID
                     return {
-                        ...formValues,
+                        ...updatedFormValues,
                         id: addedCourse.course_id, // Store the ID from the API response
                     };
                 });
@@ -109,17 +117,21 @@ const CreateCoursePage: React.FC = () => {
             } finally {
                 setLoading(false);
             }
-        };
-
-        const onFinish = async (values: any) => {
+        };        const onFinish = async (values: any) => {
             try {
                 setLoading(true);
 
                 // Prepare FormData
                 const formData = new FormData();
 
+                // Create updated values with course titles
+                const updatedValues = {
+                    ...values,
+                    course_title: courseTitles.filter(title => title.trim()).join(', ')
+                };
+
                 // Dynamically append form fields to FormData
-                Object.entries({...course, ...values}).forEach(([key, value]: any) => {
+                Object.entries({...course, ...updatedValues}).forEach(([key, value]: any) => {
                     formData.append(key, value);
                 });
 
@@ -232,146 +244,67 @@ const CreateCoursePage: React.FC = () => {
                                             Entrepreneurship and Innovation
                                         </Select.Option>
                                     </Select>
-                                </Form.Item>
-
-                                <Form.Item
-                                    label="Course Type "
+                                </Form.Item>                                <Form.Item
+                                    label="Course Type"
                                     className="inter-normal"
                                     name={"course_type"}
                                 >
-                                    <Select
-                                        placeholder="Select a Type"
-                                        className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
-                                        onChange={(value) => {
-                                            value == "Applied Science"
-                                                ? setType("applied_science_data")
-                                                : value === "Formal Science"
-                                                    ? setType("formal_science_data")
-                                                    : value === "Natural Science"
-                                                        ? setType("natural_science_data")
-                                                        : value === "Social Science"
-                                                            ? setType("social_science_data")
-                                                            : setType("humanities_data");
-                                        }}
-                                    >
-                                        {category === "learning" ? (
-                                            <>
-                                                <Select.Option value="Applied Science">
-                                                    Applied Science
-                                                </Select.Option>
-                                                <Select.Option value="Formal Science">
-                                                    Formal Science
-                                                </Select.Option>
-                                                <Select.Option value="Humanities">
-                                                    Humanities
-                                                </Select.Option>
-                                                <Select.Option value="Natural Science">
-                                                    Natural Science
-                                                </Select.Option>
-                                                <Select.Option value="Social Science">
-                                                    Social Science
-                                                </Select.Option>
-                                            </>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item
+                                    <Input
+                                        placeholder="Enter Course Type"
+                                        className="p-2"
+                                    />
+                                </Form.Item>                                <Form.Item
                                     label="Course Name"
                                     className="inter-normal"
                                     name={"course_name"}
                                 >
-                                    <Select
-                                        placeholder="Select a Type"
-                                        className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
-                                        onChange={(value) => {
-                                            value == "Applied Science"
-                                                ? setType("applied_science_data")
-                                                : value === "Formal Science"
-                                                    ? setType("formal_science_data")
-                                                    : value === "Natural Science"
-                                                        ? setType("natural_science_data")
-                                                        : value === "Social Science"
-                                                            ? setType("social_science_data")
-                                                            : setType("humanities_data");
-                                        }}
-                                    >
-                                        {category === "learning" ? (
-                                            <>
-                                                <Select.Option value="Applied Science">
-                                                    Applied Science
-                                                </Select.Option>
-                                                <Select.Option value="Formal Science">
-                                                    Formal Science
-                                                </Select.Option>
-                                                <Select.Option value="Humanities">
-                                                    Humanities
-                                                </Select.Option>
-                                                <Select.Option value="Natural Science">
-                                                    Natural Science
-                                                </Select.Option>
-                                                <Select.Option value="Social Science">
-                                                    Social Science
-                                                </Select.Option>
-                                            </>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item
-                                    label="Course Title"
-                                    className="inter-normal"
-                                    name={"course_title"}
-                                >
-                                    <Select
-                                        placeholder="Select a Title"
-                                        className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
-                                    >
-                                        {type === "applied_science_data"
-                                            ? applied_science_data.map((title) => {
-                                                return (
-                                                    <Select.Option key={title}>{title}</Select.Option>
-                                                );
-                                            })
-                                            : type === "formal_science_data"
-                                                ? formal_science_data.map((title) => {
-                                                    return (
-                                                        <Select.Option key={title}>{title}</Select.Option>
-                                                    );
-                                                })
-                                                : type === "natural_science_data"
-                                                    ? natural_science_data.map((title) => {
-                                                        return (
-                                                            <Select.Option key={title}>{title}</Select.Option>
-                                                        );
-                                                    })
-                                                    : type === "social_science_data"
-                                                        ? social_science_data.map((title) => {
-                                                            return (
-                                                                <Select.Option key={title}>{title}</Select.Option>
-                                                            );
-                                                        })
-                                                        : type === "humanities_data"
-                                                            ? humanities_data.map((title) => {
-                                                                return (
-                                                                    <Select.Option key={title}>{title}</Select.Option>
-                                                                );
-                                                            })
-                                                            : ""}
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item
-                                    label="Brief about the course"
-                                    className="inter-normal"
-                                    name={"brief"}
-                                >
-                                    <Input.TextArea
+                                    <Input
+                                        placeholder="Enter Course Name"
                                         className="p-2"
-                                        placeholder="Write a short descr. about course"
                                     />
+                                </Form.Item>                                <Form.Item label="Course Title" className="mb-0">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-[#666666]">Add Course Titles</span>
+                                        <Button 
+                                            className="text-[#581A57]" 
+                                            type="link" 
+                                            onClick={() => setCourseTitles([...courseTitles, ''])}
+                                        >
+                                            + Add Title
+                                        </Button>
+                                    </div>
                                 </Form.Item>
+                                {courseTitles.map((title, index) => (
+                                    <Form.Item 
+                                        key={index}
+                                        className="inter-normal mb-2"
+                                    >
+                                        <div className="flex items-center">
+                                            <Input 
+                                                placeholder={`Enter title ${index + 1}`} 
+                                                className="p-2" 
+                                                value={title}
+                                                onChange={(e) => {
+                                                    const newTitles = [...courseTitles];
+                                                    newTitles[index] = e.target.value;
+                                                    setCourseTitles(newTitles);
+                                                }}
+                                            />
+                                            {courseTitles.length > 1 && (
+                                                <Button 
+                                                    className="ml-2 text-red-500" 
+                                                    type="link"
+                                                    onClick={() => {
+                                                        const newTitles = courseTitles.filter((_, i) => i !== index);
+                                                        setCourseTitles(newTitles);
+                                                    }}
+                                                >
+                                                    Remove
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </Form.Item>
+                                ))}
                                 <Form.Item
                                     label="Number of Modules"
                                     className="inter-normal"

@@ -3,6 +3,7 @@ import {
     AdminBlogPage,
 	AdminCoursePage,
 	AdminCreateBlogPage,
+	AdminCreateCoursePage,
 	AdminCreateInstructorPage,
 	AdminEditUserPage,
 	AdminInstructorsPage,
@@ -57,11 +58,15 @@ const adminRoutes = [
         path: URL.ADMIN_BLOGS,
         element: <AdminBlogPage />,
         name: 'Admin Blogs',
-    },
-    {
+    },    {
         path: URL.ADMIN_CREATE_BLOGS,
         element: <AdminCreateBlogPage />,
         name: 'Admin Create Blogs',
+    },
+    {
+        path: URL.ADMIN_CREATE_COURSE,
+        element: <AdminCreateCoursePage />,
+        name: 'Admin Create Course',
     },
 ]
 

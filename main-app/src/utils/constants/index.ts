@@ -33,6 +33,7 @@ export const URL = {
 	//Admin URL
 	ADMIN_OVERVIEW: "/admin/overview",
 	ADMIN_COURSES: "/admin/courses",
+	ADMIN_CREATE_COURSE: "/admin/courses/create",
 	TUTOR_LIST: "/admin/instructors",
 	ADMIN_WALLET: "/admin/wallet",
 	ADMIN_SETTINGS: "/admin/settings",

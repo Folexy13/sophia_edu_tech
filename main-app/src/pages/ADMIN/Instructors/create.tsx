@@ -17,7 +17,16 @@ type FieldType = {
 	confirm_password?: string;
 };
 
-const defaultCourseSelections: any = { category: '', type: '', name: '', title: '', amount: '', brief: '', number_of_modules: 0 };
+const defaultCourseSelections: any = { 
+	category: '', 
+	type: '', 
+	name: '', 
+	title: '', 
+	amount: '', 
+	brief: '', 
+	number_of_modules: 0,
+	showAddTitle: false 
+};
 
 const CreateCoursePage: React.FC = () => {
 	const [form] = Form.useForm();
@@ -60,7 +69,6 @@ const CreateCoursePage: React.FC = () => {
         }
         setCourseSelections(newSelections);
     };
-
 	const getInstructorData = (values: any) => {
 		let { full_name, email, phone, password } = values;
 		let courses = courseSelections.map((course) => ({
@@ -73,8 +81,7 @@ const CreateCoursePage: React.FC = () => {
 			number_of_modules: course.number_of_modules,
 		}));
 		
-		return {
-			full_name,
+		return {			full_name,
 			email,
 			phone,
 			password,
@@ -194,8 +201,7 @@ const CreateCoursePage: React.FC = () => {
 												))
 											}
 										</Select>
-									</Form.Item>
-									<Form.Item label="Course Type" name={`course_type_${index}`} className="inter-normal">
+									</Form.Item>									<Form.Item label="Course Type" name={`course_type_${index}`} className="inter-normal">
 										<Select
 											placeholder="Select a Type"
 											value={selection.type}
@@ -226,28 +232,67 @@ const CreateCoursePage: React.FC = () => {
 												))
 											}
 										</Select>
-									</Form.Item>
-									<Form.Item label="Course Title" name={`course_title_${index}`} className="inter-normal">
-										<Select
-											placeholder="Select a Title"
-											className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
-											value={selection.title}
-											onChange={(value) => handleCourseChange(index, 'title', value)}
-										>
-											{
-												getCourseTitles(selection.category, selection.type, selection.name).map((title) => (
-													<Select.Option key={title} value={title}>
-														{ title }
-													</Select.Option>
-												))
-											}
-										</Select>
-									</Form.Item>
+									</Form.Item>									{!selection.showAddTitle ? (
+										<>
+											<Form.Item label="Course Title" className="mb-0">
+												<div className="flex justify-between items-center">
+													<span className="text-[#666666]">Select from existing titles</span>
+													<Button 
+														className="text-[#581A57]" 
+														type="link" 
+														onClick={() => {
+															const newSelections = [...courseSelections];
+															newSelections[index].showAddTitle = true;
+															setCourseSelections(newSelections);
+														}}
+													>
+														+ Add Title
+													</Button>
+												</div>
+											</Form.Item>
+											<Form.Item name={`course_title_${index}`} className="inter-normal">
+												<Select
+													placeholder="Select a Title"
+													className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
+													value={selection.title}
+													onChange={(value) => handleCourseChange(index, 'title', value)}
+												>
+													{
+														getCourseTitles(selection.category, selection.type, selection.name).map((title) => (
+															<Select.Option key={title} value={title}>
+																{ title }
+															</Select.Option>
+														))
+													}
+												</Select>
+											</Form.Item>
+										</>
+									) : (
+										<Form.Item label="Course Title" name={`course_title_${index}`} className="inter-normal">
+											<div className="flex items-center">
+												<Input 
+													placeholder="Enter custom title" 
+													className="p-2"
+													value={selection.title}
+													onChange={(e) => handleCourseChange(index, 'title', e.target.value)}
+												/>
+												<Button 
+													className="ml-2 text-[#581A57]" 
+													type="link" 
+													onClick={() => {
+														const newSelections = [...courseSelections];
+														newSelections[index].showAddTitle = false;
+														setCourseSelections(newSelections);
+													}}
+												>
+													Select Title
+												</Button>
+											</div>
+										</Form.Item>
+									)}
 									<Form.Item label="Amount" className="inter-normal" name={`course_amount_${index}`}>
 										<Input className="p-2" type="number" value={selection.amount} onChange={(e) => handleCourseChange(index, 'amount', e.target.value)} placeholder="Enter amount"/>
-									</Form.Item>
-
-									<Form.Item label="Brief" className="inter-normal" name={`course_brief_${index}`}>
+									</Form.Item>									<Form.Item label="Brief" className="inter-normal" name={`course_brief_${index}`}>
 										<Input className="p-2" value={selection.brief} onChange={(e) => handleCourseChange(index, 'brief', e.target.value)} placeholder="Enter brief summary of the course"/>
 									</Form.Item>
 

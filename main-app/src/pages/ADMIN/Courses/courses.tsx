@@ -102,12 +102,15 @@ const Courses: React.FC = () => {
 							<FilterIcon />
 							<p className="text-[#808080] text-[14px] inter-normal">Filter</p>
 						</div>
-					</div>
-
-					<div className="flex gap-3">
+					</div>					<div className="flex gap-3">
 						<Button
 							label="Export"
 							className="text-[#808080] p-3 bg-transparent border-[#808080] border rounded-[5px]"
+						/>
+						<Button
+							label="Create Course"
+							className="text-white p-3 bg-[#581A57] rounded-[5px]"
+							onclick={() => window.location.href = "/admin/courses/create"}
 						/>
 					</div>
 				</header>

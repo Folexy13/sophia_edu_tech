@@ -57,10 +57,24 @@ class AdminRequests {
 				"failed";
 			throw new Error(errorMessage);
 		}
-	};
-	createInstructor = async (data: any) => {
+	};	createInstructor = async (data: any) => {
 		try {
 			const response = await api.post(`/admin/instructors`, data);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+	
+	createCourse = async (data: any) => {
+		try {
+			const response = await api.post(`/admin/courses`, data);
 			return response;
 		} catch (error: any) {
 			// Extract the message or create a custom error message
