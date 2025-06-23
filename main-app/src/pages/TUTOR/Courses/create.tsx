@@ -3,11 +3,6 @@ import Layout from "../../DashboardLayout";
 
 import {Button, Form, Input, Select, Upload} from "antd";
 import {
-    applied_science_data,
-    formal_science_data,
-    humanities_data,
-    natural_science_data,
-    social_science_data,
     URL,
 } from "../../../utils/constants";
 import {ArrowLeftOutlined, UploadOutlined} from "@ant-design/icons";
@@ -45,10 +40,8 @@ const handleBeforeUpload = (file:any) => {
 const CreateCoursePage: React.FC = () => {
         const [form] = Form.useForm();
         const [moduleNumber, setModuleNumber] = useState<number>(1);
-        const [category, setCategory] = useState<string>("");
         const {course, setCourse} = useCourse();
-        const [loading, setLoading] = useState<boolean>(false);        
-        const [type, setType] = useState<string>("");
+        const [loading, setLoading] = useState<boolean>(false);
         const [currentModule, setCurrentModule] = useState(0); // Track current module
         const [step, setStep] = useState<number>(1);
         const [courseTitles, setCourseTitles] = useState<string[]>(['']); // Array to store multiple course titles
@@ -227,15 +220,9 @@ const CreateCoursePage: React.FC = () => {
                                     label="Course Category"
                                     className="inter-normal"
                                     name={"course_category"}
-                                >
-                                    <Select
+                                >                                    <Select
                                         placeholder="Select a Category"
                                         className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
-                                        onChange={(value: any) => {
-                                            value === "Learning Development"
-                                                ? setCategory("learning")
-                                                : setCategory("social");
-                                        }}
                                     >
                                         <Select.Option value="Learning Development">
                                             Learning Development
