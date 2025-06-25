@@ -3,6 +3,13 @@ import React, { useState } from "react";
 
 type TableRowSelection<T> = TableProps<T>["rowSelection"];
 
+const mapKeyToOptions = (options: any[] = []) => {
+	return options.map((option: any, index: number) => ({
+		...option,
+		key: index + 1,
+	}));
+};
+
 const Table: React.FC<{
 	data?: any[];
 	columns?: TableColumnsType<any>;
@@ -12,7 +19,8 @@ const Table: React.FC<{
 	className?: string;
 	onFilter?: any;
 	loading?: boolean;
-}> = ({ data = [], columns = [], className = "", rowSelection = {}, type = "default", pagination = {}, loading = false }) => {
+	onChange?: any;
+}> = ({ data = [], columns = [], className = "", rowSelection = {}, type = "default", pagination = {}, loading = false, onChange = () => {} }) => {
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
 	const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
@@ -59,21 +67,23 @@ const Table: React.FC<{
 	if (type === "selection")
 		return (
 			<AntTable
-				dataSource={data.map((item) => ({ ...item, key: item.id }))}
+				dataSource={mapKeyToOptions(data)}
 				columns={columns}
 				loading={loading}
 				className={`customtable ${className}`}
 				rowSelection={rowSelection ? rowSelection : section}
 				pagination={pagination}
+				onChange={onChange}
 			/>
 		);
 	return (
 		<AntTable
-			dataSource={data}
+			dataSource={mapKeyToOptions(data)}
 			loading={loading}
 			columns={columns}
 			className={`customtable ${className}`}
 			pagination={pagination}
+			onChange={onChange}
 		/>
 	);
 };
