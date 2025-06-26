@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../DashboardLayout";
-import {Card, Dropdown, Form, Input, Space, TableColumnsType} from "antd";
+import {Card, Dropdown, Form, Input, Space, TableColumnsType, Drawer, Modal, message} from "antd";
 import {FilterIcon} from "../../../assets";
 import {Button, Table} from "../../../components";
 import {useNavigate} from "react-router-dom";
 import {URL} from "../../../utils/constants";
 import {useScreenSize} from "../../../utils/hooks/useScreen";
 import {TutorRequest} from "../../../requests";
+import {EllipsisOutlined} from "@ant-design/icons";
 
 interface Course {
     id: number;
@@ -18,40 +19,14 @@ interface Course {
     date: string;
 }
 
-const columns: TableColumnsType<Course> = [
-    {
-        title: "Course Category",
-        dataIndex: "course_category",
-    },
-    {
-        title: "Course Type",
-        dataIndex: "course_type",
-    },
-    {
-        title: "Course Title",
-        dataIndex: "course_title",
-    },
-    {
-        title: "Amount",
-        dataIndex: "amount",
-    },
-    {
-        title: "Number of Students",
-        dataIndex: "number_of_students",
-    },
-    {
-        title: "Date",
-        dataIndex: "date",
-    },
-    {
-        title: "",
-        dataIndex: "more",
-    },
-];
-
 const Courses: React.FC = () => {
     const [courses, setCourses] = useState<Course[]>([]);
     const [loading, setLoading] = useState(true);
+    const [editDrawerOpen, setEditDrawerOpen] = useState(false);
+    const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+    const [editForm] = Form.useForm();
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [deletingCourse, setDeletingCourse] = useState<Course | null>(null);
     const nav = useNavigate();
     const {isMobile} = useScreenSize();
 
@@ -82,14 +57,49 @@ const Courses: React.FC = () => {
         fetchCourses();
     }, []);
 
-    const getDropdownItems = (id: number) => [
+    const handleEdit = (course: Course) => {
+        setSelectedCourse(course);
+        editForm.setFieldsValue(course);
+        setEditDrawerOpen(true);
+    };
+
+    const handleDelete = (course: Course) => {
+        setDeletingCourse(course);
+        setDeleteModalOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!deletingCourse) return;
+        try {
+            await TutorRequest.deleteCourse(deletingCourse.id);
+            message.success("Course deleted successfully");
+            setCourses((prev) => prev.filter((c) => c.id !== deletingCourse.id));
+        } catch (err: any) {
+            message.error("Failed to delete course");
+        } finally {
+            setDeleteModalOpen(false);
+            setDeletingCourse(null);
+        }
+    };
+
+    const handleEditSubmit = async () => {
+        try {
+            const values = await editForm.validateFields();
+            await TutorRequest.updateCourse(values); // Only send values
+            message.success("Course updated successfully");
+            setCourses((prev) => prev.map((c) => c.id === selectedCourse?.id ? { ...c, ...values } : c));
+            setEditDrawerOpen(false);
+            setSelectedCourse(null);
+        } catch (err: any) {
+            message.error("Failed to update course");
+        }
+    };
+
+    const getDropdownItems = (course: Course) => [
         {
             key: "1",
             label: (
-                <div
-                    className="text-[14px] cursor-pointer"
-                    onClick={() => console.log(id)}
-                >
+                <div className="text-[14px] cursor-pointer" onClick={() => handleEdit(course)}>
                     Edit
                 </div>
             ),
@@ -97,13 +107,48 @@ const Courses: React.FC = () => {
         {
             key: "2",
             label: (
-                <div
-                    className="text-[14px] cursor-pointer"
-                    onClick={() => console.log(id)}
-                >
+                <div className="text-[14px] cursor-pointer" onClick={() => handleDelete(course)}>
                     Delete
                 </div>
             ),
+        },
+    ];
+
+    const columns: TableColumnsType<Course> = [
+        {
+            title: "Course Category",
+            dataIndex: "course_category",
+        },
+        {
+            title: "Course Type",
+            dataIndex: "course_type",
+        },
+        {
+            title: "Course Title",
+            dataIndex: "course_title",
+        },
+        {
+            title: "Amount",
+            dataIndex: "amount",
+        },
+        {
+            title: "Number of Students",
+            dataIndex: "number_of_students",
+        },
+        {
+            title: "Date",
+            dataIndex: "date",
+        },
+        {
+            title: "",
+            dataIndex: "more",
+            render: (_: any, record: Course) => (
+                <Dropdown menu={{ items: getDropdownItems(record) }} trigger={["click"]}>
+                    <EllipsisOutlined style={{ fontSize: 24, cursor: "pointer" }} />
+                </Dropdown>
+            ),
+            width: 60,
+            align: "center",
         },
     ];
 
@@ -148,6 +193,39 @@ const Courses: React.FC = () => {
                     loading={loading}
                     type={"selection"}
                 />
+                <Drawer
+                    title="Edit Course"
+                    width={400}
+                    onClose={() => setEditDrawerOpen(false)}
+                    open={editDrawerOpen}
+                    destroyOnClose
+                >
+                    <Form form={editForm} layout="vertical" onFinish={handleEditSubmit}>
+                        <Form.Item label="Course Category" name="course_category">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Course Type" name="course_type">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Course Title" name="course_title">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Amount" name="amount">
+                            <Input type="number" />
+                        </Form.Item>
+                        <Button label="Save" htmlType="submit" className="bg-[#581A57] text-white mt-2" />
+                    </Form>
+                </Drawer>
+                <Modal
+                    title="Delete Course"
+                    open={deleteModalOpen}
+                    onOk={confirmDelete}
+                    onCancel={() => setDeleteModalOpen(false)}
+                    okText="Delete"
+                    okButtonProps={{ danger: true }}
+                >
+                    Are you sure you want to delete this course?
+                </Modal>
             </Card>
         </Layout>
     );
