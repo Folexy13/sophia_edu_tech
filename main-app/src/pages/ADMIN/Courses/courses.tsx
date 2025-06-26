@@ -7,6 +7,8 @@ import { Button, Table } from "../../../components";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 import adminRequests from "../../../requests/admin.request";
 import { useAlert } from "../../../store";
+import { Dropdown, Menu, Drawer, Modal, message } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
 
 const renderColumns = () => {
     return [
@@ -50,8 +52,38 @@ const Courses: React.FC = () => {
 	const { onFailure } = useAlert();
 	const [loading, setLoading] = useState(false);
 	const [tableData, setTableData] = useState<{ total_items?: number, items_per_page?: number, current_page?: number }>({});
+	const [editDrawerOpen, setEditDrawerOpen] = useState(false);
+    const [selectedCourse, setSelectedCourse] = useState<any>(null);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [deletingCourse, setDeletingCourse] = useState<any>(null);
+    const [editForm] = Form.useForm();
 
-	const columns: TableColumnsType<any> = renderColumns()
+	const columns: TableColumnsType<any> = [
+		...renderColumns(),
+		{
+			title: '',
+			dataIndex: 'actions',
+			render: (_: any, record: any) => (
+				<Dropdown
+					overlay={
+						<Menu>
+							<Menu.Item key="edit" onClick={() => handleEdit(record)}>
+								Edit
+							</Menu.Item>
+							<Menu.Item key="delete" onClick={() => handleDelete(record)}>
+								Delete
+							</Menu.Item>
+						</Menu>
+					}
+					trigger={["click"]}
+				>
+					<EllipsisOutlined style={{ fontSize: 24, cursor: "pointer" }} />
+				</Dropdown>
+			),
+			width: 60,
+			align: 'center',
+		},
+	];
 
 	const pagination = useMemo(() => ({
 		total: tableData?.total_items ?? 0,
@@ -82,6 +114,43 @@ const Courses: React.FC = () => {
 			setLoading(false);
 		}
 	}, [])
+
+	const handleEdit = (course: any) => {
+        setSelectedCourse(course);
+        editForm.setFieldsValue(course);
+        setEditDrawerOpen(true);
+    };
+
+    const handleDelete = (course: any) => {
+        setDeletingCourse(course);
+        setDeleteModalOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        try {
+            // await adminRequests.deleteCourse(deletingCourse.id);
+            message.success("Course deleted successfully");
+            setCourses((prev) => prev.filter((c) => c.id !== deletingCourse.id));
+        } catch (err: any) {
+            message.error("Failed to delete course");
+        } finally {
+            setDeleteModalOpen(false);
+            setDeletingCourse(null);
+        }
+    };
+
+    const handleEditSubmit = async () => {
+        try {
+            const values = await editForm.validateFields();
+            // await adminRequests.updateCourse(selectedCourse.id, values);
+            message.success("Course updated successfully");
+            setCourses((prev) => prev.map((c) => c.id === selectedCourse.id ? { ...c, ...values } : c));
+            setEditDrawerOpen(false);
+            setSelectedCourse(null);
+        } catch (err: any) {
+            message.error("Failed to update course");
+        }
+    };
 
 	return (
 		<Layout title="Courses" hasMargin={!isMobile} isAdmin>
@@ -123,6 +192,39 @@ const Courses: React.FC = () => {
 					loading={loading}
 					pagination={pagination}
 				/>
+				<Drawer
+					title="Edit Course"
+					width={400}
+					onClose={() => setEditDrawerOpen(false)}
+					open={editDrawerOpen}
+					destroyOnClose
+				>
+					<Form form={editForm} layout="vertical" onFinish={handleEditSubmit}>
+						<Form.Item label="Course Category" name="categories">
+							<Input />
+						</Form.Item>
+						<Form.Item label="Course Type" name="course_type">
+							<Input />
+						</Form.Item>
+						<Form.Item label="Course Title" name="title">
+							<Input />
+						</Form.Item>
+						<Form.Item label="Amount" name="price">
+							<Input type="number" />
+						</Form.Item>
+						<Button htmlType="submit" label="Save" className="bg-[#581A57] text-white mt-2" />
+					</Form>
+				</Drawer>
+				<Modal
+					title="Delete Course"
+					open={deleteModalOpen}
+					onOk={confirmDelete}
+					onCancel={() => setDeleteModalOpen(false)}
+					okText="Delete"
+					okButtonProps={{ danger: true }}
+				>
+					Are you sure you want to delete this course?
+				</Modal>
 			</Card>
 		</Layout>
 	);

@@ -246,7 +246,7 @@ const CreateCoursePage: React.FC = () => {
 															setCourseSelections(newSelections);
 														}}
 													>
-														+ Add Title
+														{/* + Add Title */}
 													</Button>
 												</div>
 											</Form.Item>
@@ -292,9 +292,8 @@ const CreateCoursePage: React.FC = () => {
 									)}
 									<Form.Item label="Amount" className="inter-normal" name={`course_amount_${index}`}>
 										<Input className="p-2" type="number" value={selection.amount} onChange={(e) => handleCourseChange(index, 'amount', e.target.value)} placeholder="Enter amount"/>
-									</Form.Item>									<Form.Item label="Brief" className="inter-normal" name={`course_brief_${index}`}>
-										<Input className="p-2" value={selection.brief} onChange={(e) => handleCourseChange(index, 'brief', e.target.value)} placeholder="Enter brief summary of the course"/>
-									</Form.Item>
+									</Form.Item>	
+																	
 
 									<Form.Item label="Number of Modules" className="inter-normal" name={`course_number_of_modules_${index}`}>
 										<Input className="p-2" type="number" value={selection.number_of_modules} onChange={(e) => handleCourseChange(index, 'number_of_modules', e.target.value)} placeholder="Enter number of modules"/>
