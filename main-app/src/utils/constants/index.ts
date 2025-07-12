@@ -42,6 +42,8 @@ export const URL = {
 	ADMIN_CREATE_INSTRUCTOR: "/admin/instructor",
 	ADMIN_BLOGS: "/admin/blog",
 	ADMIN_CREATE_BLOGS: "/admin/create-blog",
+	ADMIN_CATEGORIES: "/admin/categories",
+	ADMIN_CREATE_CATEGORY: "/admin/categories/create",
 	ADMIN_LOGIN: "/admin/login",
 };
 
@@ -190,6 +192,16 @@ export const APPCONSTANTS = {
 		{
 			path: URL.ADMIN_CREATE_BLOGS,
 			name: "admin instructors",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_CATEGORIES,
+			name: "admin categories",
+			icon: UserOutlined,
+		},
+		{
+			path: URL.ADMIN_CREATE_CATEGORY,
+			name: "admin create category",
 			icon: UserOutlined,
 		},
 		{

@@ -1,16 +1,18 @@
 import { URL } from "../utils/constants";
 import {
     AdminBlogPage,
-	AdminCoursePage,
-	AdminCreateBlogPage,
-	AdminCreateCoursePage,
-	AdminCreateInstructorPage,
-	AdminEditUserPage,
-	AdminInstructorsPage,
-	AdminOverviewPage,
-	AdminSettingsPage,
-	AdminStudentsPage,
-	AdminTutorWalletPage,
+ AdminCategoriesPage,
+ AdminCoursePage,
+ AdminCreateBlogPage,
+ AdminCreateCategoryPage,
+ AdminCreateCoursePage,
+ AdminCreateInstructorPage,
+ AdminEditUserPage,
+ AdminInstructorsPage,
+ AdminOverviewPage,
+ AdminSettingsPage,
+ AdminStudentsPage,
+ AdminTutorWalletPage,
 } from "../pages/ADMIN";
 
 const adminRoutes = [
@@ -62,6 +64,16 @@ const adminRoutes = [
         path: URL.ADMIN_CREATE_BLOGS,
         element: <AdminCreateBlogPage />,
         name: 'Admin Create Blogs',
+    },
+    {
+        path: URL.ADMIN_CATEGORIES,
+        element: <AdminCategoriesPage />,
+        name: 'Admin Categories',
+    },
+    {
+        path: URL.ADMIN_CREATE_CATEGORY,
+        element: <AdminCreateCategoryPage />,
+        name: 'Admin Create Category',
     },
     {
         path: URL.ADMIN_CREATE_COURSE,

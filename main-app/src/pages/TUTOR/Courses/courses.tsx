@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../DashboardLayout";
-import {Card, Dropdown, Form, Input, Space, TableColumnsType, Drawer, Modal, message} from "antd";
+import {Card, Dropdown, Form, Input, Space, TableColumnsType, Drawer, Modal, message, Select} from "antd";
 import {FilterIcon} from "../../../assets";
 import {Button, Table} from "../../../components";
 import {useNavigate} from "react-router-dom";
@@ -11,12 +11,17 @@ import {EllipsisOutlined} from "@ant-design/icons";
 
 interface Course {
     id: number;
-    course_category: string;
+    categories: string[];
     course_type: string;
-    course_title: string;
-    amount: string;
-    number_of_students: number;
-    date: string;
+    course_name: string;
+    title: string[];
+    price: number;
+    student_count: number;
+    date_created: string;
+    brief: string;
+    content: string;
+    status: string;
+    number_of_modules: number;
 }
 
 const Courses: React.FC = () => {
@@ -27,16 +32,19 @@ const Courses: React.FC = () => {
     const [editForm] = Form.useForm();
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [deletingCourse, setDeletingCourse] = useState<Course | null>(null);
+    const [categories, setCategories] = useState<any[]>([]);
     const nav = useNavigate();
     const {isMobile} = useScreenSize();
 
     useEffect(() => {
-        const fetchCourses = async () => {
+        const fetchData = async () => {
             try {
                 setLoading(true);
-                const response: any = await TutorRequest.fetchMyCourses();
-                if (response) {
-                    const formattedCourses = response.courses.map((course: any) => ({
+                
+                // Fetch courses
+                const courseResponse: any = await TutorRequest.fetchMyCourses();
+                if (courseResponse) {
+                    const formattedCourses = courseResponse.courses.map((course: any) => ({
                         key: course.id,
                         ...course,
                         more: (
@@ -47,14 +55,18 @@ const Courses: React.FC = () => {
                     }));
                     setCourses(formattedCourses);
                 }
+                
+                // Fetch categories
+                const categoriesResponse: any = await TutorRequest.getCategories();
+                setCategories(categoriesResponse.items || []);
             } catch (error) {
-                console.error("Failed to fetch courses:", error);
+                console.error("Failed to fetch data:", error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchCourses();
+        fetchData();
     }, []);
 
     const handleEdit = (course: Course) => {
@@ -117,7 +129,14 @@ const Courses: React.FC = () => {
     const columns: TableColumnsType<Course> = [
         {
             title: "Course Category",
-            dataIndex: "course_category",
+            dataIndex: "categories",
+            render: (categories: string[]) => (
+                <span>{Array.isArray(categories) ? categories.join(', ') : categories}</span>
+            ),
+        },
+        {
+            title: "Course Name",
+            dataIndex: "course_name",
         },
         {
             title: "Course Type",
@@ -125,19 +144,24 @@ const Courses: React.FC = () => {
         },
         {
             title: "Course Title",
-            dataIndex: "course_title",
+            dataIndex: "title",
+            render: (title: string | string[]) => (
+                Array.isArray(title) ? title.join(', ') : title
+            ),
         },
         {
-            title: "Amount",
-            dataIndex: "amount",
+            title: "Amount (NGN)",
+            dataIndex: "price",
+            render: (price: number) => price.toLocaleString(),
         },
         {
-            title: "Number of Students",
-            dataIndex: "number_of_students",
+            title: "No. of Students",
+            dataIndex: "student_count",
         },
         {
-            title: "Date",
-            dataIndex: "date",
+            title: "Date Created",
+            dataIndex: "date_created",
+            render: (date: string) => new Date(date).toDateString(),
         },
         {
             title: "",
@@ -201,16 +225,31 @@ const Courses: React.FC = () => {
                     destroyOnClose
                 >
                     <Form form={editForm} layout="vertical" onFinish={handleEditSubmit}>
-                        <Form.Item label="Course Category" name="course_category">
+                        <Form.Item label="Course Category" name="categories">
+                            <Select
+                                placeholder="Select Categories"
+                                mode="multiple"
+                            >
+                                {categories.map((category: any) => (
+                                    <Select.Option key={category.id} value={category.id}>
+                                        {category.name}
+                                    </Select.Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item label="Course Name" name="course_name">
                             <Input />
                         </Form.Item>
                         <Form.Item label="Course Type" name="course_type">
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Course Title" name="course_title">
+                        <Form.Item label="Course Title" name="title">
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Amount" name="amount">
+                        <Form.Item label="Brief" name="brief">
+                            <Input.TextArea />
+                        </Form.Item>
+                        <Form.Item label="Amount (NGN)" name="price">
                             <Input type="number" />
                         </Form.Item>
                         <Button label="Save" htmlType="submit" className="bg-[#581A57] text-white mt-2" />

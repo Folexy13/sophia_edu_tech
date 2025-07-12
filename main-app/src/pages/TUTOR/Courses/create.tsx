@@ -44,9 +44,24 @@ const CreateCoursePage: React.FC = () => {
         const [loading, setLoading] = useState<boolean>(false);
         const [currentModule, setCurrentModule] = useState(0); // Track current module
         const [step, setStep] = useState<number>(1);
-        const [courseTitles, setCourseTitles] = useState<string[]>(['']); // Array to store multiple course titles
+        const [categories, setCategories] = useState<any[]>([]);
+        const [courseImage, setCourseImage] = useState<string | null>(null);
         const nav = useNavigate();
 
+        // Fetch categories when component mounts
+        useEffect(() => {
+            const fetchCategories = async () => {
+                try {
+                    const response: any = await TutorRequest.getCategories();
+                    setCategories(response.items || []);
+                } catch (error: any) {
+                    console.error("Error fetching categories:", error);
+                    message.error("Failed to load categories");
+                }
+            };
+            
+            fetchCategories();
+        }, []);
 
         useEffect(() => {
             const numberOfModules = form.getFieldValue("number_of_module");
@@ -71,19 +86,22 @@ const CreateCoursePage: React.FC = () => {
         const handleValuesChange = () => {
             const numberOfModules = form.getFieldValue("number_of_modules");
             setModuleNumber(numberOfModules || 1);
-        };        const handleNext = async () => {
+        };        
+        
+        const handleNext = async () => {
             setLoading(true);
             try {
                 const formValues = form.getFieldsValue();
                 
-                // Create a new object with all form values and the course titles
+                // Create a new object with all form values
                 const updatedFormValues = {
                     ...formValues,
-                    course_title: courseTitles.filter(title => title.trim()).join(', ')
+                    titles: [formValues.course_title], // Convert single title to array format
+                    image_base64: courseImage // Add the base64 encoded image
                 };
                 
-                const addedCourse: any = course?.id 
-                    ? {course_id: course.id} 
+                const addedCourse: any = course?.id
+                    ? {course_id: course.id}
                     : await TutorRequest.createCourse(updatedFormValues);
 
                 setCourse((prevCourse: CourseProps | null): CourseProps => {
@@ -110,17 +128,20 @@ const CreateCoursePage: React.FC = () => {
             } finally {
                 setLoading(false);
             }
-        };        const onFinish = async (values: any) => {
+        };        
+        
+        const onFinish = async (values: any) => {
             try {
                 setLoading(true);
 
                 // Prepare FormData
                 const formData = new FormData();
 
-                // Create updated values with course titles
+                // Create updated values with course title as array
                 const updatedValues = {
                     ...values,
-                    course_title: courseTitles.filter(title => title.trim()).join(', ')
+                    titles: [values.course_title], // Convert single title to array format
+                    image_base64: courseImage // Add the base64 encoded image
                 };
 
                 // Dynamically append form fields to FormData
@@ -162,7 +183,7 @@ const CreateCoursePage: React.FC = () => {
                 formData.append('file', formValues.additional_resources.file);
             }
 
-            return formData; // Now it’s ready for backend handling
+            return formData; // Now it's ready for backend handling
         };
 
 // Update handleNextModule to use FormData
@@ -219,95 +240,147 @@ const CreateCoursePage: React.FC = () => {
                                 <Form.Item
                                     label="Course Category"
                                     className="inter-normal"
-                                    name={"course_category"}
-                                >                                    <Select
-                                        placeholder="Select a Category"
-                                        className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
+                                    name={"category_id"}
+                                    rules={[{ required: true, message: 'Please select at least one category' }]}
+                                >
+                                    <Select
+                                        placeholder="Select Categories"
+                                        className="!px-[20px]  inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
+                                        loading={categories.length === 0}
                                     >
-                                        <Select.Option value="Learning Development">
-                                            Learning Development
-                                        </Select.Option>
-                                        <Select.Option value="Learning Career">
-                                            Entrepreneurship and Innovation
-                                        </Select.Option>
+                                        {categories.map((category) => (
+                                            <Select.Option key={category.id} value={category.id}>
+                                                {category.name}
+                                            </Select.Option>
+                                        ))}
                                     </Select>
-                                </Form.Item>                                <Form.Item
+                                </Form.Item>
+                                
+                                <Form.Item
                                     label="Course Type"
                                     className="inter-normal"
                                     name={"course_type"}
                                 >
-                                    <Input
-                                        placeholder="Enter Course Type"
-                                        className="p-2"
-                                    />
-                                </Form.Item>                                <Form.Item
+                                    <Select
+                                        placeholder="Select a Course Type"
+                                        className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
+                                    >
+                                        <Select.Option value="Programming">Programming</Select.Option>
+                                        <Select.Option value="Design">Design</Select.Option>
+                                        <Select.Option value="Business">Business</Select.Option>
+                                        <Select.Option value="Marketing">Marketing</Select.Option>
+                                        <Select.Option value="Other">Other</Select.Option>
+                                    </Select>
+                                </Form.Item>
+                                
+                                <Form.Item
                                     label="Course Name"
                                     className="inter-normal"
                                     name={"course_name"}
+                                    rules={[{ required: true, message: 'Please enter course name' }]}
                                 >
                                     <Input
                                         placeholder="Enter Course Name"
                                         className="p-2"
                                     />
-                                </Form.Item>                                <Form.Item label="Course Title" className="mb-0">
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-[#666666]">Add Course Titles</span>
-                                        <Button 
-                                            className="text-[#581A57]" 
-                                            type="link" 
-                                            onClick={() => setCourseTitles([...courseTitles, ''])}
-                                        >
-                                            + Add Title
-                                        </Button>
-                                    </div>
                                 </Form.Item>
-                                {courseTitles.map((title, index) => (
-                                    <Form.Item 
-                                        key={index}
-                                        className="inter-normal mb-2"
-                                    >
-                                        <div className="flex items-center">
-                                            <Input 
-                                                placeholder={`Enter title ${index + 1}`} 
-                                                className="p-2" 
-                                                value={title}
-                                                onChange={(e) => {
-                                                    const newTitles = [...courseTitles];
-                                                    newTitles[index] = e.target.value;
-                                                    setCourseTitles(newTitles);
-                                                }}
-                                            />
-                                            {courseTitles.length > 1 && (
-                                                <Button 
-                                                    className="ml-2 text-red-500" 
-                                                    type="link"
-                                                    onClick={() => {
-                                                        const newTitles = courseTitles.filter((_, i) => i !== index);
-                                                        setCourseTitles(newTitles);
-                                                    }}
-                                                >
-                                                    Remove
-                                                </Button>
-                                            )}
-                                        </div>
-                                    </Form.Item>
-                                ))}
+                                
+                                <Form.Item
+                                    label="Course Title"
+                                    className="inter-normal"
+                                    name={"course_title"}
+                                    rules={[{ required: true, message: 'Please enter course title' }]}
+                                >
+                                    <Input
+                                        placeholder="Enter Course Title"
+                                        className="p-2"
+                                    />
+                                </Form.Item>
+                                
+                                <Form.Item
+                                    label="Price"
+                                    className="inter-normal"
+                                    name={"price"}
+                                    rules={[{ required: true, message: 'Please enter course price' }]}
+                                >
+                                    <Input
+                                        type="number"
+                                        placeholder="Enter Course Price"
+                                        className="p-2"
+                                    />
+                                </Form.Item>
+                                
+                                <Form.Item
+                                    label="Course Content"
+                                    className="inter-normal"
+                                    name={"content"}
+                                    rules={[{ required: true, message: 'Please enter course content' }]}
+                                >
+                                    <Input.TextArea
+                                        placeholder="Enter course content description"
+                                        className="p-2"
+                                        rows={4}
+                                    />
+                                </Form.Item>
+                                
                                 <Form.Item
                                     label="Number of Modules"
                                     className="inter-normal"
                                     name={"number_of_modules"}
+                                    rules={[{ required: true, message: 'Please select number of modules' }]}
                                 >
                                     <Select
                                         defaultValue={1}
                                         className="!p-[20px] inter-bold bg-[#fff] !text-black !outline-none !hover:border-none !border-none rounded-[6px]"
                                     >
-                                        <Select.Option value={1}>1</Select.Option>
-                                        <Select.Option value={2}>2</Select.Option>
-                                        <Select.Option value={3}>3</Select.Option>
-                                        <Select.Option value={4}>4</Select.Option>
-                                        <Select.Option value={5}>5</Select.Option>
+                                        {[1, 2, 3, 4, 5].map((count) => (
+                                            <Select.Option key={count} value={count}>
+                                                {count}
+                                            </Select.Option>
+                                        ))}
                                     </Select>
                                 </Form.Item>
+                                
+                                <Form.Item
+                                    label="Brief Description"
+                                    className="inter-normal"
+                                    name={"brief"}
+                                >
+                                    <Input.TextArea
+                                        placeholder="Enter a brief description"
+                                        className="p-2"
+                                    />
+                                </Form.Item>
+                                
+                                <Form.Item
+                                    label="Course Image"
+                                    className="inter-normal"
+                                    name="course_image"
+                                >
+                                    <Upload
+                                        listType="picture-card"
+                                        beforeUpload={(file) => {
+                                            const isImage = file.type.startsWith('image/');
+                                            if (!isImage) {
+                                                message.error('You can only upload image files!');
+                                                return Upload.LIST_IGNORE;
+                                            }
+                                            
+                                            const reader = new FileReader();
+                                            reader.readAsDataURL(file);
+                                            reader.onload = () => {
+                                                setCourseImage(reader.result as string);
+                                            };
+                                            return false;
+                                        }}
+                                    >
+                                        <div>
+                                            <UploadOutlined />
+                                            <div style={{ marginTop: 8 }}>Upload</div>
+                                        </div>
+                                    </Upload>
+                                </Form.Item>
+                                
                                 {/*{Array.from({length: moduleNumber}, (_, i) => (*/}
                                 {/*    <Form.Item*/}
                                 {/*        label={`Module ${i + 1}`}*/}

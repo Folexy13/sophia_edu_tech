@@ -72,10 +72,70 @@ class AdminRequests {
 		}
 	};
 	
+	createCategory = async (data: { name: string }) => {
+		try {
+			const response = await api.post(`/categories`, data);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+
+	getCategories = async () => {
+		try {
+			const response = await api.get(`/categories`);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+
 	createCourse = async (data: any) => {
 		try {
-			const response = await api.post(`/admin/courses`, data);
+			const response = await api.post(`/courses`, data);
 			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+
+	createCourseWithModules = async (data: any) => {
+		try {
+			const response = await api.post(`/courses/with-modules`, data);
+			return response;
+		} catch (error: any) {
+			// Extract the message or create a custom error message
+			console.log(error.response?.data);
+			const errorMessage =
+				error.response?.data?.error ||
+				error.response?.data?.message ||
+				"failed";
+			throw new Error(errorMessage);
+		}
+	};
+
+	getCourseUploadOptions = async () => {
+		try {
+			const response = await api.get(`/instructor/course-upload-options`);
+			return response.data;
 		} catch (error: any) {
 			// Extract the message or create a custom error message
 			console.log(error.response?.data);

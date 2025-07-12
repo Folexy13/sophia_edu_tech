@@ -3,7 +3,7 @@ import Layout from "../../DashboardLayout";
 import { Card, Form, Input, TableColumnsType } from "antd";
 import { FilterIcon } from "../../../assets";
 import { Button, Table } from "../../../components";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useScreenSize } from "../../../utils/hooks/useScreen";
 import adminRequests from "../../../requests/admin.request";
 import { useAlert } from "../../../store";
@@ -19,6 +19,10 @@ const renderColumns = () => {
                 <span>{categories.join(', ')}</span>
             ),
         },
+		{
+            title: "Course Name",
+            dataIndex: "course_name",
+        },
         {
             title: "Course Type",
             dataIndex: "course_type",
@@ -26,11 +30,15 @@ const renderColumns = () => {
         {
             title: "Course Title",
             dataIndex: "title",
+            render: (title: string | string[]) => {
+                return Array.isArray(title) ? title.join(', ') : title;
+            }
         },
+		
         {
-            title: "Amount",
+            title: "Amount (NGN)",
             dataIndex: "price",
-            render: (price: number) => `$${price.toFixed(2)}`,
+            render: (price: number) => price.toLocaleString(),
         },
         {
             title: "No of Students",
@@ -46,7 +54,7 @@ const renderColumns = () => {
 
 // const onFilter = () => {};
 const Courses: React.FC = () => {
-	// const nav = useNavigate();
+		const navigate = useNavigate();
 	const { isMobile } = useScreenSize();
 	const [courses, setCourses] = useState<any[]>([]);
 	const { onFailure } = useAlert();
@@ -157,7 +165,7 @@ const Courses: React.FC = () => {
 			<Card className="my-4 p-3 course_card">
 				<header className="flex justify-between items-center">
 					<div className="flex items-baseline gap-4">
-						<h2 className="text-[16px] inter-bold">{tableData?.total_items ?? 0} Courses</h2>
+						<h2 className="text-[16px] inter-bold">{courses?.length ?? 0} Courses</h2>
 
 						<Form>
 							<Form.Item>
@@ -179,7 +187,7 @@ const Courses: React.FC = () => {
 						<Button
 							label="Create Course"
 							className="text-white p-3 bg-[#581A57] rounded-[5px]"
-							onclick={() => window.location.href = "/admin/courses/create"}
+							onclick={() => navigate("/admin/courses/create")}
 						/>
 					</div>
 				</header>
