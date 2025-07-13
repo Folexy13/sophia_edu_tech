@@ -42,7 +42,7 @@ const CategoriesPage: React.FC = () => {
 	const [data, setData] = useState<any>([]);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [categoryId, setCategoryId] = useState(0);
+	const [_, setCategoryId] = useState(0);
 	
 	useEffect(() => {
 		const fetchData = async () => {
@@ -63,7 +63,7 @@ const CategoriesPage: React.FC = () => {
 	};
 	
 	const handleOk = async () => {
-		const id = data[categoryId]?.id;
+		// const id = data[categoryId]?.id;
 		setLoading(true);
 		try {
 			// Implement delete category API call when available
