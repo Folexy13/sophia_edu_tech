@@ -83,6 +83,8 @@ const CreateCoursePage: React.FC = () => {
             }
         }, [course, form]);
 
+        console.log(course)
+
         const handleValuesChange = () => {
             const numberOfModules = form.getFieldValue("number_of_modules");
             setModuleNumber(numberOfModules || 1);

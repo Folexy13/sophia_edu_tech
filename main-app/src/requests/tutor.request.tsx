@@ -32,7 +32,7 @@ class TutorRequests {
 
     createCourse = async (data: any) => {
         try {
-            const response = await api.post(`/courses`, data);
+            const response = await api.post(`/instructor/upload-course`, data);
             return response;
         } catch (error: any) {
             // Extract the message or create a custom error message
