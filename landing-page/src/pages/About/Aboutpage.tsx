@@ -139,10 +139,7 @@ const AboutPage: React.FC = () => {
 							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
-							To provide inclusive and equitable access to quality higher
-							education for youths and adults by equipping them with appropriate
-							learning and research skills necessary to improve their learning
-							outcomes at their various institutions of study and research.
+							To promote inclusive and equitable participation in quality higher education and career development by equipping youths and adults with the learning, research, and entrepreneurial skills they need to improve outcomes in their studies, careers, and enterprises.
 						</p>
 					</Col>
 				</Row>
