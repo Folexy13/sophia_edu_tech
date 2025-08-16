@@ -16,7 +16,7 @@ const AboutPage: React.FC = () => {
 			<div className="contain">
 				<Navbar />
 				<h2 className="playfair-display-bold text-left sm:text-center">
-					About us
+					About Us
 				</h2>
 				<p
 					className="inter-normal text-justify  sm:text-center"
@@ -25,8 +25,8 @@ const AboutPage: React.FC = () => {
 					Sophia is an ambitious for-profit education technology and career
 					development social enterprise offering tailored preparatory training
 					on relevant academic skills and practices for higher education
-					students and professionals. Sophia also provides a professional
-					networking platform where learners and professionals can hone their entrepreneurial
+					students and young professionals. Sophia also provides a professional
+					networking platform where learners and young professionals can hone their entrepreneurial
 					skills, while connecting to potential investors and employers.
 				</p>
 				<div className="div">
@@ -73,7 +73,7 @@ const AboutPage: React.FC = () => {
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							Our logo was inspired by Wittgenstein's metaphor of the ladder in
-							his Tractatus Logico-Philosophicus, symbolizing the journey of
+							his <em>Tractatus Logico-Philosophicus</em>, symbolizing the journey of
 							learning and understanding.
 						</p>
 						<p
@@ -83,7 +83,7 @@ const AboutPage: React.FC = () => {
 							Sophia leverages on the potentials offered by latest technologies,
 							insights and feedback from stakeholders in the higher education
 							sector to optimize learning and research skills for higher
-							education students and professionals.
+							education students and young professionals.
 						</p>
 					</Col>
 					<Col
