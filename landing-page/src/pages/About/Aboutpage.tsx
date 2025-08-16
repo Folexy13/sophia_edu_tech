@@ -24,10 +24,9 @@ const AboutPage: React.FC = () => {
 				>
 					Sophia is an ambitious for-profit education technology and career
 					development social enterprise offering tailored preparatory training
-					on relevant academic skills and practices for higher education
+					on relevant academic and entrepreneurial skills for higher education
 					students and young professionals. Sophia also provides a professional
-					networking platform where learners and young professionals can hone their entrepreneurial
-					skills, while connecting to potential investors and employers.
+					networking platform where learners and young professionals can showcase their enterprise projects for visibility to potential investors and employers.
 				</p>
 				<div className="div">
 					<a
@@ -66,7 +65,7 @@ const AboutPage: React.FC = () => {
 							platform's logo suggests, Sophia is aimed at providing the
 							scaffolding with which learners could see what is lying out there
 							in terms of knowledge, wisdom and understanding in their chosen
-							fields of study.
+							fields of study and professional endeavours.
 						</p>
 						<p
 							className="inter-normal text-justify"
@@ -80,9 +79,9 @@ const AboutPage: React.FC = () => {
 							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
-							Sophia leverages on the potentials offered by latest technologies,
+							Sophia leverages the potentials offered by latest technologies,
 							insights and feedback from stakeholders in the higher education
-							sector to optimize learning and research skills for higher
+							sector and industry experts to optimize learning, research, career and entrepreneurial skills for higher
 							education students and young professionals.
 						</p>
 					</Col>
