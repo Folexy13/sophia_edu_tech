@@ -81,7 +81,7 @@ const AboutPage: React.FC = () => {
 						>
 							Sophia leverages the potentials offered by latest technologies,
 							insights and feedback from stakeholders in the higher education
-							sector and industry experts to optimize learning, research, career and entrepreneurial skills for higher
+							sector and industry experts to optimize learning, research, and entrepreneurial skills for higher
 							education students and young professionals.
 						</p>
 					</Col>
