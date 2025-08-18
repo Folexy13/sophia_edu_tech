@@ -95,9 +95,24 @@ class StudentRequest {
             throw new Error(errorMessage);
         }
     }
-    getAllCourses = async () => {
+    getAllCourses = async (page: number = 1) => {
         try {
-            const response = await api.get(`/courses`);
+            const response = await api.get(`/courses?page=${page}`);
+            return response;
+        } catch (error: any) {
+            // Extract the message or create a custom error message
+            console.log(error.response?.data);
+            const errorMessage =
+                error.response?.data?.error ||
+                error.response?.data?.message ||
+                "failed";
+            throw new Error(errorMessage);
+        }
+    }
+    
+    getCourseById = async (courseId: string | number) => {
+        try {
+            const response = await api.get(`/courses/${courseId}`);
             return response;
         } catch (error: any) {
             // Extract the message or create a custom error message

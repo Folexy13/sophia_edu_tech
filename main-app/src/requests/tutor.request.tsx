@@ -93,7 +93,6 @@ class TutorRequests {
     };
 
     createCourseModule = async (data: any) => {
-
         try {
             const response = await api.post(`/modules`, data);
             return response;
@@ -104,6 +103,25 @@ class TutorRequests {
                 error.response?.data?.error ||
                 error.response?.data?.message ||
                 "failed";
+            throw new Error(errorMessage);
+        }
+    };
+
+    // New method specifically for creating multiple modules at once
+    createMultipleCourseModules = async (data: any) => {
+        try {
+            const response = await api.post(`/modules`, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            return response;
+        } catch (error: any) {
+            console.log(error.response?.data);
+            const errorMessage =
+                error.response?.data?.error ||
+                error.response?.data?.message ||
+                "Failed to create modules";
             throw new Error(errorMessage);
         }
     };

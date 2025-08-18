@@ -25,11 +25,11 @@ export const getRandomDate = () => {
 	}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}pm`;
 };
 
-export const getAvatar = (avatar?: string) => {
-	if (avatar) {
+export const getAvatar = (avatar: string) => {
+	if (!!avatar) {
 		return avatar;
 	} else {
-		return "https://p7.hiclipart.com/preview/247/564/869/computer-icons-user-profile-clip-art-user-avatar-thumbnail.jpg";
+		return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQphO53vNmzmBvdevyFh99kVFK48BiPKMYV4w&s";
 	}
 };
 
@@ -103,14 +103,17 @@ export const removeDuplicates = (obj: Record<string, any>): Record<string, any> 
  * Converts frontend module data to API payload format
  * @param {Object} moduleData - Frontend module data (e.g., module_1_title, module_1_description)
  * @param {string} courseId - The ID of the course this module belongs to
+ * @param {number} moduleIndex - The current module index (1-based)
  * @returns {Object} - Formatted payload for API request
  */
- export function formatModulePayload(moduleData:any, courseId:any) {
-	// Extract the base property names (remove the module_1_ prefix)
+ export function formatModulePayload(moduleData:any, courseId:any, moduleIndex: number = 1) {
+	// Extract the base property names (remove the module_X_ prefix)
+	const modulePrefix = `module_${moduleIndex}_`;
 	const properties :any= {};
+	
 	for (const key in moduleData) {
-		if (key.startsWith('module_1_')) {
-			const newKey = key.replace('module_1_', '');
+		if (key.startsWith(modulePrefix)) {
+			const newKey = key.replace(modulePrefix, '');
 			properties[newKey] = moduleData[key];
 		}
 	}

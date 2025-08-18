@@ -96,13 +96,13 @@ const HomePage: React.FC = () => {
         <div className="overflow-y-auto order-1  hidden lg:flex w-full flex-[0.25] min-h-[300px] sm:min-h-[400px] bg-white rounded-lg border-[#B6B6B6] border flex-col items-center justify-center">
           {/* Profile image */}
           <img
-            src={getAvatar(user?.profile_image)}
+            src={getAvatar(String(user?.profile_image))}
             alt="Profile"
-            className="w-[50px] sm:w-[84px] sm:mt-0 mt-[-40px]"
+            className="w-[50px] sm:w-[64px] sm:mt-0 mt-[-40px]"
             style={{ borderRadius: "50%" }}
           />
           <p className="font-semibold text-[16px] font-inter leading-[25.89px]">
-            {user?.full_name}
+            {user?.full_name || "Guest"}
           </p>
           <p className="text-[#808080] text-[14px] my-[10px] flex gap-2 items-center">
             <AddressLocator />

@@ -341,7 +341,7 @@ const Profile: React.FC<any> = () => {
 							<Avatar
 								size={64}
 								className="cursor-pointer border-4 border-solid border-white "
-								src={imageUrl || getAvatar(user?.profile_image)} // Changed to use avatar prop
+								src={imageUrl || getAvatar(user?.profile_image as string)} // Changed to use avatar prop
 								alt="Profile Image" // Changed to use avatar prop
 								onClick={() => fileInputRef.current?.click()}
 							/>

@@ -155,7 +155,7 @@ const Navbar: React.FC<{ data: any }> = ({ data }) => {
 
 	return (
 		<div
-			className={`navbar w-[95%] mx-auto ${
+			className={`navbar mx-auto ${
 				isScrolled || isMobile ? "fixed" : ""
 			}`}
 		>
