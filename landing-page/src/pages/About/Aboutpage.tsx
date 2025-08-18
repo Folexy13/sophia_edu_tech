@@ -16,7 +16,7 @@ const AboutPage: React.FC = () => {
 			<div className="contain">
 				<Navbar />
 				<h2 className="playfair-display-bold text-left sm:text-center">
-					About us
+					About Us
 				</h2>
 				<p
 					className="inter-normal text-justify  sm:text-center"
@@ -24,10 +24,9 @@ const AboutPage: React.FC = () => {
 				>
 					Sophia is an ambitious for-profit education technology and career
 					development social enterprise offering tailored preparatory training
-					on relevant academic skills and practices for higher education
-					students and professionals. Sophia also provides a professional
-					networking platform where learners and professionals can hone their entrepreneurial
-					skills, while connecting to potential investors and employers.
+					on relevant academic and entrepreneurial skills for higher education
+					students and young professionals. Sophia also provides a professional
+					networking platform where learners and young professionals can showcase their enterprise projects for visibility to potential investors and employers.
 				</p>
 				<div className="div">
 					<a
@@ -66,24 +65,24 @@ const AboutPage: React.FC = () => {
 							platform's logo suggests, Sophia is aimed at providing the
 							scaffolding with which learners could see what is lying out there
 							in terms of knowledge, wisdom and understanding in their chosen
-							fields of study.
+							fields of study and professional endeavours.
 						</p>
 						<p
 							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
 							Our logo was inspired by Wittgenstein's metaphor of the ladder in
-							his Tractatus Logico-Philosophicus, symbolizing the journey of
+							his <em>Tractatus Logico-Philosophicus</em>, symbolizing the journey of
 							learning and understanding.
 						</p>
 						<p
 							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
-							Sophia leverages on the potentials offered by latest technologies,
+							Sophia leverages the potentials offered by latest technologies,
 							insights and feedback from stakeholders in the higher education
-							sector to optimize learning and research skills for higher
-							education students and professionals.
+							sector and industry experts to optimize learning, research, and entrepreneurial skills for higher
+							education students and young professionals.
 						</p>
 					</Col>
 					<Col
@@ -139,10 +138,7 @@ const AboutPage: React.FC = () => {
 							className="inter-normal text-justify"
 							style={{ marginBottom: 18, lineHeight: 2, fontSize: 16 }}
 						>
-							To provide inclusive and equitable access to quality higher
-							education for youths and adults by equipping them with appropriate
-							learning and research skills necessary to improve their learning
-							outcomes at their various institutions of study and research.
+							To promote inclusive and equitable participation in quality higher education and career development by equipping youths and adults with the learning, research, and entrepreneurial skills they need to improve outcomes in their studies, careers, and enterprises.
 						</p>
 					</Col>
 				</Row>
