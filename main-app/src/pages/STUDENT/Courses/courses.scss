@@ -1,32 +1,73 @@
 .about_course {
 	.custom-collapse {
-		margin-bottom: 5px;
+		margin-bottom: 0;
 		background: #fff !important;
+		border-radius: 4px;
 
 		span {
-			font-size: 20px;
+			font-size: 18px;
+		}
+
+		.ant-collapse-item {
+			border-bottom: 1px solid #f0f0f0;
+			
+			&:last-child {
+				border-bottom: none;
+			}
 		}
 
 		.ant-collapse-header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			flex-direction: row-reverse;
-
-			.ant-collapse-arrow {
-				order: 2; /* Move arrow to the right side */
-				margin-left: 8px;
+			display: flex !important;
+			justify-content: space-between !important;
+			align-items: center !important;
+			padding: 16px !important;
+			background-color: #fff;
+			
+			&:hover {
+				background-color: #f9f9f9;
+			}
+			
+			.ant-collapse-expand-icon {
+				margin-right: 0 !important;
+				order: 2 !important; /* Arrow on right */
+				padding: 0 !important;
 			}
 
-			// Uncomment if  need this style
-			// .ant-collapse-header-text {
-			//   order: 1; /* Ensure text is on the left side */
-			//   flex-grow: 1; /* Take up remaining space */
-			// }
+			.ant-collapse-header-text {
+				order: 1 !important; /* Text on left */
+				flex-grow: 1 !important;
+			}
+		}
+		
+		// Custom styling for up/down arrows
+		.ant-collapse-arrow {
+			display: flex !important;
+			align-items: center;
+			justify-content: center;
+			width: 32px;
+			height: 32px;
+			
+			.anticon-arrow-up {
+				color: #fff; // White arrow for expanded state
+				font-size: 16px;
+				font-weight: bold;
+			}
+			
+			.anticon-arrow-down {
+				color: #666; // Gray arrow for collapsed state
+				font-size: 16px;
+				font-weight: bold;
+			}
 		}
 		
 		// Module content styling
+		.ant-collapse-content {
+			border-top: 1px solid #f0f0f0;
+			background-color: #f9f9f9;
+		}
+		
 		.ant-collapse-content-box {
+			padding: 20px !important;
 			.space-y-4 > * + * {
 				margin-top: 1rem;
 			}
@@ -237,7 +278,7 @@
 .learn_course {
 	.main {
 		min-height: auto;
-		padding: 2rem;
+		// padding: 2rem;
 		
 		svg {
 			color: #fff;

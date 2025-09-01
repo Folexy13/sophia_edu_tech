@@ -12,6 +12,7 @@ import {
 	OpenBookIcon,
 	SmileyIcon,
 } from "../../../assets";
+// We're using a custom expandIcon function instead of the indicator image
 import { Button, Modal } from "../../../components";
 import { useNavigate, useParams } from "react-router-dom";
 import studentRequest from "../../../requests/students.request";
@@ -58,64 +59,291 @@ const AboutPage: React.FC<any> = () => {
 	const createCollapseItems = (): CollapseProps["items"] => {
 		if (!course) return [];
 
-		// If we have actual module data, use it
+			
+		// If we have actual modules array, use it (for the array of modules in the course)
 		if (course.modules && course.modules.length > 0) {
-			return course.modules.map((module: any) => ({
-				key: module.id.toString(),
-				label: (
-					<div className="flex justify-between items-center w-full">
-						<span className="font-medium">{module.name || module.title}</span>
-						<span className="text-sm text-gray-500">Module {module.order}</span>
-					</div>
-				),
-				children: (
-					<div className="space-y-4">
-						{module.title && module.title !== module.name && (
-							<div>
-								<h4 className="font-semibold text-gray-700 mb-2">Title:</h4>
-								<p className="text-gray-600">{module.title}</p>
-							</div>
-						)}
-						
-						{module.description && (
-							<div>
-								<h4 className="font-semibold text-gray-700 mb-2">Description:</h4>
-								<p className="text-gray-600">{module.description}</p>
-							</div>
-						)}
-						
-						{module.content && (
-							<div>
-								<h4 className="font-semibold text-gray-700 mb-2">Content:</h4>
-								<div 
-									className="text-gray-600 prose prose-sm max-w-none"
-									dangerouslySetInnerHTML={{ __html: module.content }}
-								/>
-							</div>
-						)}
-						
-						{module.additional_resources && (
-							<div>
-								<h4 className="font-semibold text-gray-700 mb-2">Additional Resources:</h4>
-								<p className="text-gray-600">{module.additional_resources}</p>
-							</div>
-						)}
-						
-						{module.media_file && (
-							<div>
-								<h4 className="font-semibold text-gray-700 mb-2">Media:</h4>
-								<p className="text-blue-600 hover:underline cursor-pointer">{module.media_file}</p>
-							</div>
-						)}
-					</div>
-				),
-			}));
+			return course.modules.map((module: any) => {
+				const moduleEntries = module.data || [];
+				
+				return {
+					key: module.id.toString(),
+					label: (
+						<div className="flex  justify-between items-center w-full">
+							<span className="font-medium">{module.name || module.title}</span>
+							<span className="text-sm text-gray-500 mr-2">
+								{moduleEntries.length > 0 ? `${moduleEntries.length} lessons` : `Module ${module.order}`}
+							</span>
+						</div>
+					),
+					children: (
+						<div className="space-y-4">
+							{module.description && (
+								<div className="mb-4">
+									<p className="text-gray-600">{module.description}</p>
+								</div>
+							)}
+							
+							{/* If module has data array with entries */}
+							{moduleEntries.length > 0 ? (
+								<div className="space-y-2">
+									{moduleEntries.map((entry: any, index: number) => (
+										<div key={index} className="border-b pb-2 last:border-b-0">
+											<div className="flex items-center gap-2">
+												<div className="bg-[#581A57] text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
+													{entry.order || index + 1}
+												</div>
+												<h4 className="font-medium text-gray-800">{entry.title}</h4>
+											</div>
+											
+											{entry.content && (
+												<div className="pl-8 mt-2">
+													<div 
+														className="text-gray-600 prose prose-sm max-w-none text-sm"
+														dangerouslySetInnerHTML={{ __html: entry.content }}
+													/>
+												</div>
+											)}
+											
+											{entry.media_file && (
+												<div className="pl-8 mt-2">
+													<a 
+														href={entry.media_file} 
+														target="_blank" 
+														rel="noopener noreferrer"
+														className="text-blue-600 hover:underline cursor-pointer text-sm flex items-center gap-1"
+													>
+														<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+															<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" />
+														</svg>
+														Media Resource
+													</a>
+												</div>
+											)}
+											
+											{entry.additional_resources && (
+												<div className="pl-8 mt-2">
+													<a 
+														href={entry.additional_resources} 
+														target="_blank" 
+														rel="noopener noreferrer"
+														className="text-blue-600 hover:underline cursor-pointer text-sm flex items-center gap-1"
+													>
+														<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+															<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+														</svg>
+														Additional Resources
+													</a>
+												</div>
+											)}
+										</div>
+									))}
+								</div>
+							) : (
+								// Fallback for modules without data array
+								<div className="space-y-2">
+									{module.content && (
+										<div>
+											<div 
+												className="text-gray-600 prose prose-sm max-w-none"
+												dangerouslySetInnerHTML={{ __html: module.content }}
+											/>
+										</div>
+									)}
+									
+									{module.additional_resources && (
+										<div>
+											<a 
+												href={module.additional_resources} 
+												target="_blank" 
+												rel="noopener noreferrer"
+												className="text-blue-600 hover:underline cursor-pointer flex items-center gap-1"
+											>
+												<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+												</svg>
+												Additional Resources
+											</a>
+										</div>
+									)}
+									
+									{module.media_file && (
+										<div>
+											<a 
+												href={module.media_file} 
+												target="_blank" 
+												rel="noopener noreferrer"
+												className="text-blue-600 hover:underline cursor-pointer flex items-center gap-1"
+											>
+												<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" />
+												</svg>
+												Media Resource
+											</a>
+										</div>
+									)}
+								</div>
+							)}
+						</div>
+					),
+				};
+			});
 		}
+
+		// Check if we have a module with data_entries in it (from the payload structure)
+		if (course.module && course.module.data_entries && course.module.data_entries.length > 0) {
+			return [
+				{
+					key: course.module.id?.toString() || "1",
+					label: (
+						<div className="flex justify-between items-center w-full">
+							<span className="font-medium">{course.module.name || `Module ${course.module.order || 1}`}</span>
+							<span className="text-sm text-gray-500 mr-2">{course.module.data_entries.length} lessons</span>
+						</div>
+					),
+					children: (
+						<div className="space-y-4">
+							{course.module.description && (
+								<div className="mb-4">
+									<p className="text-gray-600">{course.module.description}</p>
+								</div>
+							)}
+							
+							{/* Module entries/lessons */}
+							<div className="space-y-2">
+								{course.module.data_entries.map((entry: any, index: number) => (
+									<div key={entry.id} className="border-b pb-2 last:border-b-0">
+										<div className="flex items-center gap-2">
+											<div className="bg-[#581A57] text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
+												{entry.order || index + 1}
+											</div>
+											<h4 className="font-medium text-gray-800">{entry.title}</h4>
+										</div>
+										
+										{entry.content && (
+											<div className="pl-8 mt-2">
+												<div 
+													className="text-gray-600 prose prose-sm max-w-none text-sm"
+													dangerouslySetInnerHTML={{ __html: entry.content }}
+												/>
+											</div>
+										)}
+										
+										{entry.media_file && (
+											<div className="pl-8 mt-2">
+												<a href={entry.media_file} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline cursor-pointer text-sm flex items-center gap-1">
+													<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" />
+													</svg>
+													Media Resource
+												</a>
+											</div>
+										)}
+										
+										{entry.additional_resources && (
+											<div className="pl-8 mt-2">
+												<a 
+													href={entry.additional_resources} 
+													target="_blank" 
+													rel="noopener noreferrer"
+													className="text-blue-600 hover:underline cursor-pointer text-sm flex items-center gap-1"
+												>
+													<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+													</svg>
+													Additional Resources
+												</a>
+											</div>
+										)}
+									</div>
+								))}
+							</div>
+						</div>
+					),
+				}
+			];
+		}
+		
+		// Check for module_entries from the JSON example
+		if (course.module_entries && course.module_entries.length > 0) {
+			// Group entries by module if needed
+			const moduleEntries = course.module_entries;
+			return [
+				{
+					key: course.module?.id?.toString() || "1",
+					label: (
+						<div className="flex justify-between items-center w-full">
+							<span className="font-medium">{course.module?.name || `Module ${course.module?.order || 1}`}</span>
+							<span className="text-sm text-gray-500 mr-2">{moduleEntries.length} lessons</span>
+						</div>
+					),
+					children: (
+						<div className="space-y-4">
+							{course.module?.description && (
+								<div className="mb-4">
+									<p className="text-gray-600">{course.module.description}</p>
+								</div>
+							)}
+							
+							{/* Module entries/lessons */}
+							<div className="space-y-2">
+								{moduleEntries.map((entry: any, index: number) => (
+									<div key={entry.id} className="border-b pb-2 last:border-b-0">
+										<div className="flex items-center gap-2">
+											<div className="bg-[#581A57] text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
+												{entry.order || index + 1}
+											</div>
+											<h4 className="font-medium text-gray-800">{entry.title}</h4>
+										</div>
+										
+										{entry.content && (
+											<div className="pl-8 mt-2">
+												<div 
+													className="text-gray-600 prose prose-sm max-w-none text-sm"
+													dangerouslySetInnerHTML={{ __html: entry.content }}
+												/>
+											</div>
+										)}
+										
+										{entry.media_file && (
+											<div className="pl-8 mt-2">
+												<a href={entry.media_file} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline cursor-pointer text-sm flex items-center gap-1">
+													<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" />
+													</svg>
+													Media Resource
+												</a>
+											</div>
+										)}
+										
+										{entry.additional_resources && (
+											<div className="pl-8 mt-2">
+												<a 
+													href={entry.additional_resources} 
+													target="_blank" 
+													rel="noopener noreferrer"
+													className="text-blue-600 hover:underline cursor-pointer text-sm flex items-center gap-1"
+												>
+													<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+													</svg>
+													Additional Resources
+												</a>
+											</div>
+										)}
+									</div>
+								))}
+							</div>
+						</div>
+					),
+				}
+			];
+		}
+	
 
 		// Fallback to generated modules if no actual module data
 		if (course.number_of_modules > 0) {
 			const items = [];
-			for (let i = 1; i <= course.number_of_modules; i++) {
+			for (let i = 1; i <= course.modules.length; i++) {
 				items.push({
 					key: i.toString(),
 					label: `Module ${i}`,
@@ -171,8 +399,22 @@ const AboutPage: React.FC<any> = () => {
 			nav(`/course/${id}/learning`)
 		}, 2000);
 	};
-	const expandIcon = (panelProps: any) =>
-		panelProps.isActive ? <ArrowUpOutlined size={36} /> : <ArrowDownOutlined />;
+	// Custom expand icon with more visible arrow indicator
+	const expandIcon = (panelProps: any) => {
+		if (panelProps.isActive) {
+			return (
+				<div className="flex items-center justify-center w-8 h-8 rounded-full border border-[#581A57] bg-[#581A57] text-white">
+					<ArrowUpOutlined style={{ fontSize: '16px', fontWeight: 'bold' }} />
+				</div>
+			);
+		} else {
+			return (
+				<div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 bg-white text-gray-600">
+					<ArrowDownOutlined style={{ fontSize: '16px', fontWeight: 'bold' }} />
+				</div>
+			);
+		}
+	};
 	return (
 		<Layout>
 			{loading ? (
@@ -204,7 +446,7 @@ const AboutPage: React.FC<any> = () => {
 					</div>
 				</div>
 			) : (
-			<div className="mb-[80px] about_course px-[10px] sm:px-[30px] py-1 sm:py-10 w-[100%] sm:w-[95%] mx-auto flex md:flex-row flex-col justify-between gap-2">
+			<div className="mb-[80px] about_course px-[10px] sm:px-[30px] py-1 sm:py-10 sm:pb-[100px] w-[100%] sm:w-[95%] mx-auto flex md:flex-row flex-col justify-between gap-2">
 				<div className="w-full md:w-1/2 order-1">
 					<h1 className="font-semibold text-[18px] sm:text-[24px] mb-[20px] font-inter">
 						About the Course
@@ -303,26 +545,34 @@ const AboutPage: React.FC<any> = () => {
 					/> */}
 					<div>
 						<h1 className="text-[20px] my-[30px] font-semibold order-3">
-							Course Content {course.modules && course.modules.length > 0 && (
-								<span className="text-sm font-normal text-gray-600">
-									({course.modules.length} modules)
+							Course Content {course.module_entries && (
+								<span className="text-sm font-normal text-gray-600 ">
+									({course.modules.length} lessons)
 								</span>
 							)}
 						</h1>
-						{course.modules && course.modules.length === 0 && course.number_of_modules === 0 && (
+						{(!course.modules || course.modules.length === 0) &&
+						 course.number_of_modules === 0 && (
 							<div className="bg-gray-50 p-4 rounded-lg text-center">
 								<p className="text-gray-600">Course content is being prepared. Check back soon!</p>
 							</div>
 						)}
-						{(course.modules && course.modules.length > 0) || course.number_of_modules > 0 ? (
-							<Collapse
-								onChange={onChange}
-								items={items}
-								accordion
-								className="custom-collapse"
-								expandIcon={expandIcon} // Add custom icon
-							/>
-						) : null}
+						{((course.modules && course.modules.length > 0) || 
+						  (course.module_entries && course.module_entries.length > 0) || 
+						  course.number_of_modules > 0) && (
+							<div className="border  border-gray-200 rounded-md">
+								<Collapse
+									onChange={onChange}
+									items={items}
+									accordion
+									className="custom-collapse"
+									expandIcon={expandIcon}
+									expandIconPosition="end" // Ensure icon is at the end
+									bordered={false}
+									defaultActiveKey={items && items.length > 0 ? [String(items[0]?.key)] : undefined} // Open the first module by default
+								/>
+							</div>
+						)}
 					</div>
 				</div>
 

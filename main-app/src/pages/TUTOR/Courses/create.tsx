@@ -3,7 +3,7 @@ import Layout from "../../DashboardLayout";
 
 import { Button, Form, Input, Select, Upload } from "antd";
 import { URL } from "../../../utils/constants";
-import { ArrowLeftOutlined, UploadOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import { CourseProps, useCourse } from "../../../store.tsx";
 import { toast } from "react-toastify";
 import { TutorRequest } from "../../../requests";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { RichTextEditor } from "../../../components/editor.tsx";
 import tutorRequests from "../../../requests/tutor.request.tsx";
 import { message } from "antd";
+import { uploadImageToCloudinary } from "../../../utils/helperFunction.tsx";
 
 const handleBeforeUpload = (file: any) => {
   const allowedTypes = [
@@ -35,10 +36,12 @@ const handleBeforeUpload = (file: any) => {
     return Upload.LIST_IGNORE;
   }
 
-  // Show success message
-  message.success(`Document "${file.name}" is ready to upload!`);
-  return false; // File passes validation
+  // Show success message and store the file object (don't upload to Cloudinary)
+  message.success(`Document "${file.name}" is ready to attach!`);
+  return false; // File passes validation, but we'll handle it locally
 };
+
+// Function will be moved after state declarations
 
 const handleMediaUpload = (file: any) => {
   const allowedImageTypes = [
@@ -95,10 +98,29 @@ const CreateCoursePage: React.FC = () => {
   const [step, setStep] = useState<number>(1);
   const [categories, setCategories] = useState<any[]>([]);
   const [courseImage, setCourseImage] = useState<string | null>(null);
+  const [imageUploading, setImageUploading] = useState<boolean>(false);
   const [modulesData, setModulesData] = useState<any[]>([]); // Store all modules data
   const [currentContentIndex, setCurrentContentIndex] = useState(0); // Track current content item within module
   const [moduleContents, setModuleContents] = useState<any[]>([]); // Store content items for current module
   const nav = useNavigate();
+  
+  // Handle image upload to Cloudinary
+  const handleImageUpload = async (file: File) => {
+    try {
+      setImageUploading(true);
+      // Use the uploadImageToCloudinary helper function
+      const secureUrl = await uploadImageToCloudinary(file);
+      
+      // Set the course image to the Cloudinary URL
+      setCourseImage(secureUrl);
+      message.success('Image uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      message.error('Failed to upload image. Please try again.');
+    } finally {
+      setImageUploading(false);
+    }
+  };
 
   // Fetch categories when component mounts
   useEffect(() => {
@@ -116,14 +138,16 @@ const CreateCoursePage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const numberOfModules = form.getFieldValue("number_of_module");
-    setModuleNumber(numberOfModules || 1);
-  }, [form]);
-
-  useEffect(() => {
-    const numberOfModules = form.getFieldValue("number_of_modules");
-    setModuleNumber(numberOfModules || 1);
-  }, [form]);
+    // Only run this effect in step 1
+    if (step === 1) {
+      const numberOfModules = form.getFieldValue("number_of_modules");
+      const newModuleNumber = numberOfModules || 1;
+      if (newModuleNumber !== moduleNumber) {
+        console.log("useEffect: Setting moduleNumber from", moduleNumber, "to", newModuleNumber);
+        setModuleNumber(newModuleNumber);
+      }
+    }
+  }, [form, step, moduleNumber]);
 
   // Initialize form with persisted values
   useEffect(() => {
@@ -149,24 +173,64 @@ const CreateCoursePage: React.FC = () => {
   // Load existing module data when currentModule changes
   useEffect(() => {
     if (step === 2) {
+      // Ensure moduleNumber is set from course data when entering step 2
+      if (course?.number_of_module && moduleNumber !== course.number_of_module) {
+        console.log("Setting module number in step 2 from course data:", course.number_of_module);
+        setModuleNumber(course.number_of_module);
+      }
+      
       // Load existing module data if it exists
       if (modulesData[currentModule]) {
-        setModuleContents(modulesData[currentModule].contents || []);
+        const moduleData = modulesData[currentModule];
+        setModuleContents(moduleData.contents || []);
+        
+        // If there's existing content, load the first content item into the form
+        if (moduleData.contents && moduleData.contents.length > 0) {
+          const firstContent = moduleData.contents[0];
+          const modulePrefix = `module_${currentModule + 1}_`;
+          const formFields: any = {};
+          
+          Object.keys(firstContent).forEach((key) => {
+            if (firstContent[key] !== null && firstContent[key] !== undefined) {
+              formFields[`${modulePrefix}${key}`] = firstContent[key];
+            }
+          });
+          
+          form.setFieldsValue(formFields);
+          setCurrentContentIndex(0);
+          console.log(`Loaded existing content for Module ${currentModule + 1}`);
+        } else {
+          setCurrentContentIndex(0);
+          form.resetFields();
+        }
       } else {
         setModuleContents([]);
+        setCurrentContentIndex(0);
+        form.resetFields();
       }
-      setCurrentContentIndex(0);
     }
-  }, [currentModule, step, modulesData]);
+  }, [currentModule, step, modulesData, course, moduleNumber, form]);
 
   console.log(course);
 
   const handleValuesChange = () => {
-    const numberOfModules = form.getFieldValue("number_of_modules");
-    setModuleNumber(numberOfModules || 1);
+    // Only update module number when we're in step 1 (course creation step)
+    if (step === 1) {
+      const numberOfModules = form.getFieldValue("number_of_modules");
+      if (numberOfModules && numberOfModules !== moduleNumber) {
+        console.log("Updating module number from", moduleNumber, "to", numberOfModules);
+        setModuleNumber(numberOfModules);
+      }
+    }
   };
 
   const handleNext = async () => {
+    // Check if course image has been uploaded to Cloudinary
+    if (!courseImage) {
+      message.error('Please upload a course image before proceeding');
+      return;
+    }
+    
     setLoading(true);
     try {
       const formValues = form.getFieldsValue();
@@ -182,7 +246,7 @@ const CreateCoursePage: React.FC = () => {
             course_type: formValues.course_type,
             price: formValues.price,
             number_of_modules: formValues.number_of_modules,
-            image_base64: courseImage,
+            image: courseImage, // Changed from image_base64 to image with Cloudinary URL
           },
         ],
         category_id: formValues.category_id,
@@ -194,6 +258,7 @@ const CreateCoursePage: React.FC = () => {
         // Course already exists, use existing ID
         courseId = course.id;
       } else {
+        console.log("Creating new course with values:", updatedFormValues);
         // Create new course
         const addedCourse: any = await TutorRequest.createCourse(
           updatedFormValues
@@ -217,6 +282,11 @@ const CreateCoursePage: React.FC = () => {
         return newCourse;
       });
 
+      // Ensure moduleNumber state is preserved for step 2
+      const finalModuleCount = formValues.number_of_modules || 1;
+      setModuleNumber(finalModuleCount);
+      console.log("Transitioning to step 2 with", finalModuleCount, "modules");
+
       setStep(step + 1);
     } catch (error) {
       console.error("Error creating course:", error);
@@ -237,7 +307,7 @@ const CreateCoursePage: React.FC = () => {
       const updatedValues = {
         ...values,
         titles: [values.course_title], // Convert single title to array format
-        image_base64: courseImage, // Add the base64 encoded image
+        image: courseImage, // Changed from image_base64 to image with Cloudinary URL
       };
 
       // Dynamically append form fields to FormData
@@ -329,15 +399,43 @@ const CreateCoursePage: React.FC = () => {
     try {
       setLoading(true);
 
-      // Get current content data from form
+      // Get current content data from form if form has content
       const formValues = form.getFieldsValue();
-      const currentContentData = extractContentData(formValues, currentModule + 1);
+      const hasFormContent = Object.values(formValues).some(value => value && value !== '');
       
-      // Add current content to the moduleContents array
-      const updatedContents = [...moduleContents, currentContentData];
-      setModuleContents(updatedContents);
+      let currentContentData = null;
+      if (hasFormContent) {
+        currentContentData = extractContentData(formValues, currentModule + 1);
+        
+        // Validate that required fields are filled if there's content
+        if (currentContentData.title || currentContentData.body) {
+          if (!currentContentData.title || !currentContentData.body) {
+            message.error('Please fill in both Title and Body, or clear the form before proceeding to next module.');
+            setLoading(false);
+            return;
+          }
+        }
+      }
+      
+      // Add current content to the moduleContents array if it has valid content
+      let updatedContents = [...moduleContents];
+      if (currentContentData && (currentContentData.title || currentContentData.body)) {
+        if (currentContentIndex < updatedContents.length) {
+          // Update existing content
+          updatedContents[currentContentIndex] = currentContentData;
+        } else {
+          // Add new content
+          updatedContents.push(currentContentData);
+        }
+      }
 
-      // Create module data with all its contents
+      // Create module data with all its contents - ensure at least one content item
+      if (updatedContents.length === 0) {
+        message.error(`Module ${currentModule + 1} must have at least one content item. Please add content before proceeding.`);
+        setLoading(false);
+        return;
+      }
+
       const moduleData = {
         name: `Module ${currentModule + 1}`,
         description: `Module ${currentModule + 1} Description`,
@@ -356,9 +454,7 @@ const CreateCoursePage: React.FC = () => {
         setModuleContents([]); // Reset module contents for new module
         form.resetFields();
         message.success(
-          `Module ${currentModule + 1} completed. Moving to module ${
-            currentModule + 2
-          }.`
+          `Module ${currentModule + 1} completed with ${updatedContents.length} content item(s). Moving to Module ${currentModule + 2}.`
         );
       } else {
         // All modules completed - create all modules at once
@@ -414,24 +510,40 @@ const CreateCoursePage: React.FC = () => {
     const formValues = form.getFieldsValue();
     const currentContentData = extractContentData(formValues, currentModule + 1);
     
+    // Validate that required fields are filled
+    if (!currentContentData.title || !currentContentData.body) {
+      message.error('Please fill in Title and Body before adding more content.');
+      return;
+    }
+    
     // Add to moduleContents array
     const updatedContents = [...moduleContents, currentContentData];
     setModuleContents(updatedContents);
-    setCurrentContentIndex(currentContentIndex + 1);
+    setCurrentContentIndex(updatedContents.length); // Set to next new index
     
     // Clear form for next content item
     form.resetFields();
     
-    message.success(`Content item ${currentContentIndex + 1} added to Module ${currentModule + 1}. Add another content item.`);
+    message.success(`Content item ${currentContentIndex + 1} added to Module ${currentModule + 1}. Ready to add content item ${updatedContents.length + 1}.`);
   };
 
   // New function to handle editing existing content
   const handleEditContent = (contentIndex: number) => {
-    // Save current form data first if it has content
+    // Save current form data first if it has content and it's a new item
     const formValues = form.getFieldsValue();
     const hasContent = Object.values(formValues).some(value => value && value !== '');
     
-    if (hasContent && contentIndex !== currentContentIndex) {
+    if (hasContent && currentContentIndex >= moduleContents.length) {
+      // User was creating new content, ask if they want to save it first
+      const currentContentData = extractContentData(formValues, currentModule + 1);
+      if (currentContentData.title || currentContentData.body) {
+        if (window.confirm('You have unsaved content. Do you want to save it before editing the selected item?')) {
+          const updatedContents = [...moduleContents, currentContentData];
+          setModuleContents(updatedContents);
+        }
+      }
+    } else if (hasContent && contentIndex !== currentContentIndex && currentContentIndex < moduleContents.length) {
+      // User was editing existing content, save changes
       const currentContentData = extractContentData(formValues, currentModule + 1);
       const updatedContents = [...moduleContents];
       updatedContents[currentContentIndex] = currentContentData;
@@ -445,12 +557,45 @@ const CreateCoursePage: React.FC = () => {
       const formFields: any = {};
       
       Object.keys(selectedContent).forEach((key) => {
-        formFields[`${modulePrefix}${key}`] = selectedContent[key];
+        if (selectedContent[key] !== null && selectedContent[key] !== undefined) {
+          // Handle file fields specially
+          if (key === 'additional_resources' && selectedContent[key]) {
+            if (selectedContent[key] instanceof File) {
+              // Create fileList structure for Upload component
+              formFields[`${modulePrefix}${key}`] = {
+                fileList: [{
+                  uid: '-1',
+                  name: selectedContent[key].name,
+                  status: 'done',
+                  originFileObj: selectedContent[key]
+                }]
+              };
+            } else {
+              formFields[`${modulePrefix}${key}`] = selectedContent[key];
+            }
+          } else if (key === 'media_file' && selectedContent[key]) {
+            if (selectedContent[key] instanceof File) {
+              // Create fileList structure for Upload component
+              formFields[`${modulePrefix}media`] = {
+                fileList: [{
+                  uid: '-1',
+                  name: selectedContent[key].name,
+                  status: 'done',
+                  originFileObj: selectedContent[key]
+                }]
+              };
+            } else {
+              formFields[`${modulePrefix}media`] = selectedContent[key];
+            }
+          } else {
+            formFields[`${modulePrefix}${key}`] = selectedContent[key];
+          }
+        }
       });
       
       form.setFieldsValue(formFields);
       setCurrentContentIndex(contentIndex);
-      message.info(`Editing content item ${contentIndex + 1}`);
+      message.info(`Now editing content item ${contentIndex + 1} of Module ${currentModule + 1}`);
     }
   };
 
@@ -460,15 +605,21 @@ const CreateCoursePage: React.FC = () => {
     const formValues = form.getFieldsValue();
     const currentContentData = extractContentData(formValues, currentModule + 1);
     
+    // Validate that required fields are filled
+    if (!currentContentData.title || !currentContentData.body) {
+      message.error('Please fill in Title and Body before proceeding.');
+      return;
+    }
+    
     const updatedContents = [...moduleContents];
     updatedContents[currentContentIndex] = currentContentData;
     setModuleContents(updatedContents);
     
     // Move to new content item
-    setCurrentContentIndex(moduleContents.length);
+    setCurrentContentIndex(updatedContents.length);
     form.resetFields();
     
-    message.success(`Content item ${currentContentIndex + 1} updated. Ready to add new content.`);
+    message.success(`Content item ${currentContentIndex + 1} updated. Ready to add content item ${updatedContents.length + 1}.`);
   };
 
   // Helper function to extract content data from form values
@@ -483,28 +634,80 @@ const CreateCoursePage: React.FC = () => {
       }
     }
 
+    // Handle additional resources file
+    let additionalResources = null;
+    if (contentData.additional_resources?.fileList && contentData.additional_resources.fileList.length > 0) {
+      // Get the file object from fileList
+      const file = contentData.additional_resources.fileList[0];
+      additionalResources = file.originFileObj || file;
+    } else if (contentData.additional_resources) {
+      additionalResources = contentData.additional_resources;
+    }
+
+    // Handle media file
+    let mediaFile = null;
+    if (contentData.media?.fileList && contentData.media.fileList.length > 0) {
+      const file = contentData.media.fileList[0];
+      mediaFile = file.originFileObj || file;
+    } else if (contentData.media) {
+      mediaFile = contentData.media;
+    }
+
     return {
       title: contentData.title || "",
       description: contentData.description || "",
       body: contentData.body || "",
       content: contentData.body || "",
-      additional_resources:
-        contentData.additional_resources?.file ||
-        contentData.additional_resources ||
-        null,
-      media_file: contentData.media?.file || contentData.media || null,
+      additional_resources: additionalResources,
+      media_file: mediaFile,
     };
   };
 
   const handleBackModule = () => {
+    // Save current form content before navigating
+    const formValues = form.getFieldsValue();
+    const hasFormContent = Object.values(formValues).some(value => value && value !== '');
+    
+    if (hasFormContent) {
+      const currentContentData = extractContentData(formValues, currentModule + 1);
+      
+      // If there's meaningful content (title or body), save it
+      if (currentContentData.title || currentContentData.body) {
+        const updatedContents = [...moduleContents];
+        
+        if (currentContentIndex < updatedContents.length) {
+          // Update existing content
+          updatedContents[currentContentIndex] = currentContentData;
+        } else {
+          // Add new content
+          updatedContents.push(currentContentData);
+        }
+        
+        // Save to modulesData
+        const moduleData = {
+          name: `Module ${currentModule + 1}`,
+          description: `Module ${currentModule + 1} Description`,
+          contents: updatedContents
+        };
+        
+        const updatedModulesData = [...modulesData];
+        updatedModulesData[currentModule] = moduleData;
+        setModulesData(updatedModulesData);
+        
+        console.log(`Saved current content for Module ${currentModule + 1} before going back`);
+      }
+    }
+    
     if (currentModule > 0) {
       setCurrentModule(currentModule - 1);
       setCurrentContentIndex(0);
-      setModuleContents([]);
       // Load previous module data if exists
       if (modulesData[currentModule - 1]) {
         setModuleContents(modulesData[currentModule - 1].contents || []);
+      } else {
+        setModuleContents([]);
       }
+      form.resetFields();
     } else {
       setStep(1); // Go back to the previous step
     }
@@ -686,18 +889,19 @@ const CreateCoursePage: React.FC = () => {
                       message.error("You can only upload image files!");
                       return Upload.LIST_IGNORE;
                     }
-
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => {
-                      setCourseImage(reader.result as string);
-                    };
+                    
+                    // Set the image file for later upload
+                    // Start the upload process immediately
+                    handleImageUpload(file);
+                    
                     return false;
                   }}
                 >
                   <div>
-                    <UploadOutlined />
-                    <div style={{ marginTop: 8 }}>Upload</div>
+                    {imageUploading ? <LoadingOutlined /> : <UploadOutlined />}
+                    <div style={{ marginTop: 8 }}>
+                      {imageUploading ? 'Uploading...' : 'Upload'}
+                    </div>
                   </div>
                 </Upload>
               </Form.Item>
@@ -744,10 +948,22 @@ const CreateCoursePage: React.FC = () => {
                 <Button
                   type="link"
                   loading={loading}
-                  className="bg-[#581A57] p-3 px-8 !hover:bg-[#581A57] ml-[10px] text-[#fff] text-[14px] rounded-[8px]"
+                  disabled={imageUploading || !courseImage}
+                  className={`p-3 px-8 ml-[10px] text-[14px] rounded-[8px] ${
+                    imageUploading || !courseImage 
+                      ? 'bg-gray-400 text-white cursor-not-allowed' 
+                      : 'bg-[#581A57] !hover:bg-[#581A57] text-[#fff]'
+                  }`}
                   onClick={handleNext}
                 >
-                  {course?.id ? "Continue with Modules" : "Next"}
+                  {imageUploading 
+                    ? "Uploading Image..." 
+                    : !courseImage 
+                      ? "Upload Image First"
+                      : course?.id 
+                        ? "Continue with Modules" 
+                        : "Next"
+                  }
                 </Button>
               </div>
             </Form>
@@ -783,7 +999,9 @@ const CreateCoursePage: React.FC = () => {
                     Module {currentModule + 1} of {moduleNumber}
                   </p>
                   <p className="text-xs text-gray-500">
-                    Content item {currentContentIndex + 1} ({moduleContents.length} saved)
+                    Content item {currentContentIndex + 1} 
+                    {moduleContents.length > 0 && ` (${moduleContents.length} saved)`}
+                    {currentContentIndex >= moduleContents.length && " (New)"}
                   </p>
                 </div>
               </div>
@@ -792,17 +1010,28 @@ const CreateCoursePage: React.FC = () => {
               </p>
             </div>
           </div>
-          <div className="w-full sm:w-1/2">
+            <div className="w-full sm:w-1/2">
             {/* Module and Content Progress */}
             <div className="bg-white text-center py-3 mb-4 text-[20px] inter-normal font-medium">
               MODULE {currentModule + 1} - Content Item {currentContentIndex + 1}
+              {currentContentIndex >= moduleContents.length && " (New)"}
             </div>
             
-            <Form
+            {/* Debug info - remove in production */}
+            {/* <div className="bg-yellow-50 border border-yellow-200 rounded p-2 mb-4 text-xs">
+              <strong>Debug:</strong> moduleNumber = {moduleNumber}, currentModule = {currentModule}, 
+              course.number_of_module = {course?.number_of_module}, moduleContents.length = {moduleContents.length}
+            </div> */}
+             <Form
               layout="vertical"
               form={form}
-              onValuesChange={handleValuesChange}
               onFinish={onFinish}
+              onKeyPress={(e) => {
+                // Prevent form submission on Enter key
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                }
+              }}
             >
               {/* Additional Resources Upload */}
               <Form.Item
@@ -874,20 +1103,22 @@ const CreateCoursePage: React.FC = () => {
               {/* Proceed to add title button */}
               <div className="my-4">
                 {currentContentIndex < moduleContents.length ? (
+                  // User is editing existing content, show proceed to new option
                   <Button 
                     className="text-[#581A57] !hover:text-[#581A57] !hover:border-[#581A57] border-[#581A57] border-1 w-full" 
                     type="default" 
                     onClick={handleProceedToNew}
                   >
-                    Proceed to add title 
+                    Update and proceed to add new content item
                   </Button>
                 ) : (
+                  // User is adding new content, show add more option
                   <Button 
                     className="text-[#581A57] !hover:text-[#581A57] !hover:border-[#581A57] border-[#581A57] border-1 w-full" 
                     type="default" 
                     onClick={handleAddMoreContent}
                   >
-                    Proceed to add title (Add more content to this module)
+                    Add this content item to Module {currentModule + 1}
                   </Button>
                 )}
               </div>
@@ -896,7 +1127,7 @@ const CreateCoursePage: React.FC = () => {
               {moduleContents.length > 0 && (
                 <div className="mb-4 p-3 bg-gray-50 rounded">
                   <p className="text-sm font-medium text-gray-700 mb-2">
-                    Saved content items for this module (click to edit):
+                    Saved content items for Module {currentModule + 1} (click to edit):
                   </p>
                   {moduleContents.map((content, index) => (
                     <div 
@@ -919,9 +1150,26 @@ const CreateCoursePage: React.FC = () => {
                     </div>
                   ))}
                   <div className="text-xs text-gray-500 mt-2">
-                    Currently editing: Content item {currentContentIndex + 1}
-                    {currentContentIndex >= moduleContents.length && " (New)"}
+                    Currently: 
+                    {currentContentIndex < moduleContents.length 
+                      ? ` Editing content item ${currentContentIndex + 1}`
+                      : " Creating new content item"
+                    }
                   </div>
+                  {currentContentIndex < moduleContents.length && (
+                    <Button 
+                      type="link" 
+                      size="small"
+                      onClick={() => {
+                        setCurrentContentIndex(moduleContents.length);
+                        form.resetFields();
+                        message.info("Ready to create new content item");
+                      }}
+                      className="mt-2 p-0 h-auto text-[#581A57]"
+                    >
+                      + Start new content item
+                    </Button>
+                  )}
                 </div>
               )}
 
@@ -934,11 +1182,15 @@ const CreateCoursePage: React.FC = () => {
                   type="primary"
                   disabled={loading}
                   loading={loading}
-                  onClick={handleNextModule}
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent form submission
+                    handleNextModule();
+                  }}
+                  htmlType="button" // Explicitly set as button type to prevent form submission
                 >
                   {currentModule === moduleNumber - 1
-                    ? "Create All Modules"
-                    : `Next Module (${currentModule + 2}/${moduleNumber})`}
+                    ? `Finish & Create All ${moduleNumber} Module${moduleNumber > 1 ? 's' : ''}`
+                    : `Complete Module ${currentModule + 1} & Continue (${currentModule + 2}/${moduleNumber})`}
                 </Button>
               </div>
             </Form>
@@ -1040,7 +1292,11 @@ const CreateCoursePage: React.FC = () => {
                 </Button>
                 <Button
                   type="primary"
-                  onClick={handleNextModule}
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent form submission
+                    handleNextModule();
+                  }}
+                  htmlType="button" // Explicitly set as button type to prevent form submission
                   disabled={loading}
                   loading={loading}
                 >

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import type { TabsProps } from "antd";
-import { Collapse, type CollapseProps, Progress } from "antd";
+import {  Progress } from "antd";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import { DiscIcon } from "../assets";
 import ReactPlayer from 'react-player';
 import {BsFillPauseCircleFill, BsFillPlayCircleFill} from "react-icons/bs";
 
@@ -37,47 +36,6 @@ const tabMedia = {
     }
 } as const;
 
-// Define modules for each tab
-const tabModules = {
-    1: [
-        { title: "Module 1: Introduction to Web Development", content: "Fundamentals of HTML, CSS, and JavaScript..." },
-        { title: "Module 2: React Basics", content: "Components, props, state, and hooks..." },
-        { title: "Module 3: State Management", content: "Redux, Context API, and Zustand..." },
-        { title: "Module 4: Advanced Patterns", content: "Render props, HOCs, and custom hooks..." }
-    ],
-    2: [
-        { title: "Module 1: Performance Fundamentals", content: "Understanding React's rendering behavior..." },
-        { title: "Module 2: Optimization Techniques", content: "Memoization, code splitting, and lazy loading..." },
-        { title: "Module 3: Profiling Tools", content: "Using React DevTools and Chrome Profiler..." }
-    ],
-    3: [
-        { title: "Module 1: Project Setup", content: "Initializing the task management app..." },
-        { title: "Module 2: Backend Development", content: "Building the API and database layer..." },
-        { title: "Module 3: Frontend Implementation", content: "Creating UI components and state..." },
-        { title: "Module 4: Advanced Features", content: "Implementing drag-and-drop and real-time..." }
-    ],
-    4: [
-        { title: "Module 1: Course Recap", content: "Review of key concepts and techniques..." },
-        { title: "Module 2: Next Steps", content: "Resources for continued learning..." },
-        { title: "Module 3: Career Advice", content: "Building your portfolio and job search..." }
-    ]
-};
-
-const handleCollapseChange = (key: string | string[]) => {
-    console.log(key);
-};
-
-const expandIcon = (panelProps: any) =>
-    panelProps.isActive ? <DiscIcon color="#fff" /> : <DiscIcon color="#fff" />;
-
-const renderCollapseItems = (tabKey: number): CollapseProps["items"] => {
-    const modules = tabModules[tabKey as keyof typeof tabModules] || [];
-    return modules.map((module, index) => ({
-        key: `${tabKey}-${index + 1}`,
-        label: module.title,
-        children: <p>{module.content}</p>
-    }));
-};
 
 // Media Content Component with state management
 const MediaContent = ({ tabKey }: { tabKey: number }) => {
@@ -474,20 +432,8 @@ npm install react-beautiful-dnd @material-ui/core @material-ui/icons</code></pre
 const TabContent = ({ tabNumber }: { tabNumber: number }) => {
     return (
         <div className="flex sm:flex-row flex-col-reverse mt-[10px] gap-6 w-full">
-            <div className="sm:block hidden w-[25%]">
-                {(renderCollapseItems(tabNumber) || []).map((item, index) => (
-                    <Collapse
-                        key={`${item.key}-${index}`}
-                        onChange={handleCollapseChange}
-                        items={[item]}
-                        accordion
-                        className="custom-collapse w-full"
-                        expandIcon={expandIcon}
-                    />
-                ))}
-            </div>
-
-            <div className="sm:w-[75%] relative main">
+       
+            <div className=" relative main">
                 <MediaContent tabKey={tabNumber} />
 
                 <div

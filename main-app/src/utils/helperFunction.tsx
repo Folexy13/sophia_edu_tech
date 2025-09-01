@@ -74,6 +74,23 @@ export const uploadImageToCloudinary = async (file: any) => {
 	}
 };
 
+export const uploadFileToCloudinary = async (file: any, resourceType: 'image' | 'video' | 'auto' = 'auto') => {
+	const formData = new FormData();
+	formData.append("file", file);
+	formData.append("upload_preset", "cnu26mth"); // Cloudinary upload preset
+
+	try {
+		// Use the appropriate resource type for different file types
+		const response = await axios.post(
+			`https://api.cloudinary.com/v1_1/djl1v3zvi/${resourceType}/upload`, // Cloudinary URL with resource type
+			formData
+		);
+		return response.data.secure_url; // Return the uploaded file URL
+	} catch (error) {
+		throw new Error(`Failed to upload ${resourceType}`);
+	}
+};
+
 export const exportToExcel = (payload: any) => {
 	const worksheet = XLSX.utils.json_to_sheet(payload.data);
 	const workbook = XLSX.utils.book_new();
@@ -118,6 +135,25 @@ export const removeDuplicates = (obj: Record<string, any>): Record<string, any> 
 		}
 	}
 
+	// Handle media file and resources that could be URLs or file objects
+	let mediaFile = properties.media?.file || properties.media || undefined;
+	let additionalResources = properties.additional_resources?.file || properties.additional_resources || undefined;
+	
+	// If media file or resources are URLs (from Cloudinary), use them directly
+	if (typeof mediaFile === 'string' && (mediaFile.startsWith('http://') || mediaFile.startsWith('https://'))) {
+		// It's already a URL, keep it as is
+	} else if (mediaFile?.name) {
+		// It's a file object, use the name for the API
+		mediaFile = mediaFile.name;
+	}
+	
+	if (typeof additionalResources === 'string' && (additionalResources.startsWith('http://') || additionalResources.startsWith('https://'))) {
+		// It's already a URL, keep it as is
+	} else if (additionalResources?.name) {
+		// It's a file object, use the name for the API
+		additionalResources = additionalResources.name;
+	}
+
 	// Map to the API payload structure
 	const payload :any= {
 		name: properties.title || '', // Using title as name if not provided separately
@@ -125,10 +161,8 @@ export const removeDuplicates = (obj: Record<string, any>): Record<string, any> 
 		description: properties.description || undefined,
 		title: properties.title || undefined,
 		content: properties.body || undefined,
-		additional_resources: properties.additional_resources !== undefined ?
-			properties.additional_resources :
-			undefined,
-		media_file: properties.media?.file || undefined
+		additional_resources: additionalResources,
+		media_file: mediaFile
 	};
 
 	// Remove undefined values to clean up the payload
