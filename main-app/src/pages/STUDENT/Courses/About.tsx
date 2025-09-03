@@ -24,6 +24,7 @@ const AboutPage: React.FC<any> = () => {
 	const [course, setCourse] = useState<any>(null);
 	const [error, setError] = useState<string>("");
 
+
 	// Fetch course data when component mounts
 	useEffect(() => {
 		const fetchCourse = async () => {
@@ -95,14 +96,14 @@ const AboutPage: React.FC<any> = () => {
 												<h4 className="font-medium text-gray-800">{entry.title}</h4>
 											</div>
 											
-											{entry.content && (
+											{/* {entry.content && (
 												<div className="pl-8 mt-2">
 													<div 
 														className="text-gray-600 prose prose-sm max-w-none text-sm"
 														dangerouslySetInnerHTML={{ __html: entry.content }}
 													/>
 												</div>
-											)}
+											)} */}
 											
 											{entry.media_file && (
 												<div className="pl-8 mt-2">
